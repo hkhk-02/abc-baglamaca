@@ -1,0 +1,3870 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#2e3a92">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="application-name" content="ABC Bağlamaca">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232e3a92'/%3E%3Cpath d='M16 18 H48 V46' fill='none' stroke='%23f9a825' stroke-width='6' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='18' r='8' fill='%23e65100'/%3E%3Ccircle cx='48' cy='46' r='8' fill='%232e7d32'/%3E%3Ctext x='16' y='22' font-size='11' font-family='Arial' font-weight='bold' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3Ctext x='48' y='50' font-size='11' font-family='Arial' font-weight='bold' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
+  <title>ABC Bağlamaca - MiniBilge</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #2e3a92;
+      --blue-soft: #3d4db8;
+      --blue-pale: #e8ebf8;
+      --accent-text: #2e3a92;
+      --muted-text: #546e7a;
+      --ink: #231f20;
+      --page: #eef1f6;
+      --ok: #2e7d32;
+      --warn: #c62828;
+      --hint: #ef6c00;
+      --teal: #00695c;
+      --card-bg: #ffffff;
+      --text-main: #1a1a1a;
+      --border-color: #c5cae9;
+    }
+
+    body.dark-theme {
+      --blue: #3f4fb8;
+      --blue-soft: #5c6bc0;
+      --blue-pale: #1a2238;
+      --accent-text: #8c9eff;
+      --muted-text: #b0bec5;
+      --ink: #e0e0e0;
+      --page: #121824;
+      --card-bg: #1e2638;
+      --text-main: #f0f4f8;
+      --border-color: #3f4fb8;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      min-height: 100dvh;
+      background: linear-gradient(180deg, var(--blue-pale) 0%, var(--page) 38%, var(--page) 100%);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 10px 26px;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none;
+      user-select: none;
+      overscroll-behavior-y: contain;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .app { width: 100%; max-width: 540px; transition: max-width 0.25s ease; }
+    .app.duel-active { max-width: 1180px; }
+    @media (min-width: 1024px) {
+      .app:not(.duel-active) { max-width: 600px; }
+    }
+    @media (max-width: 380px) {
+      body { padding: 0 6px 18px; }
+      .mode-btn { font-size: 0.62rem; padding: 5px 2px; }
+      .chip { font-size: 0.7rem; padding: 6px 2px; }
+      .stats-card { font-size: 0.68rem; padding: 6px 4px; }
+    }
+
+    /* Başlık */
+    .hero {
+      background: linear-gradient(180deg, var(--blue-soft), var(--blue));
+      color: #fff;
+      border-radius: 0 0 18px 18px;
+      padding: 12px 14px 14px;
+      margin: 0 -10px 10px;
+      box-shadow: 0 8px 24px rgba(46,58,146,0.32);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 6px;
+    }
+    .icon-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: #fff;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .icon-btn:hover { background: rgba(255,255,255,0.35); }
+
+    .hero h1 {
+      font-size: clamp(1.3rem, 5vw, 1.7rem);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+    .hero .sub { font-size: 0.7rem; opacity: 0.85; margin-top: 3px; }
+
+    .card {
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .rules { font-size: 0.76rem; line-height: 1.45; color: var(--text-main); }
+    .rules strong { color: var(--accent-text); }
+    .rules summary {
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--accent-text);
+      font-size: 0.82rem;
+    }
+    .rules ul { margin: 6px 0 0 16px; }
+    .rules li { margin-bottom: 2px; }
+
+    /* Seçiciler */
+    .picker { margin-bottom: 8px; }
+    .picker-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent-text);
+      margin-bottom: 4px;
+      text-align: center;
+    }
+    .grades, .levels { display: grid; gap: 5px; }
+    .grades { grid-template-columns: repeat(3, 1fr); }
+    .levels { grid-template-columns: repeat(5, 1fr); }
+
+    .chip {
+      border: 2px solid #9fa8da;
+      background: var(--card-bg);
+      border-radius: 9px;
+      padding: 7px 2px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 0.76rem;
+      line-height: 1.1;
+      color: var(--accent-text);
+      transition: 0.15s;
+      touch-action: manipulation;
+    }
+    .chip .sub {
+      display: block;
+      font-size: 0.56rem;
+      font-weight: 600;
+      opacity: 0.72;
+      margin-top: 2px;
+    }
+    .chip:hover { background: var(--blue-pale); }
+    .chip:active { transform: scale(0.97); }
+    .chip.active {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+      box-shadow: 0 3px 10px rgba(46,58,146,0.3);
+    }
+
+    /* Tahta */
+    .board-wrap { display: flex; justify-content: center; margin-bottom: 8px; }
+    .board-frame {
+      background: var(--card-bg);
+      border: 4px solid var(--blue);
+      border-radius: 4px;
+      padding: 12px;
+      box-shadow: 0 8px 26px rgba(0,0,0,0.12);
+      touch-action: none;
+      user-select: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.3s;
+    }
+    .board-frame.hint-armed {
+      border-color: var(--hint);
+      box-shadow: 0 0 0 4px rgba(239,108,0,0.18), 0 8px 26px rgba(0,0,0,0.12);
+    }
+    .board-svg {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      overflow: visible;
+      touch-action: none;
+      user-select: none;
+    }
+    .path-line {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      pointer-events: none;
+    }
+    .node-dot { fill: var(--ink); transition: fill 0.3s; }
+    .node-letter {
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: bold;
+      fill: var(--ink);
+      stroke: var(--card-bg);
+      stroke-width: 1.6;
+      stroke-linejoin: round;
+      paint-order: stroke;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+      transition: fill 0.3s, stroke 0.3s;
+    }
+    .hint-halo {
+      fill: none;
+      stroke: var(--hint);
+      stroke-width: 2;
+      opacity: 0.9;
+    }
+    .done-halo {
+      fill: none;
+      stroke-width: 2.2;
+      stroke-dasharray: 4 3;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+    .done-halo.show { opacity: 0.85; }
+    .error-halo {
+      fill: rgba(198, 40, 40, 0.16);
+      stroke: var(--warn);
+      stroke-width: 2.4;
+      pointer-events: none;
+      animation: errPulse 0.55s ease-in-out infinite alternate;
+    }
+    @keyframes errPulse {
+      from { transform: scale(0.88); opacity: 0.95; }
+      to { transform: scale(1.18); opacity: 0.35; }
+    }
+    .obstacle-cell {
+      fill: #37474f;
+      stroke: var(--card-bg);
+      stroke-width: 1.5;
+      pointer-events: none;
+    }
+    body.dark-theme .obstacle-cell {
+      fill: #90a4ae;
+    }
+    .letter-badge {
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .energy-line {
+      fill: none;
+      stroke: #ffffff;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 5 15;
+      opacity: 0;
+      pointer-events: none;
+      filter: drop-shadow(0 0 3px rgba(255,255,255,0.95));
+    }
+    .energy-line.active {
+      opacity: 0.78;
+      animation: energyFlow 0.7s linear infinite;
+    }
+    @keyframes energyFlow {
+      from { stroke-dashoffset: 20; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    /* 60sn Fırtına Banner */
+    .rush-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(90deg, #d84315, #ef6c00);
+      color: #fff;
+      border-radius: 10px;
+      padding: 7px 12px;
+      margin-bottom: 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(239,108,0,0.28);
+    }
+    .rush-banner.show { display: flex; }
+    .rush-banner .rush-time {
+      background: rgba(0,0,0,0.24);
+      padding: 3px 10px;
+      border-radius: 14px;
+      font-family: monospace;
+      font-size: 0.92rem;
+    }
+
+    /* Kupa ve Madalya Dolabı */
+    .badge-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .badge-item {
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      padding: 8px;
+      text-align: center;
+      background: var(--card-bg);
+      opacity: 0.52;
+      transition: 0.2s;
+    }
+    .badge-item.unlocked {
+      opacity: 1;
+      border-color: #fbc02d;
+      background: rgba(255, 249, 196, 0.22);
+      box-shadow: 0 3px 10px rgba(251, 192, 45, 0.18);
+    }
+    .badge-item .b-ic { font-size: 1.45rem; margin-bottom: 2px; }
+    .badge-item .b-title { font-size: 0.76rem; font-weight: 800; color: var(--text-main); }
+    .badge-item .b-desc { font-size: 0.65rem; color: var(--muted-text); margin-top: 2px; line-height: 1.25; }
+    .badge-item .b-state {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 0.62rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 8px;
+      background: #eceff1;
+      color: #546e7a;
+    }
+    .badge-item.unlocked .b-state {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    .stars-row {
+      font-size: 1.5rem;
+      letter-spacing: 4px;
+      margin: 2px 0 6px;
+    }
+
+    /* Mod ve Özellik Çubuğu */
+    .mode-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+    .mode-btn {
+      border: 2px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-main);
+      border-radius: 9px;
+      padding: 6px 4px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      touch-action: manipulation;
+    }
+    .mode-btn .m-ic { font-size: 0.95rem; line-height: 1; }
+    .mode-btn:hover { background: var(--blue-pale); }
+    .mode-btn.active {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #fff;
+    }
+
+    /* 2 Kişilik Akıllı Tahta Düello Modu */
+    .duel-wrap {
+      display: none;
+      margin-bottom: 10px;
+    }
+    .duel-wrap.show { display: block; }
+    .duel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+      font-weight: 800;
+      font-size: 0.85rem;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .duel-score-p1 { color: #1565c0; }
+    .duel-score-p2 { color: #e65100; }
+    body.dark-theme .duel-score-p1 { color: #64b5f6; }
+    body.dark-theme .duel-score-p2 { color: #ffb74d; }
+    .duel-timer {
+      background: var(--blue-pale);
+      color: var(--accent-text);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-family: monospace;
+      font-size: 0.95rem;
+      font-weight: 900;
+    }
+    .duel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 720px) {
+      .duel-grid { grid-template-columns: 1fr; }
+    }
+    .duel-panel {
+      background: var(--card-bg);
+      border: 3px solid var(--border-color);
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .duel-panel.p1 { border-color: #1565c0; }
+    .duel-panel.p2 { border-color: #e65100; }
+    .duel-panel-title {
+      font-size: 0.85rem;
+      font-weight: 900;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0 4px;
+    }
+    .duel-mini-btn {
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      border-radius: 7px;
+      border: 1px solid #90a4ae;
+      background: var(--card-bg);
+      color: var(--text-main);
+      cursor: pointer;
+    }
+
+    /* Durum çubuğu */
+    .status {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      font-size: 0.78rem;
+      color: #455a64;
+      margin-bottom: 6px;
+    }
+    .status .tag {
+      background: var(--card-bg);
+      border: 1px solid #cfd8dc;
+      border-radius: 20px;
+      padding: 3px 10px;
+      color: var(--text-main);
+    }
+    .status .tag strong { color: var(--text-main); }
+    .status .tag.diff { border-color: #ffcc80; color: #e65100; font-weight: 700; }
+    .status .tag.solved { border-color: #a5d6a7; color: var(--ok); font-weight: 700; }
+
+    .note {
+      text-align: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      min-height: 1.15em;
+      color: var(--hint);
+    }
+    .note.teach { color: var(--accent-text); }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .actions .wide { grid-column: 1 / -1; }
+
+    .btn {
+      padding: 12px 6px;
+      border: 2px solid #37474f;
+      border-radius: 10px;
+      background: var(--card-bg);
+      color: var(--text-main);
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.15s;
+      touch-action: manipulation;
+    }
+    .btn:hover:not(:disabled) { background: rgba(0,0,0,0.05); }
+    .btn:active:not(:disabled) { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-check { background: var(--blue); border-color: var(--blue); color: #fff; grid-column: span 2; }
+    .btn-check:hover:not(:disabled) { background: #1a237e; }
+    .btn-hint { background: var(--hint); border-color: var(--hint); color: #fff; }
+    .btn-hint:hover:not(:disabled) { background: #e65100; }
+    .btn-hint.armed { animation: pulse 1s infinite; }
+    .btn-undo { background: #607d8b; border-color: #607d8b; color: #fff; }
+    .btn-undo:hover:not(:disabled) { background: #455a64; }
+    .btn-new { background: #455a64; border-color: #455a64; color: #fff; }
+    .btn-new:hover:not(:disabled) { background: #263238; }
+    .btn-pdf { background: var(--teal); border-color: var(--teal); color: #fff; }
+    .btn-pdf:hover:not(:disabled) { background: #004d40; }
+    @keyframes pulse { 50% { box-shadow: 0 0 0 6px rgba(239,108,0,0.25); } }
+
+    .hint-text {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--muted-text);
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .footer { text-align: center; font-size: 0.66rem; color: #90a4ae; }
+
+    /* İstatistik Paneli / Başarı Alanı */
+    .stats-card {
+      display: flex;
+      justify-content: space-around;
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      border-radius: 12px;
+      padding: 8px;
+      margin-bottom: 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    .stat-item span { display: block; font-size: 1rem; color: var(--accent-text); }
+
+    /* Bildirim & Modal */
+    .overlay, .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+      z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.25s;
+    }
+    .overlay.show, .modal-overlay.show { opacity: 1; pointer-events: auto; }
+    
+    .toast {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      background: var(--card-bg); border: 3px solid var(--blue);
+      border-radius: 16px; padding: 20px 24px; text-align: center;
+      z-index: 101; opacity: 0; pointer-events: none; color: var(--text-main);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-width: 88vw; min-width: 250px;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+    .toast .icon { font-size: 2.1rem; margin-bottom: 4px; }
+    .toast h2 { font-size: 1.15rem; margin-bottom: 4px; }
+    .toast p { font-size: 0.86rem; color: var(--muted-text); }
+    .toast-actions { display: flex; gap: 8px; justify-content: center; margin-top: 12px; }
+    .toast .t-btn {
+      padding: 9px 16px; border: none; border-radius: 9px;
+      background: var(--blue); color: #fff; font-weight: 800;
+      font-size: 0.85rem; cursor: pointer;
+    }
+    .toast .t-btn.ghost { background: #eceff1; color: #455a64; }
+    .toast.success { border-color: var(--ok); }
+    .toast.success h2 { color: var(--ok); }
+    .toast.error { border-color: var(--warn); }
+    .toast.error h2 { color: var(--warn); }
+
+    .confetti-box { position: fixed; inset: 0; pointer-events: none; z-index: 99; overflow: hidden; }
+    .confetti {
+      position: absolute; top: -10px; width: 8px; height: 8px;
+      animation: fall linear forwards;
+    }
+    @keyframes fall { to { transform: translateY(105vh) rotate(720deg); opacity: 0; } }
+
+    .modal {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.94);
+      width: min(92vw, 380px); max-height: 88vh; overflow-y: auto;
+      background: var(--card-bg); border: 3px solid var(--teal);
+      border-radius: 16px; padding: 18px; z-index: 201; color: var(--text-main);
+      opacity: 0; pointer-events: none;
+      transition: all 0.22s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+    .modal.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+    .modal h3 { font-size: 1.05rem; color: var(--teal); margin-bottom: 6px; }
+    .modal-note { font-size: 0.76rem; color: var(--muted-text); line-height: 1.45; margin-bottom: 12px; }
+    .field {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; margin-bottom: 9px;
+      font-size: 0.85rem; font-weight: 700; color: var(--text-main);
+    }
+    .field select {
+      flex: 1; max-width: 190px; padding: 8px;
+      border: 2px solid #b0bec5; border-radius: 8px;
+      font-size: 0.85rem; font-weight: 700; color: #263238; background: #fff;
+    }
+    .check {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.85rem; font-weight: 700; color: var(--text-main);
+      margin: 4px 0 10px; cursor: pointer;
+    }
+    .check input { width: 17px; height: 17px; accent-color: var(--teal); }
+    .modal-summary {
+      font-size: 0.76rem; color: var(--teal); background: #e0f2f1;
+      border-radius: 8px; padding: 7px 9px; margin-bottom: 12px;
+      text-align: center; font-weight: 700;
+    }
+    .modal-actions { display: flex; gap: 8px; }
+    .modal-actions .btn { flex: 1; }
+
+    /* Eğitim / İpucu Balonu */
+    .tutorial-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      z-index: 300; display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    .tutorial-card {
+      background: var(--card-bg); border-radius: 16px; padding: 24px;
+      max-width: 340px; text-align: center; border: 3px solid var(--blue);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3); color: var(--text-main);
+    }
+    .tutorial-card h3 { color: var(--accent-text); margin-bottom: 10px; }
+    .tutorial-card p { font-size: 0.85rem; line-height: 1.5; margin-bottom: 16px; color: var(--muted-text); }
+
+    /* Baskı alanı */
+    #printArea { display: none; }
+    .print-banner {
+      background: var(--blue); color: #fff; text-align: center;
+      padding: 7px 10px; border-radius: 4px; margin-bottom: 6mm;
+    }
+    .print-banner .t1 { font-size: 8pt; letter-spacing: 0.14em; opacity: 0.9; }
+    .print-banner .t2 { font-size: 15pt; font-weight: 900; letter-spacing: 0.08em; }
+    .print-rules {
+      font-size: 8pt; line-height: 1.4; color: #222;
+      border: 1px solid #999; border-radius: 3px;
+      padding: 5px 7px; margin-bottom: 4mm;
+    }
+    .print-student-info {
+      display: grid;
+      grid-template-columns: 2fr 1.2fr 1.1fr 0.9fr;
+      gap: 3mm;
+      border: 1.5px solid var(--blue);
+      border-radius: 4px;
+      padding: 4px 8px;
+      margin-bottom: 4mm;
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #222;
+      background: #f8f9fc;
+    }
+    .print-grid { display: grid; gap: 6mm 5mm; }
+    .print-card { break-inside: avoid; text-align: center; }
+    .print-card .cap { font-size: 8pt; font-weight: 700; margin-bottom: 1.5mm; color: #222; }
+    .print-card .frame {
+      border: 2px solid var(--blue); border-radius: 3px;
+      padding: 2.5mm; display: block; margin: 0 auto;
+    }
+    .print-card svg { display: block; width: 100%; height: auto; }
+    .print-foot {
+      margin-top: 4mm; font-size: 7pt; color: #666;
+      display: flex; justify-content: space-between;
+    }
+    .print-answer-tag {
+      display: inline-block; background: var(--warn); color: #fff;
+      font-size: 8pt; font-weight: 800; padding: 2px 8px;
+      border-radius: 10px; margin-bottom: 3mm; letter-spacing: 0.08em;
+    }
+
+    @media print {
+      @page { size: A4 portrait; margin: 12mm 10mm; }
+      html, body { background: #fff !important; padding: 0 !important; }
+      body > .app, #overlay, #toast, #confetti, #pdfOverlay, #pdfModal, #seedOverlay, #seedModal, #badgeOverlay, #badgeModal, #tutorialModal { display: none !important; }
+      #printArea { display: block !important; }
+      .print-page { break-after: page; page-break-after: always; }
+      .print-page:last-child { break-after: auto; page-break-after: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app" id="appRoot">
+    <header class="hero">
+      <div class="hero-top-row">
+        <div class="kids">👧🧒👦</div>
+        <div class="hero-btns">
+          <button class="icon-btn" id="btnSymbolTheme" title="Sembol Temasını Değiştir (Harf / Hayvan / Meyve / Uzay / Sayı)">🔤</button>
+          <button class="icon-btn" id="btnPattern" title="Renk Körlüğü / Çizgi Deseni Modu">🎨</button>
+          <button class="icon-btn" id="btnSound" title="Sesi Aç/Kapat">🔊</button>
+          <button class="icon-btn" id="btnTheme" title="Tema Değiştir">🌙</button>
+        </div>
+      </div>
+      <h1>ABC BAĞLAMACA</h1>
+      <div class="sub">Zekâ ve Akıl Oyunları · Uzamsal Algı</div>
+    </header>
+
+    <!-- İstatistik Paneli -->
+    <div class="stats-card">
+      <div class="stat-item">Toplam Çözüm<span id="statTotalSolved">0</span></div>
+      <div class="stat-item">Akıl Puanı<span id="statScore">0</span></div>
+      <div class="stat-item">Seri<span id="statStreak">🔥 0</span></div>
+      <div class="stat-item" id="statBadgeWrap" style="cursor:pointer;" title="Kupa ve Madalya Dolabını Aç">Rozet<span id="statBadge">🌱 Başlangıç</span></div>
+    </div>
+
+    <!-- Özel Modlar ve Araçlar -->
+    <div class="mode-bar">
+      <button class="mode-btn" id="btnDaily" title="Her gün herkes için aynı özel soru">
+        <span class="m-ic">📅</span>
+        <span>Günün Sorusu</span>
+      </button>
+      <button class="mode-btn" id="btnSeed" title="Soru kodu girerek sınıfla aynı soruyu aç">
+        <span class="m-ic">🔑</span>
+        <span id="seedBtnLabel">Kod: #----</span>
+      </button>
+      <button class="mode-btn" id="btnObstacle" title="Tahtaya üzerinden geçilemeyen engel blokları ekler">
+        <span class="m-ic">🧱</span>
+        <span>Engelli Mod</span>
+      </button>
+      <button class="mode-btn" id="btnDuel" title="Akıllı tahtada iki öğrenci aynı anda yarışır">
+        <span class="m-ic">⚔️</span>
+        <span>2 Kişilik Düello</span>
+      </button>
+      <button class="mode-btn" id="btnSymbolMode" title="Harfler yerine Hayvanlar, Meyveler, Uzay veya Sayılarla oyna">
+        <span class="m-ic" id="modeSymIcon">🔤</span>
+        <span id="modeSymLabel">Tema: Harf</span>
+      </button>
+      <button class="mode-btn" id="btnRush" title="60 saniyede en çok bulmacayı çöz! Her çözüm +10 sn kazandırır">
+        <span class="m-ic">⏱️</span>
+        <span>60sn Fırtına</span>
+      </button>
+      <button class="mode-btn" id="btnMemory" title="Semboller 4 saniye sonra gizlenir, hafızanla eşleştir!">
+        <span class="m-ic">🧠</span>
+        <span>Hafıza Modu</span>
+      </button>
+      <button class="mode-btn" id="btnBadges" title="Kazandığın madalyaları ve kupaları gör">
+        <span class="m-ic">🏅</span>
+        <span id="badgeBtnCount">Kupalar (0/8)</span>
+      </button>
+    </div>
+
+    <details class="card rules">
+      <summary>Nasıl oynanır?</summary>
+      <p style="margin-top:6px">
+        Temel amaç <strong>tüm noktaları kullanarak</strong> aynı harfleri birbirine bağlamaktır.
+      </p>
+      <ul>
+        <li>Yalnızca <strong>yatay</strong> ve <strong>dikey</strong> çizgiler kullanılır (çapraz yasak).</li>
+        <li>Çizgiler birbirini <strong>kesmemelidir</strong>.</li>
+        <li>Çizgi başka bir <strong>harfin</strong> veya <strong>engelin (⬛)</strong> üzerinden geçemez.</li>
+        <li>Bitişte <strong>tek bir nokta bile açıkta kalmamalıdır</strong>.</li>
+        <li>Her harf çifti <strong>en az bir viraj</strong> yaparak bağlanır; düz çizgi çözüm olmaz.</li>
+        <li>Kendi yolunun üzerine geri gidersen çizgi <strong>kısalır</strong>.</li>
+        <li>Dokunmatik ekranda veya akıllı tahtada harfe <strong>dokunup sürükle</strong> ya da <strong>dokun-dokun</strong> ile ilerle.</li>
+      </ul>
+    </details>
+
+    <div class="picker">
+      <div class="picker-label">Zorluk Kademesi</div>
+      <div class="grades" id="gradeButtons"></div>
+    </div>
+
+    <div class="picker">
+      <div class="picker-label">Seviye</div>
+      <div class="levels" id="levelButtons"></div>
+    </div>
+
+    <!-- Tek Kişilik Oyun Alanı -->
+    <div id="singleBoardSection">
+      <div class="rush-banner" id="rushBanner">
+        <span>⚡ 60sn Fırtına · Çözülen: <strong id="rushSolvedEl">0</strong> (Rekor: <strong id="rushBestEl">0</strong>)</span>
+        <span class="rush-time" id="rushTimerEl">⏱️ 60sn</span>
+      </div>
+      <div class="board-wrap">
+        <div class="board-frame" id="boardFrame">
+          <svg class="board-svg" id="boardSvg"></svg>
+        </div>
+      </div>
+
+      <div class="status" id="status"></div>
+      <div class="note" id="note"></div>
+
+      <div class="actions">
+        <button class="btn btn-undo" id="btnUndo">Geri Al</button>
+        <button class="btn" id="btnClear">Temizle</button>
+        <button class="btn btn-hint" id="btnHint">İpucu (2)</button>
+        <button class="btn btn-check wide" id="btnCheck">Çözümü Kontrol Et</button>
+        <button class="btn btn-new wide" id="btnNew">🎲 Yeni Soru</button>
+        <button class="btn btn-pdf wide" id="btnPdf">📄 PDF olarak çıkar</button>
+      </div>
+    </div>
+
+    <!-- 2 Kişilik Akıllı Tahta Düello Alanı -->
+    <div class="duel-wrap" id="duelSection">
+      <div class="duel-header">
+        <span class="duel-score-p1">🔵 1. Oyuncu: <strong id="duelScore1">0</strong></span>
+        <span class="duel-timer" id="duelTimer">⏱️ 00:00</span>
+        <span class="duel-score-p2">🟠 2. Oyuncu: <strong id="duelScore2">0</strong></span>
+        <div style="display:flex; gap:6px;">
+          <button class="duel-mini-btn" id="btnDuelNew">🎲 Yeni Düello</button>
+          <button class="duel-mini-btn" id="btnDuelExit">✖ Çıkış</button>
+        </div>
+      </div>
+      <div class="duel-grid">
+        <div class="duel-panel p1">
+          <div class="duel-panel-title">
+            <span class="duel-score-p1">🔵 1. OYUNCU</span>
+            <div style="display:flex; gap:5px;">
+              <button class="duel-mini-btn" id="btnDuelUndo1">Geri Al</button>
+              <button class="duel-mini-btn" id="btnDuelClear1">Temizle</button>
+            </div>
+          </div>
+          <div class="board-frame" id="duelFrame1">
+            <svg class="board-svg" id="duelSvg1"></svg>
+          </div>
+          <div class="note" id="duelNote1" style="margin-top:6px;margin-bottom:0;"></div>
+        </div>
+        <div class="duel-panel p2">
+          <div class="duel-panel-title">
+            <span class="duel-score-p2">🟠 2. OYUNCU</span>
+            <div style="display:flex; gap:5px;">
+              <button class="duel-mini-btn" id="btnDuelUndo2">Geri Al</button>
+              <button class="duel-mini-btn" id="btnDuelClear2">Temizle</button>
+            </div>
+          </div>
+          <div class="board-frame" id="duelFrame2">
+            <svg class="board-svg" id="duelSvg2"></svg>
+          </div>
+          <div class="note" id="duelNote2" style="margin-top:6px;margin-bottom:0;"></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="hint-text">Harfe dokunup sürükle veya dokun-dokun ile ilerle · Çapraz yasak · Tüm noktaları doldur</p>
+    <p class="footer">MiniBilge · ABC Bağlamaca Etkinliği</p>
+  </div>
+
+  <!-- Soru Kodu Modalı -->
+  <div class="modal-overlay" id="seedOverlay"></div>
+  <div class="modal" id="seedModal">
+    <h3>🔑 Soru Kodu ile Bulmaca Aç</h3>
+    <p class="modal-note">
+      Sınıftaki tüm öğrencilerin aynı bulmacayı çözmesi için 4 haneli soru kodunu paylaşabilir veya aşağıya başka bir soru kodu girebilirsiniz.
+    </p>
+    <div class="modal-summary" id="currentSeedDisplay">Mevcut Soru Kodu: #----</div>
+    <label class="field">
+      <span>Soru Kodu (1000–9999)</span>
+      <input type="number" id="seedInput" min="1000" max="9999" placeholder="Örn: 4821"
+        style="flex:1;max-width:160px;padding:8px;border:2px solid #b0bec5;border-radius:8px;font-size:0.95rem;font-weight:800;text-align:center;">
+    </label>
+    <div class="modal-actions" style="margin-top:12px;">
+      <button class="btn" id="seedCancel">Kapat</button>
+      <button class="btn btn-check" id="seedApply">Soruyu Aç</button>
+    </div>
+  </div>
+
+  <!-- Kupa ve Madalya Dolabı Modalı -->
+  <div class="modal-overlay" id="badgeOverlay"></div>
+  <div class="modal" id="badgeModal">
+    <h3>🏅 Madalya ve Kupa Dolabı</h3>
+    <p class="modal-note">
+      Farklı modlarda ve zorluklarda bulmacaları çözerek tüm başarı madalyalarını topla!
+    </p>
+    <div class="modal-summary" id="badgeModalSummary">Kazanılan Madalya: 0 / 8</div>
+    <div class="badge-grid" id="badgeGrid"></div>
+    <div class="modal-actions">
+      <button class="btn btn-check" id="badgeClose" style="grid-column: 1 / -1;">Harika, Devam Et!</button>
+    </div>
+  </div>
+
+  <!-- İlk Giriş / Tanıtım Modalı -->
+  <div class="tutorial-overlay" id="tutorialModal" style="display:none;">
+    <div class="tutorial-card">
+      <h3>🌟 ABC Bağlamaca'ya Hoş Geldin!</h3>
+      <p>Aynı harfleri birbirine bağla, tahtadaki bütün noktaları eksiksiz doldur. Akıllı tahta, tablet ve bilgisayarda rahatça oynayabilirsin!</p>
+      <button class="btn btn-check" id="btnStartTutorial" style="width:100%;">Oyuna Başla</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+  <div class="toast" id="toast">
+    <div class="icon" id="toastIcon"></div>
+    <div class="stars-row" id="toastStars" hidden>⭐⭐⭐</div>
+    <h2 id="toastTitle"></h2>
+    <p id="toastMsg"></p>
+    <div class="toast-actions">
+      <button class="t-btn ghost" id="toastClose" hidden>Kapat</button>
+      <button class="t-btn" id="toastNext" hidden>Yeni Soru →</button>
+    </div>
+  </div>
+  <div class="confetti-box" id="confetti"></div>
+
+  <div class="modal-overlay" id="pdfOverlay"></div>
+  <div class="modal" id="pdfModal">
+    <h3>PDF olarak çıkar</h3>
+    <p class="modal-note">
+      Sorular anında üretilir ve A4 çalışma kağıdı düzeninde kolaydan zora sıralanır.
+    </p>
+
+    <label class="field">
+      <span>Kapsam</span>
+      <select id="pdfScope">
+        <option value="question">Ekrandaki soru</option>
+        <option value="level" selected>Bu seviye</option>
+        <option value="grade">Bu zorluk grubu (5 seviye)</option>
+        <option value="all">Tüm zorluklar (30 seviye)</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Seviye başına soru</span>
+      <select id="pdfCount">
+        <option value="3">3</option>
+        <option value="5">5</option>
+        <option value="10" selected>10</option>
+        <option value="20">20</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Sayfada bulmaca</span>
+      <select id="pdfPerPage">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="4" selected>4</option>
+        <option value="6">6</option>
+      </select>
+    </label>
+
+    <label class="check">
+      <input type="checkbox" id="pdfAnswers">
+      <span>Cevap anahtarı ekle</span>
+    </label>
+
+    <p class="modal-summary" id="pdfSummary"></p>
+
+    <div class="modal-actions">
+      <button class="btn" id="pdfCancel">İptal</button>
+      <button class="btn btn-check" id="pdfCreate">Oluştur</button>
+    </div>
+  </div>
+
+  <div id="printArea"></div>
+
+  <script>
+  (function () {
+    'use strict';
+
+    const GRADES = [
+      { grade: 0, label: 'Çok Kolay', levels: [
+        { level: 1, size: 3, pairs: 2 },
+        { level: 2, size: 3, pairs: 2 },
+        { level: 3, size: 4, pairs: 4 },
+        { level: 4, size: 4, pairs: 3 },
+        { level: 5, size: 4, pairs: 2 }
+      ]},
+      { grade: 1, label: 'Kolay', levels: [
+        { level: 1, size: 4, pairs: 3 },
+        { level: 2, size: 4, pairs: 2 },
+        { level: 3, size: 5, pairs: 5 },
+        { level: 4, size: 5, pairs: 4 },
+        { level: 5, size: 5, pairs: 3 }
+      ]},
+      { grade: 2, label: 'Orta', levels: [
+        { level: 1, size: 6, pairs: 6 },
+        { level: 2, size: 6, pairs: 5 },
+        { level: 3, size: 6, pairs: 4 },
+        { level: 4, size: 7, pairs: 7 },
+        { level: 5, size: 7, pairs: 6 }
+      ]},
+      { grade: 3, label: 'Zor', levels: [
+        { level: 1, size: 7, pairs: 5 },
+        { level: 2, size: 7, pairs: 4 },
+        { level: 3, size: 8, pairs: 8 },
+        { level: 4, size: 8, pairs: 7 },
+        { level: 5, size: 8, pairs: 6 }
+      ]},
+      { grade: 4, label: 'Çok Zor', levels: [
+        { level: 1, size: 8, pairs: 5 },
+        { level: 2, size: 9, pairs: 8 },
+        { level: 3, size: 9, pairs: 7 },
+        { level: 4, size: 9, pairs: 6 },
+        { level: 5, size: 9, pairs: 5 }
+      ]},
+      { grade: 5, label: 'Uzman', levels: [
+        { level: 1, size: 9, pairs: 4 },
+        { level: 2, size: 10, pairs: 9 },
+        { level: 3, size: 10, pairs: 8 },
+        { level: 4, size: 10, pairs: 7 },
+        { level: 5, size: 10, pairs: 6 }
+      ]}
+    ];
+
+    const MAX_SIZE = 10;
+    const LETTERS = 'ABCDEFGHI';
+    const PATH_COLORS = {
+      A: '#e65100', B: '#f9a825', C: '#1565c0', D: '#2e7d32',
+      E: '#8e24aa', F: '#00838f', G: '#d81b60', H: '#5d4037', I: '#3949ab'
+    };
+    const PATH_DASHES = {
+      A: '', B: '10,6', C: '3,6', D: '12,5,3,5',
+      E: '6,5', F: '14,5,3,5,3,5', G: '4,4', H: '9,4,2,4', I: '15,4,2,4,2,4'
+    };
+    const SYMBOL_THEMES = [
+      { id: 'letters', name: 'Harf', icon: '🔤', map: { A:'A', B:'B', C:'C', D:'D', E:'E', F:'F', G:'G', H:'H', I:'I' } },
+      { id: 'animals', name: 'Hayvan', icon: '🐾', map: { A:'🐶', B:'🐱', C:'🐰', D:'🦊', E:'🐼', F:'🐸', G:'🦁', H:'🐨', I:'🐯' } },
+      { id: 'fruits',  name: 'Meyve',  icon: '🍎', map: { A:'🍎', B:'🍌', C:'🍓', D:'🍇', E:'🍉', F:'🍒', G:'🍍', H:'🥝', I:'🍑' } },
+      { id: 'space',   name: 'Uzay',   icon: '🚀', map: { A:'🚀', B:'🪐', C:'⭐', D:'🛸', E:'🌍', F:'☄️', G:'🌙', H:'🛰️', I:'🔭' } },
+      { id: 'numbers', name: 'Sayı',   icon: '🔢', map: { A:'1', B:'2', C:'3', D:'4', E:'5', F:'6', G:'7', H:'8', I:'9' } }
+    ];
+    const ACHIEVEMENTS = [
+      { id: 'first_win',  icon: '🌱', title: 'İlk Kıvılcım',    desc: 'İlk bulmacanı başarıyla çöz.' },
+      { id: 'speed_15',   icon: '⚡', title: 'Hız Şimşeği',     desc: 'Bir bulmacayı 15 saniyenin altında çöz.' },
+      { id: 'no_hint_10', icon: '🎯', title: 'Saf Mantık',      desc: 'İpucu kullanmadan 10 bulmaca çöz.' },
+      { id: 'streak_5',   icon: '🔥', title: 'Ateşli Seri',     desc: 'Üst üste 5 bulmaca çözerek 5\'li seri yap.' },
+      { id: 'obstacle_5', icon: '🧱', title: 'Engel Tanımaz',   desc: 'Engelli modda 5 bulmaca tamamla.' },
+      { id: 'memory_win', icon: '🧠', title: 'Keskin Hafıza',   desc: 'Hafıza modunda bir bulmacayı tamamla.' },
+      { id: 'rush_5',     icon: '⏱️', title: 'Fırtına Avcısı',  desc: '60sn Fırtına modunda tek turda 5 soru çöz.' },
+      { id: 'expert_win', icon: '👑', title: 'Büyük Üstat',     desc: 'Uzman zorluk kademesinde bir bulmaca çöz.' }
+    ];
+    const SCALE_NOTES = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99, 880.00, 987.77, 1046.50];
+    const MIN_PATH_CELLS = 4;
+    const MAX_HINTS = 2;
+    const STORAGE_KEY = 'minibilge-abc-baglamaca-v3';
+
+    /* Deterministik Rastgele Sayı Üreteci (Soru Kodu ve Günün Sorusu için) */
+    let activeRng = Math.random;
+    function mulberry32(seed) {
+      let a = seed >>> 0;
+      return function () {
+        a |= 0; a = (a + 0x6D2B79F5) | 0;
+        let t = Math.imul(a ^ (a >>> 15), 1 | a);
+        t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+    function rand() { return activeRng(); }
+
+    /* Üretim Algoritması */
+    const neighborCache = {};
+    function neighborsOf(size) {
+      if (neighborCache[size]) return neighborCache[size];
+      const nb = [];
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          const list = [];
+          if (r > 0) list.push((r - 1) * size + c);
+          if (r < size - 1) list.push((r + 1) * size + c);
+          if (c > 0) list.push(r * size + c - 1);
+          if (c < size - 1) list.push(r * size + c + 1);
+          nb.push(list);
+        }
+      }
+      neighborCache[size] = nb;
+      return nb;
+    }
+
+    function reverseSegment(path, pos, from, to) {
+      while (from < to) {
+        const a = path[from], b = path[to];
+        path[from] = b; path[to] = a;
+        pos[b] = from; pos[a] = to;
+        from++; to--;
+      }
+    }
+
+    function randomHamiltonian(size, iterations) {
+      const nb = neighborsOf(size);
+      const path = [];
+      for (let r = 0; r < size; r++) {
+        if (r % 2 === 0) for (let c = 0; c < size; c++) path.push(r * size + c);
+        else for (let c = size - 1; c >= 0; c--) path.push(r * size + c);
+      }
+      const pos = new Array(size * size);
+      path.forEach((cell, i) => { pos[cell] = i; });
+      const n = path.length;
+
+      for (let it = 0; it < iterations; it++) {
+        if (rand() < 0.5) {
+          const list = nb[path[0]];
+          const i = pos[list[(rand() * list.length) | 0]];
+          if (i > 1) reverseSegment(path, pos, 0, i - 1);
+        } else {
+          const list = nb[path[n - 1]];
+          const i = pos[list[(rand() * list.length) | 0]];
+          if (i < n - 2) reverseSegment(path, pos, i + 1, n - 1);
+        }
+      }
+      return path;
+    }
+
+    function splitPath(path, parts, minLen) {
+      const total = path.length;
+      if (total < parts * minLen) return null;
+      const lengths = new Array(parts).fill(minLen);
+      let extra = total - parts * minLen;
+      while (extra > 0) {
+        lengths[(rand() * parts) | 0]++;
+        extra--;
+      }
+      const segments = [];
+      let cursor = 0;
+      for (const len of lengths) {
+        segments.push(path.slice(cursor, cursor + len));
+        cursor += len;
+      }
+      return segments;
+    }
+
+    function manhattanIdx(a, b, size) {
+      return Math.abs(((a / size) | 0) - ((b / size) | 0)) + Math.abs((a % size) - (b % size));
+    }
+
+    function countTurns(seg) {
+      let turns = 0;
+      for (let i = 2; i < seg.length; i++) {
+        if (seg[i] - seg[i - 1] !== seg[i - 1] - seg[i - 2]) turns++;
+      }
+      return turns;
+    }
+
+    /* 2x2 Gereksiz Kıvrım (Self-Touching) Sayacı */
+    function countSelfTouches(seg, size) {
+      let touches = 0;
+      for (let i = 0; i < seg.length; i++) {
+        for (let j = i + 2; j < seg.length; j++) {
+          if (manhattanIdx(seg[i], seg[j], size) === 1) touches++;
+        }
+      }
+      return touches;
+    }
+
+    /* 2x2 Paralel Kenar Değişimi (Ambiguous 2x2 Swap) Analizörü */
+    function count2x2Swaps(segments, size) {
+      const edgeOwner = new Map();
+      const edgeKey = (u, v) => (u < v ? `${u}-${v}` : `${v}-${u}`);
+      for (let sIdx = 0; sIdx < segments.length; sIdx++) {
+        const seg = segments[sIdx];
+        for (let i = 0; i < seg.length - 1; i++) {
+          edgeOwner.set(edgeKey(seg[i], seg[i + 1]), sIdx);
+        }
+      }
+      let intra = 0;
+      let inter = 0;
+      for (let r = 0; r < size - 1; r++) {
+        for (let c = 0; c < size - 1; c++) {
+          const tl = r * size + c;
+          const tr = tl + 1;
+          const bl = tl + size;
+          const br = bl + 1;
+
+          const topOwner = edgeOwner.get(edgeKey(tl, tr));
+          const botOwner = edgeOwner.get(edgeKey(bl, br));
+          const leftOwner = edgeOwner.get(edgeKey(tl, bl));
+          const rightOwner = edgeOwner.get(edgeKey(tr, br));
+
+          // Yatay paralel kenarlar dolu, dikey kenarlar boş ise 2x2 alternatif takas oluşur
+          if (topOwner !== undefined && botOwner !== undefined && leftOwner === undefined && rightOwner === undefined) {
+            if (topOwner === botOwner) intra++;
+            else inter++;
+          }
+
+          // Dikey paralel kenarlar dolu, yatay kenarlar boş ise 2x2 alternatif takas oluşur
+          if (leftOwner !== undefined && rightOwner !== undefined && topOwner === undefined && botOwner === undefined) {
+            if (leftOwner === rightOwner) intra++;
+            else inter++;
+          }
+        }
+      }
+      return { intra, inter };
+    }
+
+    /* Aynı satır veya sütunda engelsiz doğrudan görüş kontrolü */
+    function hasDirectLineOfSight(a, b, blockedSet, size) {
+      const r1 = (a / size) | 0, c1 = a % size;
+      const r2 = (b / size) | 0, c2 = b % size;
+      if (r1 !== r2 && c1 !== c2) return false;
+      const dr = Math.sign(r2 - r1);
+      const dc = Math.sign(c2 - c1);
+      let r = r1 + dr, c = c1 + dc;
+      while (r !== r2 || c !== c2) {
+        if (blockedSet.has(r * size + c)) return false;
+        r += dr;
+        c += dc;
+      }
+      return true;
+    }
+
+    function segScore(seg, size) {
+      const detour = (seg.length - 1) - manhattanIdx(seg[0], seg[seg.length - 1], size);
+      const selfTouch = countSelfTouches(seg, size);
+      return countTurns(seg) + detour * 0.6 - selfTouch * 0.35;
+    }
+
+    function shuffle(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = (rand() * (i + 1)) | 0;
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function generatePuzzle(size, pairs, percentile, floorScore, poolSize, opts = {}) {
+      const prevRng = activeRng;
+      const code = opts.seedCode || (1000 + Math.floor(Math.random() * 9000));
+      const fullSeed = code * 1009 + (opts.gi || 0) * 97 + (opts.li || 0) * 13 + (opts.withObstacles ? 7 : 0);
+      activeRng = mulberry32(fullSeed);
+
+      try {
+        const want = poolSize || 90;
+        const iterations = 260 + size * 90;
+        const obsCount = (opts.withObstacles && size >= 4 && (size * size - 2 >= pairs * MIN_PATH_CELLS))
+          ? (size >= 7 ? 2 : 1)
+          : 0;
+        const candidates = [];
+        let guard = 0;
+
+        while (candidates.length < want && guard < want * 30) {
+          guard++;
+          const ham = randomHamiltonian(size, iterations);
+          const obsCells = obsCount > 0 ? ham.slice(0, obsCount) : [];
+          const usablePath = obsCount > 0 ? ham.slice(obsCount) : ham;
+          const segments = splitPath(usablePath, pairs, MIN_PATH_CELLS);
+          if (!segments) return null;
+
+          let ok = true;
+          const blockedSet = new Set(obsCells);
+          for (const seg of segments) {
+            blockedSet.add(seg[0]);
+            blockedSet.add(seg[seg.length - 1]);
+          }
+
+          let collinearPenalty = 0;
+          let selfTouchTotal = 0;
+          for (const seg of segments) {
+            if (countTurns(seg) < 1) { ok = false; break; }
+            if (manhattanIdx(seg[0], seg[seg.length - 1], size) < 2) { ok = false; break; }
+            if (hasDirectLineOfSight(seg[0], seg[seg.length - 1], blockedSet, size)) {
+              collinearPenalty += 2.5;
+            }
+            selfTouchTotal += countSelfTouches(seg, size);
+          }
+          if (!ok) continue;
+
+          const swaps = count2x2Swaps(segments, size);
+          const swapPenalty = swaps.intra * 3.0 + swaps.inter * 0.45;
+
+          candidates.push({
+            segments,
+            obstacles: obsCells,
+            intraSwaps: swaps.intra,
+            interSwaps: swaps.inter,
+            qualityPenalty: collinearPenalty + selfTouchTotal * 0.4 + swapPenalty,
+            score: segments.reduce((sum, s) => sum + segScore(s, size), 0) - collinearPenalty - swapPenalty
+          });
+        }
+
+        if (!candidates.length) return null;
+        // 2x2 iç-kıvrım (intraSwaps === 0) olan tekil çözümlü adayları havuz varsa önceliklendir
+        const zeroIntra = candidates.filter(c => c.intraSwaps === 0);
+        const pool = zeroIntra.length >= Math.min(8, candidates.length) ? zeroIntra : candidates;
+        pool.sort((a, b) => a.score - b.score);
+
+        let idx = Math.round(percentile * (pool.length - 1));
+        if (floorScore != null) {
+          let found = -1;
+          for (let i = idx; i < pool.length; i++) {
+            if (pool[i].score > floorScore) { found = i; break; }
+          }
+          idx = found !== -1 ? found : pool.length - 1;
+        }
+
+        const chosen = pool[idx];
+        return {
+          s: size,
+          code,
+          obstacles: chosen.obstacles || [],
+          score: chosen.score,
+          sol: shuffle(chosen.segments.slice()).map(s => s.slice())
+        };
+      } finally {
+        activeRng = prevRng;
+      }
+    }
+
+    function difficultyRange(gi, li) {
+      if (gi === 0) {
+        return {
+          start: 0.02 + li * 0.06,
+          max: 0.25 + li * 0.08,
+          step: 0.04
+        };
+      }
+      const base = (gi - 1) * 0.12 + li * 0.05;
+      return {
+        start: Math.min(0.62, 0.05 + base),
+        max: Math.min(0.98, 0.45 + base * 1.15),
+        step: 0.05
+      };
+    }
+
+    function growthEvery(gi, li) {
+      return GRADES[gi].levels[li].size <= 3 ? 4 : 8;
+    }
+
+    function grownSteps(gi, li, solved) {
+      if (gi === 0) return 0;
+      return Math.min(2, Math.floor(solved / growthEvery(gi, li)));
+    }
+
+    function variantFor(gi, li, solved) {
+      const cfg = GRADES[gi].levels[li];
+      const grown = grownSteps(gi, li, solved);
+      return {
+        size: Math.min(cfg.size + grown, MAX_SIZE),
+        pairs: cfg.pairs,
+        grown
+      };
+    }
+
+    function percentileFor(gi, li, solved) {
+      const r = difficultyRange(gi, li);
+      const inVariant = solved - growthEvery(gi, li) * grownSteps(gi, li, solved);
+      return Math.min(r.max, r.start + inVariant * r.step);
+    }
+
+    /* Uygulama Durumu */
+    let gradeIdx = 0;
+    let levelIdx = 0;
+    let size = 3;
+    let letters = [];
+    let endpoints = {};
+    let solution = {};
+    let obstacles = [];
+    let paths = {};
+    let historyStack = []; // Geri al (Undo) için hamle geçmişi
+    let puzzleScore = 0;
+    let currentSeedCode = 1000;
+
+    let activeLetter = null;
+    let tapLetter = null;
+    let isDrawing = false;
+    let lastCell = null;
+    let lastDir = null;
+    let lastSvgPt = null;
+    let cellGap = 48;
+    let pad = 10;
+
+    let hintsUsed = 0;
+    let hintStageByLetter = {};
+    let hintArmed = false;
+    let pendingFloor = null;
+    let puzzleSolved = false;
+    let obstacleMode = false;
+    let dailyMode = false;
+    let duelMode = false;
+    let patternMode = false;
+    let symbolThemeIdx = 0;
+    let rushMode = false;
+    let rushTimeLeft = 60;
+    let rushSolved = 0;
+    let rushInterval = null;
+    let memoryMode = false;
+    let memoryHidden = false;
+    let memoryTimer = null;
+    let memoryCountdown = 0;
+    let streakCount = 0;
+    let puzzleStartTime = Date.now();
+    let undoOrClearUsed = false;
+    let lastNoteTime = 0;
+    let autoCheckTimer = null;
+
+    let appData = loadAppData();
+
+    const appRoot = document.getElementById('appRoot');
+    const singleBoardSection = document.getElementById('singleBoardSection');
+    const duelSection = document.getElementById('duelSection');
+    const boardSvg = document.getElementById('boardSvg');
+    const boardFrame = document.getElementById('boardFrame');
+    const gradeButtonsEl = document.getElementById('gradeButtons');
+    const levelButtonsEl = document.getElementById('levelButtons');
+    const statusEl = document.getElementById('status');
+    const noteEl = document.getElementById('note');
+    const btnClear = document.getElementById('btnClear');
+    const btnUndo = document.getElementById('btnUndo');
+    const btnHint = document.getElementById('btnHint');
+    const btnCheck = document.getElementById('btnCheck');
+    const btnNew = document.getElementById('btnNew');
+    const btnSymbolTheme = document.getElementById('btnSymbolTheme');
+    const btnSymbolMode = document.getElementById('btnSymbolMode');
+    const modeSymIcon = document.getElementById('modeSymIcon');
+    const modeSymLabel = document.getElementById('modeSymLabel');
+    const btnPattern = document.getElementById('btnPattern');
+    const btnSound = document.getElementById('btnSound');
+    const btnTheme = document.getElementById('btnTheme');
+    const btnDaily = document.getElementById('btnDaily');
+    const btnSeed = document.getElementById('btnSeed');
+    const seedBtnLabel = document.getElementById('seedBtnLabel');
+    const btnObstacle = document.getElementById('btnObstacle');
+    const btnDuel = document.getElementById('btnDuel');
+    const btnRush = document.getElementById('btnRush');
+    const btnMemory = document.getElementById('btnMemory');
+    const btnBadges = document.getElementById('btnBadges');
+    const badgeBtnCount = document.getElementById('badgeBtnCount');
+    const rushBanner = document.getElementById('rushBanner');
+    const rushSolvedEl = document.getElementById('rushSolvedEl');
+    const rushBestEl = document.getElementById('rushBestEl');
+    const rushTimerEl = document.getElementById('rushTimerEl');
+    
+    const statTotalSolved = document.getElementById('statTotalSolved');
+    const statScore = document.getElementById('statScore');
+    const statStreak = document.getElementById('statStreak');
+    const statBadge = document.getElementById('statBadge');
+    const statBadgeWrap = document.getElementById('statBadgeWrap');
+
+    const toast = document.getElementById('toast');
+    const toastIcon = document.getElementById('toastIcon');
+    const toastStars = document.getElementById('toastStars');
+    const toastTitle = document.getElementById('toastTitle');
+    const toastMsg = document.getElementById('toastMsg');
+    const toastNext = document.getElementById('toastNext');
+    const toastClose = document.getElementById('toastClose');
+    const overlay = document.getElementById('overlay');
+    const confettiEl = document.getElementById('confetti');
+    const tutorialModal = document.getElementById('tutorialModal');
+
+    /* Ses Motoru (Web Audio API - Nota Merdiveni ve Melodi Sesleri) */
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function playTone(freq, start, dur, type = 'sine', vol = 0.12) {
+      if (!soundEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new AudioCtx();
+        const ctx = audioCtx;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(vol, ctx.currentTime + start);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(ctx.currentTime + start);
+        osc.stop(ctx.currentTime + start + dur);
+      } catch (_) {}
+    }
+    function playStepNote(stepLen) {
+      if (!soundEnabled) return;
+      const now = performance.now();
+      if (now - lastNoteTime < 42) return;
+      lastNoteTime = now;
+      const idx = Math.max(0, (stepLen - 1)) % SCALE_NOTES.length;
+      playTone(SCALE_NOTES[idx], 0, 0.09, 'triangle', 0.09);
+    }
+    function playPathComplete() {
+      playTone(587.33, 0, 0.14, 'sine', 0.12);
+      playTone(880.00, 0.07, 0.20, 'sine', 0.13);
+    }
+    function playSuccess() {
+      [523, 659, 784, 1047].forEach((n, i) => playTone(n, i * 0.11, 0.26, 'sine', 0.14));
+    }
+    function playError() {
+      playTone(200, 0, 0.16, 'square', 0.07);
+      playTone(150, 0.13, 0.2, 'square', 0.05);
+    }
+    function playClick() { playTone(440, 0, 0.04, 'triangle', 0.08); }
+    function playHint() {
+      [700, 900, 1100].forEach((n, i) => playTone(n, i * 0.08, 0.2, 'triangle', 0.1));
+    }
+
+    /* Veri Yönetimi ve İstatistikler */
+    function loadAppData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const parsed = raw ? JSON.parse(raw) : {};
+        return Object.assign({
+          progress: {}, score: 0, sound: true, dark: false, pattern: false,
+          symbolTheme: 0, firstTime: true, achievements: {},
+          noHintWins: 0, obstacleWins: 0, bestRush: 0
+        }, parsed);
+      } catch (_) {
+        return {
+          progress: {}, score: 0, sound: true, dark: false, pattern: false,
+          symbolTheme: 0, firstTime: true, achievements: {},
+          noHintWins: 0, obstacleWins: 0, bestRush: 0
+        };
+      }
+    }
+    function saveAppData() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); } catch (_) {}
+    }
+    function levelKey(gi, li) { return `g${GRADES[gi].grade}-l${GRADES[gi].levels[li].level}`; }
+    function solvedCount(gi, li) { return (appData.progress[levelKey(gi, li)] || 0); }
+    
+    function unlockAchievement(id) {
+      if (!appData.achievements) appData.achievements = {};
+      if (appData.achievements[id]) return null;
+      appData.achievements[id] = Date.now();
+      saveAppData();
+      return ACHIEVEMENTS.find(a => a.id === id) || null;
+    }
+
+    function addSolved(gi, li) {
+      const k = levelKey(gi, li);
+      appData.progress[k] = (appData.progress[k] || 0) + 1;
+      streakCount++;
+      const streakBonus = Math.min(50, streakCount * 10);
+      appData.score += (gradeIdx + 1) * 20 + (levelIdx + 1) * 10 + (obstacleMode ? 15 : 0) + (memoryMode ? 20 : 0) + streakBonus;
+      if (hintsUsed === 0) appData.noHintWins = (appData.noHintWins || 0) + 1;
+      if (obstacleMode) appData.obstacleWins = (appData.obstacleWins || 0) + 1;
+      saveAppData();
+      updateStatsUI();
+    }
+
+    function gradeSolved(gi) {
+      return GRADES[gi].levels.reduce((sum, _, li) => sum + solvedCount(gi, li), 0);
+    }
+
+    function updateStatsUI() {
+      let total = 0;
+      Object.values(appData.progress).forEach(v => total += v);
+      statTotalSolved.textContent = total;
+      statScore.textContent = appData.score;
+      statStreak.textContent = `🔥 ${streakCount}`;
+
+      let badge = '🌱 Başlangıç';
+      if (total >= 5) badge = '⭐ Yol Kaşifi';
+      if (total >= 15) badge = '🧠 Uzman Beyin';
+      if (total >= 30) badge = '👑 Zekâ Üstadı';
+      statBadge.textContent = badge;
+
+      const unlockedCount = Object.keys(appData.achievements || {}).length;
+      if (badgeBtnCount) badgeBtnCount.textContent = `Kupalar (${unlockedCount}/${ACHIEVEMENTS.length})`;
+    }
+
+    function getSymbol(letter, forPlayerPaths) {
+      const theme = SYMBOL_THEMES[symbolThemeIdx] || SYMBOL_THEMES[0];
+      const sym = theme.map[letter] || letter;
+      if (!forPlayerPaths && memoryMode && memoryHidden) {
+        if (!isPathComplete(letter) && activeLetter !== letter && tapLetter !== letter) {
+          return '?';
+        }
+      }
+      return sym;
+    }
+
+    function updateSymbolThemeUI() {
+      const theme = SYMBOL_THEMES[symbolThemeIdx] || SYMBOL_THEMES[0];
+      if (btnSymbolTheme) btnSymbolTheme.textContent = theme.icon;
+      if (modeSymIcon) modeSymIcon.textContent = theme.icon;
+      if (modeSymLabel) modeSymLabel.textContent = `Tema: ${theme.name}`;
+      if (btnSymbolMode) btnSymbolMode.classList.toggle('active', symbolThemeIdx > 0);
+    }
+
+    function cycleSymbolTheme() {
+      symbolThemeIdx = (symbolThemeIdx + 1) % SYMBOL_THEMES.length;
+      appData.symbolTheme = symbolThemeIdx;
+      playClick();
+      saveAppData();
+      updateSymbolThemeUI();
+      render();
+      if (duelMode) renderDuelBoards();
+    }
+
+    symbolThemeIdx = (appData.symbolTheme || 0) % SYMBOL_THEMES.length;
+    updateSymbolThemeUI();
+    if (btnSymbolTheme) btnSymbolTheme.addEventListener('click', cycleSymbolTheme);
+    if (btnSymbolMode) btnSymbolMode.addEventListener('click', cycleSymbolTheme);
+
+    // Tema ve Renk Körlüğü Desen Ayarı
+    if (appData.dark) {
+      document.body.classList.add('dark-theme');
+      btnTheme.textContent = '☀️';
+    }
+    patternMode = !!appData.pattern;
+    btnPattern.style.background = patternMode ? 'rgba(255,255,255,0.42)' : '';
+    soundEnabled = appData.sound;
+    btnSound.textContent = soundEnabled ? '🔊' : '🔇';
+
+    btnPattern.addEventListener('click', () => {
+      patternMode = !patternMode;
+      appData.pattern = patternMode;
+      btnPattern.style.background = patternMode ? 'rgba(255,255,255,0.42)' : '';
+      playClick();
+      saveAppData();
+      render();
+      if (duelMode) renderDuelBoards();
+    });
+
+    btnSound.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      appData.sound = soundEnabled;
+      btnSound.textContent = soundEnabled ? '🔊' : '🔇';
+      saveAppData();
+    });
+
+    btnTheme.addEventListener('click', () => {
+      appData.dark = !appData.dark;
+      document.body.classList.toggle('dark-theme', appData.dark);
+      btnTheme.textContent = appData.dark ? '☀️' : '🌙';
+      saveAppData();
+      render();
+      if (duelMode) renderDuelBoards();
+    });
+
+    // İlk Giriş Kontrolü
+    if (appData.firstTime) {
+      tutorialModal.style.display = 'flex';
+    }
+    document.getElementById('btnStartTutorial').addEventListener('click', () => {
+      appData.firstTime = false;
+      saveAppData();
+      tutorialModal.style.display = 'none';
+    });
+
+    /* Yardımcılar ve Hamle Geçmişi (Undo için) */
+    function serializePaths(pObj) {
+      return letters.map(l => l + ':' + (pObj[l] || []).map(pt => pt[0] + ',' + pt[1]).join(';')).join('|');
+    }
+
+    function saveHistoryState() {
+      // paths derin kopyası
+      const copy = {};
+      for (const l of letters) {
+        copy[l] = paths[l].map(pt => [...pt]);
+      }
+      if (historyStack.length > 0) {
+        const last = historyStack[historyStack.length - 1];
+        if (serializePaths(last) === serializePaths(copy)) return;
+      }
+      historyStack.push(copy);
+      if (historyStack.length > 20) historyStack.shift();
+    }
+
+    function key(r, c) { return r + ',' + c; }
+    function isAdjacent(r1, c1, r2, c2) {
+      return Math.abs(r1 - r2) + Math.abs(c1 - c2) === 1;
+    }
+    function isObstacle(r, c) {
+      return obstacles.some(([or, oc]) => or === r && oc === c);
+    }
+    function getEndpointLetter(r, c) {
+      for (const letter of letters) {
+        for (const [er, ec] of endpoints[letter]) {
+          if (er === r && ec === c) return letter;
+        }
+      }
+      return null;
+    }
+    function isPathComplete(letter, customPaths) {
+      const pMap = customPaths || paths;
+      const path = pMap[letter];
+      if (!path || path.length < 2) return false;
+      const first = path[0];
+      const last = path[path.length - 1];
+      const epFirst = getEndpointLetter(first[0], first[1]);
+      const epLast = getEndpointLetter(last[0], last[1]);
+      return epFirst === letter && epLast === letter && (first[0] !== last[0] || first[1] !== last[1]);
+    }
+    function countCoordTurns(path) {
+      let turns = 0;
+      for (let i = 2; i < path.length; i++) {
+        const dr1 = path[i - 1][0] - path[i - 2][0];
+        const dc1 = path[i - 1][1] - path[i - 2][1];
+        const dr2 = path[i][0] - path[i - 1][0];
+        const dc2 = path[i][1] - path[i - 1][1];
+        if (dr1 !== dr2 || dc1 !== dc2) turns++;
+      }
+      return turns;
+    }
+    function getCellOwner(r, c, customPaths) {
+      const ep = getEndpointLetter(r, c);
+      if (ep) return ep;
+      const pMap = customPaths || paths;
+      for (const letter of letters) {
+        for (const [pr, pc] of pMap[letter]) {
+          if (pr === r && pc === c) return letter;
+        }
+      }
+      return null;
+    }
+    function countFilledCells(customPaths) {
+      const pMap = customPaths || paths;
+      const set = new Set();
+      for (const letter of letters) {
+        for (const [r, c] of (pMap[letter] || [])) {
+          set.add(key(r, c));
+        }
+      }
+      return set.size;
+    }
+    function totalUsableCells() {
+      return size * size - obstacles.length;
+    }
+    function nodeXY(r, c) { return { x: pad + c * cellGap, y: pad + r * cellGap }; }
+    function levelCfg() { return GRADES[gradeIdx].levels[levelIdx]; }
+    
+    function rebuildPaths() {
+      const hasAnyPath = letters.some(l => paths[l] && paths[l].length > 0);
+      if (hasAnyPath) saveHistoryState();
+      paths = {};
+      letters.forEach(l => { paths[l] = []; });
+    }
+
+    function clearOtherPathsFromCell(r, c, exceptLetter, customPaths) {
+      const pMap = customPaths || paths;
+      for (const letter of letters) {
+        if (letter === exceptLetter) continue;
+        const idx = pMap[letter].findIndex(([pr, pc]) => pr === r && pc === c);
+        if (idx !== -1) {
+          pMap[letter] = idx <= 1 ? [] : pMap[letter].slice(0, idx);
+        }
+      }
+    }
+
+    /* Seçiciler */
+    function buildGradeButtons() {
+      gradeButtonsEl.innerHTML = '';
+      GRADES.forEach((g, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'chip' + (i === gradeIdx ? ' active' : '');
+        btn.innerHTML = `${g.label}<span class="sub">${gradeSolved(i)} çözüm</span>`;
+        btn.addEventListener('click', () => {
+          if (i === gradeIdx) return;
+          playClick();
+          gradeIdx = i;
+          levelIdx = 0;
+          dailyMode = false;
+          btnDaily.classList.remove('active');
+          buildGradeButtons();
+          buildLevelButtons();
+          newPuzzle();
+        });
+        gradeButtonsEl.appendChild(btn);
+      });
+    }
+
+    function buildLevelButtons() {
+      levelButtonsEl.innerHTML = '';
+      GRADES[gradeIdx].levels.forEach((lvl, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'chip' + (i === levelIdx ? ' active' : '');
+        const v = variantFor(gradeIdx, i, solvedCount(gradeIdx, i));
+        btn.innerHTML = `Seviye ${lvl.level}` +
+          `<span class="sub">${v.size}×${v.size} · ${v.pairs} çift${v.grown ? ' ↑' : ''}</span>`;
+        btn.addEventListener('click', () => {
+          if (i === levelIdx) return;
+          playClick();
+          levelIdx = i;
+          dailyMode = false;
+          btnDaily.classList.remove('active');
+          buildLevelButtons();
+          newPuzzle();
+        });
+        levelButtonsEl.appendChild(btn);
+      });
+    }
+
+    function startMemoryCountdown(seconds) {
+      clearInterval(memoryTimer);
+      if (!memoryMode) {
+        memoryHidden = false;
+        return;
+      }
+      memoryHidden = false;
+      memoryCountdown = seconds || 4;
+      updateSymbolTexts();
+      noteEl.className = 'note';
+      noteEl.textContent = `🧠 Hafıza Modu: Sembollerin yerini ezberle! (${memoryCountdown} sn...)`;
+      memoryTimer = setInterval(() => {
+        if (!memoryMode) {
+          clearInterval(memoryTimer);
+          return;
+        }
+        memoryCountdown--;
+        if (memoryCountdown > 0) {
+          noteEl.textContent = `🧠 Hafıza Modu: Sembollerin yerini ezberle! (${memoryCountdown} sn...)`;
+        } else {
+          clearInterval(memoryTimer);
+          memoryHidden = true;
+          updateSymbolTexts();
+          noteEl.textContent = '🧠 Semboller gizlendi! Hatırladığın uçlara dokunarak eşleştir.';
+        }
+      }, 1000);
+    }
+
+    function applyPuzzle(puzzle) {
+      size = puzzle.s;
+      puzzleScore = puzzle.score;
+      currentSeedCode = puzzle.code || 1000;
+      seedBtnLabel.textContent = `Kod: #${currentSeedCode}`;
+      letters = LETTERS.slice(0, puzzle.sol.length).split('');
+      obstacles = (puzzle.obstacles || []).map(idx => [Math.floor(idx / size), idx % size]);
+
+      endpoints = {};
+      solution = {};
+      puzzle.sol.forEach((cells, i) => {
+        const letter = letters[i];
+        const coords = cells.map(idx => [Math.floor(idx / size), idx % size]);
+        solution[letter] = coords;
+        endpoints[letter] = [coords[0], coords[coords.length - 1]];
+      });
+
+      paths = {};
+      hintStageByLetter = {};
+      letters.forEach(l => {
+        paths[l] = [];
+        hintStageByLetter[l] = 0;
+      });
+      historyStack = [];
+      activeLetter = null;
+      tapLetter = null;
+      isDrawing = false;
+      lastCell = null;
+      hintsUsed = 0;
+      hintArmed = false;
+      puzzleSolved = false;
+      puzzleStartTime = Date.now();
+      undoOrClearUsed = false;
+
+      resizeBoard();
+      updateHintUI();
+      updateStatus();
+      updateStatsUI();
+      render();
+      if (memoryMode) startMemoryCountdown(4);
+      if (duelMode) resetDuelRound();
+    }
+
+    function dailySeedCode() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = now.getMonth() + 1;
+      const d = now.getDate();
+      return 1000 + ((y * 372 + m * 31 + d + gradeIdx * 19 + levelIdx * 7) % 9000);
+    }
+
+    function newPuzzle(customSeedCode) {
+      const solved = solvedCount(gradeIdx, levelIdx);
+      const v = variantFor(gradeIdx, levelIdx, solved);
+      const p = percentileFor(gradeIdx, levelIdx, solved);
+      const seedCode = customSeedCode || (dailyMode ? dailySeedCode() : null);
+      const puzzle = generatePuzzle(v.size, v.pairs, p, seedCode ? null : pendingFloor, 90, {
+        seedCode,
+        gi: gradeIdx,
+        li: levelIdx,
+        withObstacles: obstacleMode
+      });
+      pendingFloor = null;
+      if (!puzzle) {
+        showToast('error', '!', 'Üretilemedi', 'Bu seviye için bulmaca üretilemedi.');
+        return;
+      }
+      applyPuzzle(puzzle);
+    }
+
+    function resizeBoard() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const singleCap = vw >= 1100 ? Math.min(490, Math.floor(vh * 0.56)) : (vw >= 768 ? 450 : 420);
+      const duelCap = vw >= 1100 ? Math.min(450, Math.floor(vh * 0.58)) : 380;
+      const maxW = duelMode
+        ? Math.min(Math.floor((vw - 76) / (vw > 720 ? 2 : 1)), duelCap)
+        : Math.min(vw - 44, singleCap);
+      cellGap = Math.floor(maxW / (size - 1 + 0.5));
+      if (size >= 10) cellGap = Math.max(24, Math.min(cellGap, 44));
+      else if (size >= 9) cellGap = Math.max(26, Math.min(cellGap, 46));
+      else if (size >= 8) cellGap = Math.max(28, Math.min(cellGap, 48));
+      else if (size >= 7) cellGap = Math.max(30, Math.min(cellGap, 52));
+      else if (size >= 6) cellGap = Math.max(34, Math.min(cellGap, 58));
+      else if (size >= 5) cellGap = Math.max(38, Math.min(cellGap, 64));
+      else cellGap = Math.max(42, Math.min(cellGap, 72));
+      pad = Math.round(cellGap * 0.32);
+    }
+
+    function updateStatus() {
+      const cfg = levelCfg();
+      const solved = solvedCount(gradeIdx, levelIdx);
+      const p = percentileFor(gradeIdx, levelIdx, solved);
+      const stars = Math.max(1, Math.min(5, Math.round(p * 5)));
+      const bar = '●'.repeat(stars) + '○'.repeat(5 - stars);
+      const filled = countFilledCells();
+      const total = totalUsableCells();
+
+      statusEl.innerHTML =
+        `<span class="tag"><strong>${GRADES[gradeIdx].label}</strong> · Seviye ${cfg.level}</span>` +
+        `<span class="tag">${size}×${size} · Nokta: <strong>${filled}/${total}</strong></span>` +
+        `<span class="tag diff">Zorluk ${bar}</span>` +
+        `<span class="tag solved">Çözülen: ${solved}</span>`;
+
+      if (gradeIdx === 0 && levelIdx === 0 && solved === 0 && hintsUsed === 0) {
+        noteEl.className = 'note teach';
+        noteEl.textContent = 'Bir harfe dokun ve parmağını diğer aynı harfe doğru sürükle.';
+      } else if (!hintArmed && hintsUsed === 0) {
+        noteEl.className = 'note';
+        noteEl.textContent = dailyMode
+          ? `📅 Günün Sorusu (#${currentSeedCode}) · 2 kademeli ipucu hakkın var.`
+          : 'Her soruda 2 kademeli ipucu hakkın var (1. başlangıç rotası, 2. tam çözüm).';
+      }
+    }
+
+    /* Çizim ve SVG İşlemleri */
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    let polyByLetter = {};
+    let energyPolyByLetter = {};
+    let textElsByLetter = {};
+    let haloEls = [];
+    let doneHaloByLetter = {};
+    let errorHaloGroup = null;
+    let headMarker = null;
+
+    function svgEl(name, attrs) {
+      const el = document.createElementNS(SVG_NS, name);
+      for (const k in attrs) el.setAttribute(k, attrs[k]);
+      return el;
+    }
+
+    function updateSymbolTexts() {
+      letters.forEach(letter => {
+        const sym = getSymbol(letter, false);
+        (textElsByLetter[letter] || []).forEach(tEl => {
+          tEl.textContent = sym;
+        });
+      });
+    }
+
+    function render() {
+      const W = pad * 2 + (size - 1) * cellGap;
+      boardSvg.setAttribute('width', W);
+      boardSvg.setAttribute('height', W);
+      boardSvg.setAttribute('viewBox', `0 0 ${W} ${W}`);
+      boardSvg.innerHTML = '';
+
+      const strokeW = Math.max(5, cellGap * 0.3);
+      const dotR = Math.max(2.6, cellGap * 0.075);
+      const isEmoji = symbolThemeIdx >= 1 && symbolThemeIdx <= 3;
+      const fontSize = Math.round(cellGap * (isEmoji ? (size >= 8 ? 0.44 : 0.48) : (size >= 8 ? 0.5 : 0.54)));
+
+      polyByLetter = {};
+      energyPolyByLetter = {};
+      const pathGroup = svgEl('g');
+      letters.forEach(letter => {
+        const attrs = {
+          class: 'path-line',
+          points: '',
+          stroke: PATH_COLORS[letter],
+          'stroke-width': strokeW
+        };
+        if (patternMode && PATH_DASHES[letter]) {
+          attrs['stroke-dasharray'] = PATH_DASHES[letter];
+        }
+        const poly = svgEl('polyline', attrs);
+        polyByLetter[letter] = poly;
+        pathGroup.appendChild(poly);
+
+        const energyPoly = svgEl('polyline', {
+          class: 'energy-line',
+          points: '',
+          'stroke-width': Math.max(2.2, strokeW * 0.32)
+        });
+        energyPolyByLetter[letter] = energyPoly;
+        pathGroup.appendChild(energyPoly);
+      });
+      boardSvg.appendChild(pathGroup);
+
+      headMarker = svgEl('circle', {
+        r: strokeW * 0.62,
+        fill: 'none',
+        opacity: '0'
+      });
+      boardSvg.appendChild(headMarker);
+
+      const dotGroup = svgEl('g');
+      const obsSize = cellGap * 0.56;
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          const { x, y } = nodeXY(r, c);
+          if (isObstacle(r, c)) {
+            dotGroup.appendChild(svgEl('rect', {
+              class: 'obstacle-cell',
+              x: x - obsSize / 2,
+              y: y - obsSize / 2,
+              width: obsSize,
+              height: obsSize,
+              rx: Math.max(4, obsSize * 0.22)
+            }));
+            continue;
+          }
+          if (getEndpointLetter(r, c)) continue;
+          dotGroup.appendChild(svgEl('circle', { class: 'node-dot', cx: x, cy: y, r: dotR }));
+        }
+      }
+      boardSvg.appendChild(dotGroup);
+
+      errorHaloGroup = svgEl('g');
+      boardSvg.appendChild(errorHaloGroup);
+
+      haloEls = [];
+      doneHaloByLetter = {};
+      textElsByLetter = {};
+      const letterGroup = svgEl('g');
+      letters.forEach(letter => {
+        doneHaloByLetter[letter] = [];
+        textElsByLetter[letter] = [];
+        endpoints[letter].forEach(([r, c]) => {
+          const { x, y } = nodeXY(r, c);
+          if (patternMode) {
+            letterGroup.appendChild(svgEl('circle', {
+              class: 'letter-badge',
+              cx: x, cy: y,
+              r: cellGap * 0.32,
+              fill: PATH_COLORS[letter],
+              opacity: '0.22'
+            }));
+          }
+          const doneHalo = svgEl('circle', {
+            class: 'done-halo',
+            cx: x, cy: y,
+            r: cellGap * 0.35,
+            stroke: PATH_COLORS[letter]
+          });
+          doneHaloByLetter[letter].push(doneHalo);
+          letterGroup.appendChild(doneHalo);
+
+          const halo = svgEl('circle', {
+            class: 'hint-halo', cx: x, cy: y, r: cellGap * 0.36, opacity: '0'
+          });
+          haloEls.push(halo);
+          letterGroup.appendChild(halo);
+
+          const text = svgEl('text', {
+            class: 'node-letter', x, y, 'font-size': fontSize
+          });
+          text.textContent = getSymbol(letter, false);
+          textElsByLetter[letter].push(text);
+          letterGroup.appendChild(text);
+        });
+      });
+      boardSvg.appendChild(letterGroup);
+
+      updatePaths();
+      updateHalos();
+    }
+
+    function highlightEmptyCells() {
+      if (!errorHaloGroup) return;
+      errorHaloGroup.innerHTML = '';
+      const occupied = new Set();
+      for (const letter of letters) {
+        for (const [r, c] of paths[letter]) occupied.add(key(r, c));
+      }
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          if (isObstacle(r, c)) continue;
+          if (!occupied.has(key(r, c))) {
+            const { x, y } = nodeXY(r, c);
+            errorHaloGroup.appendChild(svgEl('circle', {
+              class: 'error-halo',
+              cx: x, cy: y,
+              r: cellGap * 0.28
+            }));
+          }
+        }
+      }
+      setTimeout(() => {
+        if (errorHaloGroup) errorHaloGroup.innerHTML = '';
+      }, 2200);
+    }
+
+    function updatePaths() {
+      letters.forEach(letter => {
+        const poly = polyByLetter[letter];
+        const ePoly = energyPolyByLetter[letter];
+        if (!poly) return;
+        const path = paths[letter];
+        let pts = '';
+        if (path && path.length >= 2) {
+          for (let i = 0; i < path.length; i++) {
+            const p = nodeXY(path[i][0], path[i][1]);
+            pts += (i ? ' ' : '') + p.x + ',' + p.y;
+          }
+        }
+        poly.setAttribute('points', pts);
+        const done = isPathComplete(letter);
+        if (ePoly) {
+          ePoly.setAttribute('points', done ? pts : '');
+          ePoly.classList.toggle('active', done);
+        }
+        (doneHaloByLetter[letter] || []).forEach(el => el.classList.toggle('show', done));
+      });
+      updateSymbolTexts();
+      updateHead();
+      updateStatus();
+    }
+
+    function updateHead() {
+      if (!headMarker) return;
+      const letter = activeLetter || tapLetter;
+      const path = letter ? paths[letter] : null;
+      if (!letter || !path || !path.length) {
+        headMarker.setAttribute('opacity', '0');
+        return;
+      }
+      const [r, c] = path[path.length - 1];
+      const { x, y } = nodeXY(r, c);
+      headMarker.setAttribute('cx', x);
+      headMarker.setAttribute('cy', y);
+      headMarker.setAttribute('stroke', PATH_COLORS[letter]);
+      headMarker.setAttribute('stroke-width', Math.max(2, cellGap * 0.06));
+      headMarker.setAttribute('opacity', '0.9');
+    }
+
+    function updateHalos() {
+      haloEls.forEach(el => el.setAttribute('opacity', hintArmed ? '1' : '0'));
+    }
+
+    function updateHintUI() {
+      const remaining = MAX_HINTS - hintsUsed;
+      btnHint.disabled = remaining <= 0;
+      btnHint.classList.toggle('armed', hintArmed);
+      btnHint.textContent = remaining <= 0
+        ? 'İpucu bitti'
+        : (hintArmed ? 'Bir harfe dokun' : `İpucu (${remaining})`);
+      boardFrame.classList.toggle('hint-armed', hintArmed);
+      if (hintArmed) {
+        noteEl.className = 'note';
+        noteEl.textContent = 'İpucu hazır: 1. dokunuşta başlangıç rotası, 2. dokunuşta tam yol çizilir.';
+      }
+    }
+
+    function applyHint(letter) {
+      const sol = solution[letter];
+      if (!sol || hintsUsed >= MAX_HINTS) return;
+      saveHistoryState();
+      const stage = (hintStageByLetter[letter] || 0) + 1;
+      hintStageByLetter[letter] = stage;
+      const sliceLen = stage === 1 ? Math.max(2, Math.ceil(sol.length / 2)) : sol.length;
+      const partial = sol.slice(0, sliceLen);
+
+      partial.forEach(([r, c]) => clearOtherPathsFromCell(r, c, letter));
+      paths[letter] = partial.map(([r, c]) => [r, c]);
+      hintsUsed++;
+      hintArmed = false;
+      updateHintUI();
+      noteEl.className = 'note';
+      noteEl.textContent = stage === 1
+        ? `💡 ${letter} harfinin başlangıç rotası (${sliceLen}/${sol.length} adım) çizildi! Devamını tamamla.`
+        : `💡 ${letter} harfi eşiyle tamamen birleştirildi.`;
+      playHint();
+      updatePaths();
+      updateHalos();
+      scheduleAutoCheck();
+    }
+
+    btnHint.addEventListener('click', () => {
+      if (hintsUsed >= MAX_HINTS) return;
+      playClick();
+      hintArmed = !hintArmed;
+      updateHintUI();
+      if (!hintArmed) updateStatus();
+      updateHalos();
+    });
+
+    function buzz(ms) {
+      try { if (navigator.vibrate) navigator.vibrate(ms); } catch (_) {}
+    }
+
+    function grabPath(letter, r, c) {
+      saveHistoryState();
+      activeLetter = letter;
+      lastCell = [r, c];
+      lastDir = null;
+      const isEp = getEndpointLetter(r, c) === letter;
+      const path = paths[letter];
+      const idx = path.findIndex(([pr, pc]) => pr === r && pc === c);
+      if (!isEp && idx !== -1) {
+        paths[letter] = path.slice(0, idx + 1);
+      } else {
+        clearOtherPathsFromCell(r, c, letter);
+        paths[letter] = [[r, c]];
+      }
+    }
+
+    function startDraw(r, c) {
+      if (isObstacle(r, c)) return false;
+      const ep = getEndpointLetter(r, c);
+
+      if (hintArmed) {
+        if (ep) applyHint(ep);
+        return false;
+      }
+
+      if (ep) {
+        playClick();
+        buzz(8);
+        isDrawing = true;
+        tapLetter = ep;
+        grabPath(ep, r, c);
+        updatePaths();
+        return true;
+      }
+
+      const owner = getCellOwner(r, c);
+      if (owner) {
+        playClick();
+        isDrawing = true;
+        tapLetter = owner;
+        grabPath(owner, r, c);
+        updatePaths();
+        return true;
+      }
+      return false;
+    }
+
+    function stepTo(r, c) {
+      if (r < 0 || c < 0 || r >= size || c >= size) return false;
+      if (isObstacle(r, c)) return false;
+      if (!activeLetter || !lastCell) return false;
+      if (lastCell[0] === r && lastCell[1] === c) return false;
+      if (!isAdjacent(lastCell[0], lastCell[1], r, c)) return false;
+
+      const path = paths[activeLetter];
+      const existingIdx = path.findIndex(([pr, pc]) => pr === r && pc === c);
+
+      if (existingIdx !== -1) {
+        paths[activeLetter] = path.slice(0, existingIdx + 1);
+        lastDir = [r - lastCell[0], c - lastCell[1]];
+        lastCell = [r, c];
+        playStepNote(paths[activeLetter].length);
+        return true;
+      }
+
+      if (isPathComplete(activeLetter)) return false;
+
+      const ep = getEndpointLetter(r, c);
+      if (ep && ep !== activeLetter) return false;
+      const owner = getCellOwner(r, c);
+      if (owner && owner !== activeLetter) return false;
+
+      paths[activeLetter].push([r, c]);
+      lastDir = [r - lastCell[0], c - lastCell[1]];
+      lastCell = [r, c];
+
+      if (ep === activeLetter) {
+        const start = paths[activeLetter][0];
+        if (!(start[0] === r && start[1] === c)) {
+          isDrawing = false;
+          tapLetter = null;
+          playPathComplete();
+          buzz(14);
+          return true;
+        }
+      }
+      playStepNote(paths[activeLetter].length);
+      return true;
+    }
+
+    function traceTo(tr, tc) {
+      let changed = false;
+      let guard = 0;
+      const limit = size * size + 8;
+      const maxBridge = Math.max(6, size + 2);
+
+      if (lastCell && (Math.abs(tr - lastCell[0]) + Math.abs(tc - lastCell[1])) > maxBridge) {
+        return false;
+      }
+
+      while (lastCell && guard++ < limit) {
+        const [r, c] = lastCell;
+        if (r === tr && c === tc) break;
+
+        const dr = Math.sign(tr - r);
+        const dc = Math.sign(tc - c);
+        const order = Math.abs(tr - r) >= Math.abs(tc - c)
+          ? [[dr, 0], [0, dc]]
+          : [[0, dc], [dr, 0]];
+
+        if (lastDir) {
+          if (lastDir[0] && dr === lastDir[0]) order.unshift([dr, 0]);
+          else if (lastDir[1] && dc === lastDir[1]) order.unshift([0, dc]);
+        }
+
+        let moved = false;
+        for (const [sr, sc] of order) {
+          if (!sr && !sc) continue;
+          if (stepTo(r + sr, c + sc)) { moved = true; break; }
+        }
+        if (!moved) break;
+        changed = true;
+        if (!isDrawing) break;
+      }
+
+      return changed;
+    }
+
+    function scheduleAutoCheck() {
+      if (puzzleSolved || duelMode) return;
+      clearTimeout(autoCheckTimer);
+      if (countFilledCells() < totalUsableCells()) return;
+      autoCheckTimer = setTimeout(() => {
+        if (!puzzleSolved && !isDrawing && validate().valid) {
+          triggerSingleWin();
+        }
+      }, 260);
+    }
+
+    function pauseStroke() {
+      isDrawing = false;
+      activeLetter = null;
+      lastCell = null;
+      lastDir = null;
+      lastSvgPt = null;
+      updateSymbolTexts();
+      updateHead();
+      scheduleAutoCheck();
+    }
+
+    function boardSizeSvg() {
+      return pad * 2 + (size - 1) * cellGap;
+    }
+
+    function clientToSvg(clientX, clientY) {
+      const rect = boardSvg.getBoundingClientRect();
+      if (!rect.width || !rect.height) return null;
+      const W = boardSizeSvg();
+      return {
+        x: ((clientX - rect.left) / rect.width) * W,
+        y: ((clientY - rect.top) / rect.height) * W
+      };
+    }
+
+    function nearestCellFromSvg(x, y, tolerance) {
+      const W = boardSizeSvg();
+      const margin = cellGap * 0.85;
+      if (x < -margin || y < -margin || x > W + margin || y > W + margin) return null;
+
+      let c = Math.round((x - pad) / cellGap);
+      let r = Math.round((y - pad) / cellGap);
+      c = Math.max(0, Math.min(size - 1, c));
+      r = Math.max(0, Math.min(size - 1, r));
+      const p = nodeXY(r, c);
+      const dist2 = (p.x - x) ** 2 + (p.y - y) ** 2;
+      if (tolerance != null && dist2 > (cellGap * tolerance) ** 2) return null;
+      return [r, c];
+    }
+
+    function nodeAt(clientX, clientY, tolerance) {
+      const pt = clientToSvg(clientX, clientY);
+      if (!pt) return null;
+      return nearestCellFromSvg(pt.x, pt.y, tolerance);
+    }
+
+    function dragTargetFromSvg(x, y) {
+      if (!lastCell) return nearestCellFromSvg(x, y, null);
+
+      const [lr, lc] = lastCell;
+      const candidates = [
+        [lr, lc],
+        [lr - 1, lc], [lr + 1, lc], [lr, lc - 1], [lr, lc + 1]
+      ];
+
+      let best = null;
+      let bestD = Infinity;
+      for (const [r, c] of candidates) {
+        if (r < 0 || c < 0 || r >= size || c >= size) continue;
+        const p = nodeXY(r, c);
+        const d = (p.x - x) ** 2 + (p.y - y) ** 2;
+        if (d < bestD) {
+          bestD = d;
+          best = [r, c];
+        }
+      }
+
+      const nearest = nearestCellFromSvg(x, y, null);
+      if (nearest) {
+        const p = nodeXY(nearest[0], nearest[1]);
+        const dn = (p.x - x) ** 2 + (p.y - y) ** 2;
+        const man = Math.abs(nearest[0] - lr) + Math.abs(nearest[1] - lc);
+        if (man > 1 && dn + (cellGap * 0.12) ** 2 < bestD) return nearest;
+        if (man === 1 && dn < bestD) return nearest;
+      }
+      return best;
+    }
+
+    function sampleSvgSegment(x0, y0, x1, y1) {
+      const dx = x1 - x0;
+      const dy = y1 - y0;
+      const dist = Math.hypot(dx, dy);
+      const step = Math.max(4, cellGap * 0.22);
+      const n = Math.max(1, Math.ceil(dist / step));
+      const out = [];
+      for (let i = 1; i <= n; i++) {
+        const t = i / n;
+        out.push([x0 + dx * t, y0 + dy * t]);
+      }
+      return out;
+    }
+
+    let pointerId = null;
+    let activeTouchId = null;
+    let usingTouch = false;
+    let pathsDirty = false;
+    let frameQueued = false;
+
+    function schedulePathPaint() {
+      if (frameQueued) return;
+      frameQueued = true;
+      requestAnimationFrame(() => {
+        frameQueued = false;
+        if (pathsDirty) {
+          pathsDirty = false;
+          updatePaths();
+        }
+      });
+    }
+
+    function markPathsDirty() {
+      pathsDirty = true;
+      schedulePathPaint();
+    }
+
+    function processDragSvg(x, y) {
+      if (!isDrawing || !lastCell) return;
+      const samples = lastSvgPt
+        ? sampleSvgSegment(lastSvgPt.x, lastSvgPt.y, x, y)
+        : [[x, y]];
+      lastSvgPt = { x, y };
+
+      let changed = false;
+      for (let i = 0; i < samples.length; i++) {
+        const target = dragTargetFromSvg(samples[i][0], samples[i][1]);
+        if (!target) continue;
+        if (target[0] === lastCell[0] && target[1] === lastCell[1]) continue;
+        if (traceTo(target[0], target[1])) changed = true;
+        if (!isDrawing) break;
+      }
+      if (changed) markPathsDirty();
+    }
+
+    function processDragClient(clientX, clientY) {
+      const pt = clientToSvg(clientX, clientY);
+      if (!pt) return;
+      processDragSvg(pt.x, pt.y);
+    }
+
+    function handleDown(r, c) {
+      if (hintArmed) {
+        const ep = getEndpointLetter(r, c);
+        if (ep) applyHint(ep);
+        return false;
+      }
+
+      if (tapLetter && !isPathComplete(tapLetter)) {
+        const path = paths[tapLetter];
+        if (path && path.length) {
+          const head = path[path.length - 1];
+          const ep = getEndpointLetter(r, c);
+          if (isAdjacent(head[0], head[1], r, c) && (!ep || ep === tapLetter)) {
+            saveHistoryState();
+            activeLetter = tapLetter;
+            lastCell = head;
+            lastDir = null;
+            isDrawing = true;
+            if (stepTo(r, c)) {
+              playClick();
+              buzz(6);
+              updatePaths();
+            }
+            return true;
+          }
+        }
+      }
+
+      return startDraw(r, c);
+    }
+
+    function beginAtClient(clientX, clientY) {
+      lastSvgPt = clientToSvg(clientX, clientY);
+      const pos = nodeAt(clientX, clientY, 0.92);
+      if (!pos) {
+        isDrawing = false;
+        return false;
+      }
+      return handleDown(pos[0], pos[1]);
+    }
+
+    // Dokunmatik Eventler (Akıllı Tahta & Mobil Uyumlu)
+    function onTouchStart(e) {
+      if (e.touches.length !== 1) return;
+      const t = e.touches[0];
+      usingTouch = true;
+      activeTouchId = t.identifier;
+      pointerId = null;
+      e.preventDefault();
+      beginAtClient(t.clientX, t.clientY);
+    }
+
+    function onTouchMove(e) {
+      if (!usingTouch || !isDrawing) return;
+      let t = null;
+      for (let i = 0; i < e.touches.length; i++) {
+        if (e.touches[i].identifier === activeTouchId) {
+          t = e.touches[i];
+          break;
+        }
+      }
+      if (!t && e.touches.length) t = e.touches[0];
+      if (!t) return;
+      e.preventDefault();
+      processDragClient(t.clientX, t.clientY);
+    }
+
+    function onTouchEnd(e) {
+      if (!usingTouch) return;
+      if (activeTouchId !== null) {
+        for (let i = 0; i < e.touches.length; i++) {
+          if (e.touches[i].identifier === activeTouchId) return;
+        }
+      }
+      e.preventDefault();
+      if (pathsDirty) {
+        pathsDirty = false;
+        updatePaths();
+      }
+      usingTouch = false;
+      activeTouchId = null;
+      pauseStroke();
+    }
+
+    function onTouchCancel() {
+      if (!usingTouch) return;
+      usingTouch = false;
+      activeTouchId = null;
+      pauseStroke();
+    }
+
+    boardFrame.addEventListener('touchstart', onTouchStart, { passive: false });
+    boardFrame.addEventListener('touchmove', onTouchMove, { passive: false });
+    boardFrame.addEventListener('touchend', onTouchEnd, { passive: false });
+    boardFrame.addEventListener('touchcancel', onTouchCancel, { passive: false });
+    document.addEventListener('touchmove', onTouchMove, { passive: false });
+    document.addEventListener('touchend', onTouchEnd, { passive: false });
+    document.addEventListener('touchcancel', onTouchCancel, { passive: false });
+
+    // Pointer Eventleri (Bilgisayar & Akıllı Tahta Kalemi)
+    function onPointerDown(e) {
+      if (e.pointerType === 'touch') return;
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      usingTouch = false;
+      activeTouchId = null;
+      pointerId = e.pointerId;
+      e.preventDefault();
+      try { boardFrame.setPointerCapture(e.pointerId); } catch (_) {}
+      beginAtClient(e.clientX, e.clientY);
+    }
+
+    function onPointerMove(e) {
+      if (e.pointerType === 'touch') return;
+      if (e.pointerId !== pointerId || !isDrawing) return;
+      e.preventDefault();
+
+      if (e.getCoalescedEvents) {
+        const list = e.getCoalescedEvents();
+        if (list && list.length) {
+          for (const ev of list) processDragClient(ev.clientX, ev.clientY);
+          return;
+        }
+      }
+      processDragClient(e.clientX, e.clientY);
+    }
+
+    function onPointerUp(e) {
+      if (e.pointerType === 'touch') return;
+      if (e.pointerId !== pointerId) return;
+      pointerId = null;
+      if (pathsDirty) {
+        pathsDirty = false;
+        updatePaths();
+      }
+      pauseStroke();
+    }
+
+    function onPointerCancel(e) {
+      if (e.pointerType === 'touch') return;
+      if (e.pointerId !== pointerId) return;
+      pointerId = null;
+      pauseStroke();
+    }
+
+    boardFrame.addEventListener('pointerdown', onPointerDown);
+    boardFrame.addEventListener('pointermove', onPointerMove);
+    boardFrame.addEventListener('pointerup', onPointerUp);
+    boardFrame.addEventListener('pointercancel', onPointerCancel);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('blur', () => {
+      pointerId = null;
+      usingTouch = false;
+      activeTouchId = null;
+      pauseStroke();
+    });
+
+    boardFrame.addEventListener('contextmenu', (e) => e.preventDefault());
+
+    /* Doğrulama Motoru */
+    function validate(customPaths) {
+      const pMap = customPaths || paths;
+      const issues = [];
+
+      for (const letter of letters) {
+        const eps = endpoints[letter];
+        const path = pMap[letter] || [];
+        if (path.length < 2) {
+          issues.push(`${letter} harfi henüz bağlanmadı.`);
+          continue;
+        }
+        const firstKey = key(path[0][0], path[0][1]);
+        const lastKey = key(path[path.length - 1][0], path[path.length - 1][1]);
+        const ep0Key = key(eps[0][0], eps[0][1]);
+        const ep1Key = key(eps[1][0], eps[1][1]);
+        const endsMatch = (firstKey === ep0Key && lastKey === ep1Key) ||
+                          (firstKey === ep1Key && lastKey === ep0Key);
+        if (!endsMatch) {
+          issues.push(`${letter} harfinin iki ucu bağlı değil.`);
+          continue;
+        }
+        for (let i = 1; i < path.length; i++) {
+          if (!isAdjacent(path[i-1][0], path[i-1][1], path[i][0], path[i][1])) {
+            issues.push(`${letter} yolunda çapraz veya kopukluk var.`);
+            break;
+          }
+        }
+        if (countCoordTurns(path) < 1) {
+          issues.push(`${letter} yolu en az bir viraj yapmalıdır (düz çizgi çözüm olmaz).`);
+        }
+      }
+
+      const occupied = new Map();
+      for (const letter of letters) {
+        for (const [r, c] of (pMap[letter] || [])) {
+          if (isObstacle(r, c)) {
+            issues.push(`${letter} yolu engelin üzerinden geçmiş.`);
+            break;
+          }
+          const k = key(r, c);
+          if (occupied.has(k) && occupied.get(k) !== letter) {
+            issues.push('Yollar birbirini kesiyor!');
+            break;
+          }
+          occupied.set(k, letter);
+        }
+      }
+
+      for (const letter of letters) {
+        for (const [r, c] of (pMap[letter] || [])) {
+          const ep = getEndpointLetter(r, c);
+          if (ep && ep !== letter) {
+            issues.push(`${letter} yolu ${ep} harfinin üzerinden geçmiş.`);
+            break;
+          }
+        }
+      }
+
+      let empty = 0;
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          if (isObstacle(r, c)) continue;
+          if (!occupied.has(key(r, c))) empty++;
+        }
+      }
+      if (empty > 0) issues.push(`Henüz ${empty} nokta açıkta. Tüm noktaları doldur!`);
+
+      return { valid: issues.length === 0, issues, empty };
+    }
+
+    /* Bildirim ve Görsel Şölen */
+    function showToast(type, icon, title, msg, opts = {}) {
+      toast.className = 'toast show ' + type;
+      toastIcon.textContent = icon;
+      if (toastStars) {
+        if (opts.stars) {
+          toastStars.hidden = false;
+          toastStars.textContent = '⭐'.repeat(opts.stars) + '☆'.repeat(3 - opts.stars);
+        } else {
+          toastStars.hidden = true;
+        }
+      }
+      toastTitle.textContent = title;
+      toastMsg.textContent = msg;
+      toastNext.hidden = !opts.showNext;
+      toastClose.hidden = !opts.showNext;
+      overlay.classList.add('show');
+      if (!opts.showNext) setTimeout(hideToast, opts.duration || 2600);
+    }
+    function hideToast() {
+      toast.classList.remove('show');
+      overlay.classList.remove('show');
+    }
+
+    function spawnConfetti() {
+      confettiEl.innerHTML = '';
+      const colors = Object.values(PATH_COLORS);
+      for (let i = 0; i < 55; i++) {
+        const p = document.createElement('div');
+        p.className = 'confetti';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.background = colors[i % colors.length];
+        p.style.animationDuration = (1.8 + Math.random() * 2) + 's';
+        p.style.animationDelay = Math.random() * 0.4 + 's';
+        confettiEl.appendChild(p);
+      }
+      setTimeout(() => { confettiEl.innerHTML = ''; }, 4200);
+    }
+
+    const PRAISE_EASY = ['Harikasın!', 'Süpersin!', 'Çok iyi!', 'Bravo!', 'Aferin!'];
+    const PRAISE_HARD = ['Doğru çözüm!', 'Tebrikler!', 'Mükemmel mantık!', 'Çok iyi düşündün!'];
+
+    function checkWinAchievements(elapsedSec) {
+      const newlyUnlocked = [];
+      const tryUnlock = (id) => {
+        const b = unlockAchievement(id);
+        if (b) newlyUnlocked.push(b);
+      };
+      tryUnlock('first_win');
+      if (elapsedSec <= 15) tryUnlock('speed_15');
+      if ((appData.noHintWins || 0) >= 10) tryUnlock('no_hint_10');
+      if (streakCount >= 5) tryUnlock('streak_5');
+      if ((appData.obstacleWins || 0) >= 5) tryUnlock('obstacle_5');
+      if (memoryMode) tryUnlock('memory_win');
+      if (rushMode && rushSolved >= 5) tryUnlock('rush_5');
+      if (gradeIdx === 5) tryUnlock('expert_win');
+      updateStatsUI();
+      return newlyUnlocked;
+    }
+
+    function triggerSingleWin() {
+      const easy = gradeIdx === 0 && levelIdx <= 1;
+      const list = easy ? PRAISE_EASY : PRAISE_HARD;
+      const title = list[(Math.random() * list.length) | 0];
+      const elapsedSec = Math.max(1, Math.round((Date.now() - puzzleStartTime) / 1000));
+
+      let earnedStars = 3;
+      if (hintsUsed >= 2) earnedStars = 1;
+      else if (hintsUsed === 1 || (undoOrClearUsed && elapsedSec > size * 10)) earnedStars = 2;
+
+      const before = variantFor(gradeIdx, levelIdx, solvedCount(gradeIdx, levelIdx));
+      if (!puzzleSolved) {
+        addSolved(gradeIdx, levelIdx);
+        pendingFloor = puzzleScore;
+        puzzleSolved = true;
+      }
+
+      if (rushMode) {
+        rushSolved++;
+        rushTimeLeft += 10;
+        if (rushSolved > (appData.bestRush || 0)) {
+          appData.bestRush = rushSolved;
+          saveAppData();
+        }
+        updateRushBanner();
+      }
+
+      const newBadges = checkWinAchievements(elapsedSec);
+      const solved = solvedCount(gradeIdx, levelIdx);
+      const after = variantFor(gradeIdx, levelIdx, solved);
+
+      playSuccess();
+      spawnConfetti();
+      buildGradeButtons();
+      buildLevelButtons();
+      updateStatus();
+
+      if (rushMode) {
+        noteEl.className = 'note';
+        noteEl.textContent = `⚡ HARİKA! +10 Saniye Eklendi! (${rushSolved}. Çözüm · 🔥 ${streakCount} Seri)`;
+        setTimeout(() => {
+          if (rushMode) newPuzzle();
+        }, 420);
+        return;
+      }
+
+      const grew = after.size !== before.size;
+      const badgeLine = newBadges.length
+        ? ` 🏅 Yeni Kupa: ${newBadges.map(b => b.icon + ' ' + b.title).join(', ')}!`
+        : '';
+      const streakLine = streakCount >= 2 ? ` · 🔥 ${streakCount}'li Seri!` : '';
+
+      showToast('success', '🎉', title,
+        `${GRADES[gradeIdx].label} · Seviye ${levelCfg().level} · ${elapsedSec} sn${streakLine} · ` +
+        (grew
+          ? `Izgara büyüdü: sıradaki soru ${after.size}×${after.size} olacak.`
+          : 'Sıradaki soru biraz daha zor olacak.') + badgeLine,
+        { showNext: true, stars: earnedStars });
+    }
+
+    /* Buton İşlevleri */
+    btnClear.addEventListener('click', () => {
+      playClick();
+      undoOrClearUsed = true;
+      rebuildPaths();
+      activeLetter = null;
+      tapLetter = null;
+      isDrawing = false;
+      lastCell = null;
+      hintArmed = false;
+      updateHintUI();
+      updatePaths();
+      updateHalos();
+      if (memoryMode) startMemoryCountdown(3);
+    });
+
+    btnUndo.addEventListener('click', () => {
+      playClick();
+      undoOrClearUsed = true;
+      const curSerialized = serializePaths(paths);
+      while (historyStack.length > 0) {
+        const prev = historyStack.pop();
+        if (serializePaths(prev) !== curSerialized) {
+          paths = prev;
+          activeLetter = null;
+          tapLetter = null;
+          isDrawing = false;
+          lastCell = null;
+          updatePaths();
+          updateHalos();
+          break;
+        }
+      }
+    });
+
+    btnNew.addEventListener('click', () => {
+      playClick();
+      dailyMode = false;
+      btnDaily.classList.remove('active');
+      newPuzzle();
+    });
+
+    btnCheck.addEventListener('click', () => {
+      const result = validate();
+      if (!result.valid) {
+        playError();
+        if (result.empty > 0) highlightEmptyCells();
+        showToast('error', '🤔', 'Henüz Tamamlanmadı', result.issues[0]);
+        return;
+      }
+      triggerSingleWin();
+    });
+
+    toastNext.addEventListener('click', () => {
+      hideToast();
+      if (duelMode) {
+        dailyMode = false;
+        btnDaily.classList.remove('active');
+      }
+      newPuzzle();
+    });
+    toastClose.addEventListener('click', hideToast);
+    overlay.addEventListener('click', hideToast);
+
+    /* Özel Modlar: Günün Sorusu, Soru Kodu, Engelli Mod ve 2 Kişilik Düello */
+    btnDaily.addEventListener('click', () => {
+      playClick();
+      dailyMode = !dailyMode;
+      btnDaily.classList.toggle('active', dailyMode);
+      newPuzzle(dailyMode ? dailySeedCode() : null);
+    });
+
+    btnObstacle.addEventListener('click', () => {
+      playClick();
+      obstacleMode = !obstacleMode;
+      btnObstacle.classList.toggle('active', obstacleMode);
+      if (obstacleMode && variantFor(gradeIdx, levelIdx, solvedCount(gradeIdx, levelIdx)).size < 4) {
+        showToast('error', 'ℹ️', 'Bilgi', 'Engelli mod 4×4 ve üzeri ızgaralarda devreye girer (Çok Kolay 3. Seviye ve üzeri).');
+      }
+      newPuzzle();
+    });
+
+    // 60 Saniye Fırtına (Rush) Modu
+    function updateRushBanner() {
+      if (!rushBanner) return;
+      rushBanner.classList.toggle('show', rushMode);
+      rushSolvedEl.textContent = rushSolved;
+      rushBestEl.textContent = appData.bestRush || 0;
+      rushTimerEl.textContent = `⏱️ ${rushTimeLeft}sn`;
+    }
+
+    function stopRushMode(timeExpired) {
+      clearInterval(rushInterval);
+      const finalSolved = rushSolved;
+      rushMode = false;
+      btnRush.classList.remove('active');
+      updateRushBanner();
+      if (timeExpired) {
+        playSuccess();
+        if (finalSolved > 0) spawnConfetti();
+        showToast('success', '⏱️', '60sn Fırtına Tamamlandı!',
+          `Süre doldu! Bu turda tam ${finalSolved} bulmaca çözdün. En yüksek Fırtına rekorun: ${appData.bestRush || 0}`,
+          { showNext: true });
+      }
+    }
+
+    function toggleRushMode() {
+      if (rushMode) {
+        stopRushMode(false);
+        return;
+      }
+      if (duelMode) toggleDuelMode(false);
+      rushMode = true;
+      rushTimeLeft = 60;
+      rushSolved = 0;
+      btnRush.classList.add('active');
+      updateRushBanner();
+      newPuzzle();
+      clearInterval(rushInterval);
+      rushInterval = setInterval(() => {
+        if (!rushMode) return;
+        rushTimeLeft--;
+        updateRushBanner();
+        if (rushTimeLeft <= 5 && rushTimeLeft > 0) {
+          playTone(660, 0, 0.06, 'sine', 0.07);
+        }
+        if (rushTimeLeft <= 0) {
+          stopRushMode(true);
+        }
+      }, 1000);
+    }
+
+    btnRush.addEventListener('click', () => {
+      playClick();
+      toggleRushMode();
+    });
+
+    // Hafıza (Körebe) Modu
+    btnMemory.addEventListener('click', () => {
+      playClick();
+      memoryMode = !memoryMode;
+      btnMemory.classList.toggle('active', memoryMode);
+      if (memoryMode) {
+        startMemoryCountdown(4);
+      } else {
+        clearInterval(memoryTimer);
+        memoryHidden = false;
+        updateSymbolTexts();
+        updateStatus();
+      }
+    });
+
+    // Kupa ve Madalya Dolabı Modalı
+    const badgeOverlay = document.getElementById('badgeOverlay');
+    const badgeModal = document.getElementById('badgeModal');
+    const badgeGrid = document.getElementById('badgeGrid');
+    const badgeModalSummary = document.getElementById('badgeModalSummary');
+    const badgeClose = document.getElementById('badgeClose');
+
+    function renderBadgeModal() {
+      const unlockedMap = appData.achievements || {};
+      const unlockedCount = Object.keys(unlockedMap).length;
+      badgeModalSummary.textContent = `Kazanılan Madalya: ${unlockedCount} / ${ACHIEVEMENTS.length}`;
+      badgeGrid.innerHTML = ACHIEVEMENTS.map(a => {
+        const isUnlocked = !!unlockedMap[a.id];
+        return `<div class="badge-item ${isUnlocked ? 'unlocked' : ''}">
+          <div class="b-ic">${a.icon}</div>
+          <div class="b-title">${a.title}</div>
+          <div class="b-desc">${a.desc}</div>
+          <span class="b-state">${isUnlocked ? '✓ Kazanıldı' : '🔒 Kilitli'}</span>
+        </div>`;
+      }).join('');
+    }
+
+    function openBadgeModal() {
+      renderBadgeModal();
+      badgeOverlay.classList.add('show');
+      badgeModal.classList.add('show');
+    }
+    function closeBadgeModal() {
+      badgeOverlay.classList.remove('show');
+      badgeModal.classList.remove('show');
+    }
+    if (btnBadges) btnBadges.addEventListener('click', () => { playClick(); openBadgeModal(); });
+    if (statBadgeWrap) statBadgeWrap.addEventListener('click', () => { playClick(); openBadgeModal(); });
+    if (badgeClose) badgeClose.addEventListener('click', () => { playClick(); closeBadgeModal(); });
+    if (badgeOverlay) badgeOverlay.addEventListener('click', closeBadgeModal);
+
+    // Soru Kodu Modalı
+    const seedOverlay = document.getElementById('seedOverlay');
+    const seedModal = document.getElementById('seedModal');
+    const currentSeedDisplay = document.getElementById('currentSeedDisplay');
+    const seedInput = document.getElementById('seedInput');
+    const seedCancel = document.getElementById('seedCancel');
+    const seedApply = document.getElementById('seedApply');
+
+    function openSeedModal() {
+      currentSeedDisplay.textContent = `Mevcut Soru Kodu: #${currentSeedCode} (${GRADES[gradeIdx].label} · Seviye ${levelCfg().level})`;
+      seedInput.value = currentSeedCode;
+      seedOverlay.classList.add('show');
+      seedModal.classList.add('show');
+    }
+    function closeSeedModal() {
+      seedOverlay.classList.remove('show');
+      seedModal.classList.remove('show');
+    }
+    btnSeed.addEventListener('click', () => { playClick(); openSeedModal(); });
+    seedCancel.addEventListener('click', () => { playClick(); closeSeedModal(); });
+    seedOverlay.addEventListener('click', closeSeedModal);
+    seedApply.addEventListener('click', () => {
+      const val = parseInt(seedInput.value, 10);
+      if (isNaN(val) || val < 1000 || val > 9999) {
+        playError();
+        showToast('error', '!', 'Geçersiz Kod', 'Lütfen 1000 ile 9999 arasında 4 haneli bir kod girin.');
+        return;
+      }
+      playClick();
+      dailyMode = false;
+      btnDaily.classList.remove('active');
+      closeSeedModal();
+      newPuzzle(val);
+    });
+
+    /* 2 Kişilik Akıllı Tahta Düello Motoru */
+    const duelScore1El = document.getElementById('duelScore1');
+    const duelScore2El = document.getElementById('duelScore2');
+    const duelTimerEl = document.getElementById('duelTimer');
+    const btnDuelNew = document.getElementById('btnDuelNew');
+    const btnDuelExit = document.getElementById('btnDuelExit');
+    const btnDuelUndo1 = document.getElementById('btnDuelUndo1');
+    const btnDuelUndo2 = document.getElementById('btnDuelUndo2');
+    const btnDuelClear1 = document.getElementById('btnDuelClear1');
+    const btnDuelClear2 = document.getElementById('btnDuelClear2');
+
+    let duelScores = [0, 0];
+    let duelStartTime = 0;
+    let duelTimerInterval = null;
+    let duelFinished = false;
+
+    function createDuelPlayer(id, svgElRef, frameElRef, noteElRef) {
+      return {
+        id,
+        svg: svgElRef,
+        frame: frameElRef,
+        note: noteElRef,
+        paths: {},
+        historyStack: [],
+        polyByLetter: {},
+        doneHaloByLetter: {},
+        headMarker: null,
+        activeLetter: null,
+        tapLetter: null,
+        isDrawing: false,
+        lastCell: null,
+        lastDir: null,
+        lastSvgPt: null,
+        pointerId: null,
+        touchId: null
+      };
+    }
+
+    function saveDuelHistory(dp) {
+      const snap = JSON.stringify(dp.paths);
+      if (dp.historyStack.length && dp.historyStack[dp.historyStack.length - 1] === snap) return;
+      dp.historyStack.push(snap);
+      if (dp.historyStack.length > 30) dp.historyStack.shift();
+    }
+
+    function undoDuelPlayer(dp) {
+      if (duelFinished || !dp.historyStack.length) return;
+      playClick();
+      dp.paths = JSON.parse(dp.historyStack.pop());
+      dp.isDrawing = false;
+      dp.activeLetter = null;
+      dp.tapLetter = null;
+      dp.lastCell = null;
+      updateDuelPaths(dp);
+    }
+
+    const duelPlayers = [
+      createDuelPlayer(1, document.getElementById('duelSvg1'), document.getElementById('duelFrame1'), document.getElementById('duelNote1')),
+      createDuelPlayer(2, document.getElementById('duelSvg2'), document.getElementById('duelFrame2'), document.getElementById('duelNote2'))
+    ];
+
+    function formatDuelTime(sec) {
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(sec % 60).padStart(2, '0');
+      return `⏱️ ${m}:${s}`;
+    }
+
+    function startDuelTimer() {
+      clearInterval(duelTimerInterval);
+      duelStartTime = Date.now();
+      duelTimerEl.textContent = '⏱️ 00:00';
+      duelTimerInterval = setInterval(() => {
+        if (duelFinished || !duelMode) return;
+        const sec = Math.floor((Date.now() - duelStartTime) / 1000);
+        duelTimerEl.textContent = formatDuelTime(sec);
+      }, 500);
+    }
+
+    function renderDuelBoard(dp) {
+      const W = pad * 2 + (size - 1) * cellGap;
+      dp.svg.setAttribute('width', W);
+      dp.svg.setAttribute('height', W);
+      dp.svg.setAttribute('viewBox', `0 0 ${W} ${W}`);
+      dp.svg.innerHTML = '';
+
+      const strokeW = Math.max(5, cellGap * 0.3);
+      const dotR = Math.max(2.6, cellGap * 0.075);
+      const isEmoji = symbolThemeIdx >= 1 && symbolThemeIdx <= 3;
+      const fontSize = Math.round(cellGap * (isEmoji ? (size >= 8 ? 0.44 : 0.48) : (size >= 8 ? 0.5 : 0.54)));
+
+      dp.polyByLetter = {};
+      dp.energyPolyByLetter = {};
+      const pathGroup = svgEl('g');
+      letters.forEach(letter => {
+        const attrs = {
+          class: 'path-line',
+          points: '',
+          stroke: PATH_COLORS[letter],
+          'stroke-width': strokeW
+        };
+        if (patternMode && PATH_DASHES[letter]) {
+          attrs['stroke-dasharray'] = PATH_DASHES[letter];
+        }
+        const poly = svgEl('polyline', attrs);
+        dp.polyByLetter[letter] = poly;
+        pathGroup.appendChild(poly);
+
+        const ePoly = svgEl('polyline', {
+          class: 'energy-line',
+          points: '',
+          'stroke-width': Math.max(2.2, strokeW * 0.32)
+        });
+        dp.energyPolyByLetter[letter] = ePoly;
+        pathGroup.appendChild(ePoly);
+      });
+      dp.svg.appendChild(pathGroup);
+
+      dp.headMarker = svgEl('circle', { r: strokeW * 0.62, fill: 'none', opacity: '0' });
+      dp.svg.appendChild(dp.headMarker);
+
+      const dotGroup = svgEl('g');
+      const obsSize = cellGap * 0.56;
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          const { x, y } = nodeXY(r, c);
+          if (isObstacle(r, c)) {
+            dotGroup.appendChild(svgEl('rect', {
+              class: 'obstacle-cell',
+              x: x - obsSize / 2, y: y - obsSize / 2,
+              width: obsSize, height: obsSize, rx: Math.max(4, obsSize * 0.22)
+            }));
+            continue;
+          }
+          if (getEndpointLetter(r, c)) continue;
+          dotGroup.appendChild(svgEl('circle', { class: 'node-dot', cx: x, cy: y, r: dotR }));
+        }
+      }
+      dp.svg.appendChild(dotGroup);
+
+      dp.doneHaloByLetter = {};
+      const letterGroup = svgEl('g');
+      letters.forEach(letter => {
+        dp.doneHaloByLetter[letter] = [];
+        endpoints[letter].forEach(([r, c]) => {
+          const { x, y } = nodeXY(r, c);
+          if (patternMode) {
+            letterGroup.appendChild(svgEl('circle', {
+              class: 'letter-badge', cx: x, cy: y, r: cellGap * 0.32,
+              fill: PATH_COLORS[letter], opacity: '0.22'
+            }));
+          }
+          const doneHalo = svgEl('circle', {
+            class: 'done-halo', cx: x, cy: y, r: cellGap * 0.35, stroke: PATH_COLORS[letter]
+          });
+          dp.doneHaloByLetter[letter].push(doneHalo);
+          letterGroup.appendChild(doneHalo);
+
+          const text = svgEl('text', { class: 'node-letter', x, y, 'font-size': fontSize });
+          text.textContent = getSymbol(letter, true);
+          letterGroup.appendChild(text);
+        });
+      });
+      dp.svg.appendChild(letterGroup);
+      updateDuelPaths(dp);
+    }
+
+    function updateDuelPaths(dp) {
+      letters.forEach(letter => {
+        const poly = dp.polyByLetter[letter];
+        const ePoly = dp.energyPolyByLetter ? dp.energyPolyByLetter[letter] : null;
+        if (!poly) return;
+        const path = dp.paths[letter];
+        let pts = '';
+        if (path && path.length >= 2) {
+          for (let i = 0; i < path.length; i++) {
+            const p = nodeXY(path[i][0], path[i][1]);
+            pts += (i ? ' ' : '') + p.x + ',' + p.y;
+          }
+        }
+        poly.setAttribute('points', pts);
+        const done = isPathComplete(letter, dp.paths);
+        if (ePoly) {
+          ePoly.setAttribute('points', done ? pts : '');
+          ePoly.classList.toggle('active', done);
+        }
+        (dp.doneHaloByLetter[letter] || []).forEach(el => el.classList.toggle('show', done));
+      });
+
+      const letter = dp.activeLetter || dp.tapLetter;
+      const path = letter ? dp.paths[letter] : null;
+      if (!letter || !path || !path.length) {
+        dp.headMarker.setAttribute('opacity', '0');
+      } else {
+        const [r, c] = path[path.length - 1];
+        const { x, y } = nodeXY(r, c);
+        dp.headMarker.setAttribute('cx', x);
+        dp.headMarker.setAttribute('cy', y);
+        dp.headMarker.setAttribute('stroke', PATH_COLORS[letter]);
+        dp.headMarker.setAttribute('stroke-width', Math.max(2, cellGap * 0.06));
+        dp.headMarker.setAttribute('opacity', '0.9');
+      }
+
+      const filled = countFilledCells(dp.paths);
+      const total = totalUsableCells();
+      dp.note.textContent = `Dolu Nokta: ${filled} / ${total}`;
+    }
+
+    function renderDuelBoards() {
+      resizeBoard();
+      duelPlayers.forEach(dp => renderDuelBoard(dp));
+    }
+
+    function resetDuelRound() {
+      duelFinished = false;
+      duelPlayers.forEach(dp => {
+        dp.paths = {};
+        letters.forEach(l => { dp.paths[l] = []; });
+        dp.historyStack = [];
+        dp.activeLetter = null;
+        dp.tapLetter = null;
+        dp.isDrawing = false;
+        dp.lastCell = null;
+        dp.lastDir = null;
+        dp.pointerId = null;
+        dp.touchId = null;
+      });
+      renderDuelBoards();
+      startDuelTimer();
+    }
+
+    function duelDragTarget(dp, x, y) {
+      if (!dp.lastCell) return nearestCellFromSvg(x, y, null);
+      const [lr, lc] = dp.lastCell;
+      const cur = nodeXY(lr, lc);
+      const dx = x - cur.x;
+      const dy = y - cur.y;
+      if (Math.hypot(dx, dy) < cellGap * 0.40) return [lr, lc];
+
+      let dr = 0, dc = 0;
+      const ratio = 1.25;
+      if (Math.abs(dx) > Math.abs(dy) * ratio) {
+        dc = dx > 0 ? 1 : -1;
+      } else if (Math.abs(dy) > Math.abs(dx) * ratio) {
+        dr = dy > 0 ? 1 : -1;
+      } else {
+        return nearestCellFromSvg(x, y, 0.42);
+      }
+
+      const nr = lr + dr, nc = lc + dc;
+      if (nr < 0 || nc < 0 || nr >= size || nc >= size) return null;
+      const target = nodeXY(nr, nc);
+      const perp = dr !== 0 ? Math.abs(x - target.x) : Math.abs(y - target.y);
+      if (perp > cellGap * 0.56) return null;
+      return [nr, nc];
+    }
+
+    function duelTraceTo(dp, tr, tc) {
+      if (!dp.activeLetter || !dp.lastCell) return false;
+      let changed = false;
+      let guard = 0;
+      while (dp.lastCell && (dp.lastCell[0] !== tr || dp.lastCell[1] !== tc) && guard++ < size * 2) {
+        const [lr, lc] = dp.lastCell;
+        const dr = tr - lr;
+        const dc = tc - lc;
+
+        if (Math.abs(dr) + Math.abs(dc) === 1) {
+          if (duelStepTo(dp, tr, tc)) changed = true;
+          break;
+        }
+
+        const stepR = [lr + Math.sign(dr), lc];
+        const stepC = [lr, lc + Math.sign(dc)];
+        let candidates;
+        if (Math.abs(dr) > Math.abs(dc)) {
+          candidates = dc !== 0 ? [stepR, stepC] : [stepR];
+        } else if (Math.abs(dc) > Math.abs(dr)) {
+          candidates = dr !== 0 ? [stepC, stepR] : [stepC];
+        } else if (dp.lastDir && dp.lastDir[0] !== 0) {
+          candidates = [stepR, stepC];
+        } else {
+          candidates = [stepC, stepR];
+        }
+
+        let moved = false;
+        for (const [nr, nc] of candidates) {
+          if (nr === lr && nc === lc) continue;
+          if (duelStepTo(dp, nr, nc)) {
+            changed = true;
+            moved = true;
+            break;
+          }
+        }
+        if (!moved || !dp.isDrawing) break;
+      }
+      return changed;
+    }
+
+    function duelStepTo(dp, r, c) {
+      if (duelFinished) return false;
+      if (r < 0 || c < 0 || r >= size || c >= size) return false;
+      if (isObstacle(r, c)) return false;
+      if (!dp.activeLetter || !dp.lastCell) return false;
+      if (dp.lastCell[0] === r && dp.lastCell[1] === c) return false;
+      if (!isAdjacent(dp.lastCell[0], dp.lastCell[1], r, c)) return false;
+
+      const path = dp.paths[dp.activeLetter];
+      const existingIdx = path.findIndex(([pr, pc]) => pr === r && pc === c);
+      if (existingIdx !== -1) {
+        dp.paths[dp.activeLetter] = path.slice(0, existingIdx + 1);
+        dp.lastDir = [r - dp.lastCell[0], c - dp.lastCell[1]];
+        dp.lastCell = [r, c];
+        playStepNote(dp.paths[dp.activeLetter].length);
+        return true;
+      }
+
+      if (isPathComplete(dp.activeLetter, dp.paths)) return false;
+
+      const ep = getEndpointLetter(r, c);
+      if (ep && ep !== dp.activeLetter) return false;
+      const owner = getCellOwner(r, c, dp.paths);
+      if (owner && owner !== dp.activeLetter) return false;
+
+      dp.paths[dp.activeLetter].push([r, c]);
+      dp.lastDir = [r - dp.lastCell[0], c - dp.lastCell[1]];
+      dp.lastCell = [r, c];
+
+      if (ep === dp.activeLetter) {
+        const start = dp.paths[dp.activeLetter][0];
+        if (!(start[0] === r && start[1] === c)) {
+          dp.isDrawing = false;
+          dp.tapLetter = null;
+          playPathComplete();
+          return true;
+        }
+      }
+      playStepNote(dp.paths[dp.activeLetter].length);
+      return true;
+    }
+
+    function duelCheckWin(dp) {
+      if (duelFinished) return;
+      if (countFilledCells(dp.paths) < totalUsableCells()) return;
+      const res = validate(dp.paths);
+      if (res.valid) {
+        duelFinished = true;
+        clearInterval(duelTimerInterval);
+        duelScores[dp.id - 1]++;
+        duelScore1El.textContent = duelScores[0];
+        duelScore2El.textContent = duelScores[1];
+        playSuccess();
+        spawnConfetti();
+        const elapsed = Math.floor((Date.now() - duelStartTime) / 1000);
+        showToast('success', '🏆', `${dp.id}. Oyuncu Kazandı!`,
+          `Tebrikler! Bulmacayı ${elapsed} saniyede eksiksiz tamamladın. Skor: ${duelScores[0]} - ${duelScores[1]}`,
+          { showNext: true });
+      }
+    }
+
+    function bindDuelEvents(dp) {
+      function dpClientToSvg(clientX, clientY) {
+        const rect = dp.svg.getBoundingClientRect();
+        if (!rect.width || !rect.height) return null;
+        const W = boardSizeSvg();
+        return {
+          x: ((clientX - rect.left) / rect.width) * W,
+          y: ((clientY - rect.top) / rect.height) * W
+        };
+      }
+
+      function dpStartAt(clientX, clientY) {
+        if (duelFinished) return;
+        const pt = dpClientToSvg(clientX, clientY);
+        if (!pt) return;
+        dp.lastSvgPt = pt;
+        const pos = nearestCellFromSvg(pt.x, pt.y, 0.92);
+        if (!pos) return;
+        const [r, c] = pos;
+        if (isObstacle(r, c)) return;
+
+        if (dp.tapLetter && !isPathComplete(dp.tapLetter, dp.paths)) {
+          const path = dp.paths[dp.tapLetter];
+          if (path && path.length) {
+            const head = path[path.length - 1];
+            const ep = getEndpointLetter(r, c);
+            if (isAdjacent(head[0], head[1], r, c) && (!ep || ep === dp.tapLetter)) {
+              saveDuelHistory(dp);
+              dp.activeLetter = dp.tapLetter;
+              dp.lastCell = head;
+              dp.isDrawing = true;
+              if (duelStepTo(dp, r, c)) {
+                playClick();
+                updateDuelPaths(dp);
+                duelCheckWin(dp);
+              }
+              return;
+            }
+          }
+        }
+
+        const ep = getEndpointLetter(r, c);
+        const owner = ep || getCellOwner(r, c, dp.paths);
+        if (!owner) return;
+        saveDuelHistory(dp);
+        playClick();
+        dp.isDrawing = true;
+        dp.activeLetter = owner;
+        dp.tapLetter = owner;
+        dp.lastCell = [r, c];
+        const path = dp.paths[owner];
+        const idx = path.findIndex(([pr, pc]) => pr === r && pc === c);
+        if (!ep && idx !== -1) {
+          dp.paths[owner] = path.slice(0, idx + 1);
+        } else {
+          clearOtherPathsFromCell(r, c, owner, dp.paths);
+          dp.paths[owner] = [[r, c]];
+        }
+        updateDuelPaths(dp);
+      }
+
+      function dpMoveAt(clientX, clientY) {
+        if (!dp.isDrawing || !dp.lastCell || duelFinished) return;
+        const pt = dpClientToSvg(clientX, clientY);
+        if (!pt) return;
+        const samples = dp.lastSvgPt
+          ? sampleSvgSegment(dp.lastSvgPt.x, dp.lastSvgPt.y, pt.x, pt.y)
+          : [[pt.x, pt.y]];
+        dp.lastSvgPt = pt;
+        let changed = false;
+        for (const [sx, sy] of samples) {
+          const cell = duelDragTarget(dp, sx, sy);
+          if (!cell) continue;
+          if (cell[0] === dp.lastCell[0] && cell[1] === dp.lastCell[1]) continue;
+          if (duelTraceTo(dp, cell[0], cell[1])) changed = true;
+          if (!dp.isDrawing) break;
+        }
+        if (changed) {
+          updateDuelPaths(dp);
+          duelCheckWin(dp);
+        }
+      }
+
+      function dpEnd() {
+        dp.isDrawing = false;
+        dp.activeLetter = null;
+        dp.lastCell = null;
+        dp.lastSvgPt = null;
+        updateDuelPaths(dp);
+        duelCheckWin(dp);
+      }
+
+      dp.frame.addEventListener('touchstart', (e) => {
+        if (e.changedTouches.length < 1) return;
+        const t = e.changedTouches[0];
+        dp.touchId = t.identifier;
+        e.preventDefault();
+        dpStartAt(t.clientX, t.clientY);
+      }, { passive: false });
+
+      dp.frame.addEventListener('touchmove', (e) => {
+        if (dp.touchId === null) return;
+        for (let i = 0; i < e.touches.length; i++) {
+          if (e.touches[i].identifier === dp.touchId) {
+            e.preventDefault();
+            dpMoveAt(e.touches[i].clientX, e.touches[i].clientY);
+            break;
+          }
+        }
+      }, { passive: false });
+
+      dp.frame.addEventListener('touchend', (e) => {
+        if (dp.touchId === null) return;
+        for (let i = 0; i < e.changedTouches.length; i++) {
+          if (e.changedTouches[i].identifier === dp.touchId) {
+            e.preventDefault();
+            dp.touchId = null;
+            dpEnd();
+            break;
+          }
+        }
+      }, { passive: false });
+
+      dp.frame.addEventListener('pointerdown', (e) => {
+        if (e.pointerType === 'touch') return;
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        dp.pointerId = e.pointerId;
+        e.preventDefault();
+        try { dp.frame.setPointerCapture(e.pointerId); } catch (_) {}
+        dpStartAt(e.clientX, e.clientY);
+      });
+
+      dp.frame.addEventListener('pointermove', (e) => {
+        if (e.pointerType === 'touch' || e.pointerId !== dp.pointerId) return;
+        e.preventDefault();
+        dpMoveAt(e.clientX, e.clientY);
+      });
+
+      dp.frame.addEventListener('pointerup', (e) => {
+        if (e.pointerType === 'touch' || e.pointerId !== dp.pointerId) return;
+        dp.pointerId = null;
+        dpEnd();
+      });
+    }
+
+    duelPlayers.forEach(dp => bindDuelEvents(dp));
+
+    function toggleDuelMode(forceState) {
+      duelMode = typeof forceState === 'boolean' ? forceState : !duelMode;
+      btnDuel.classList.toggle('active', duelMode);
+      appRoot.classList.toggle('duel-active', duelMode);
+      singleBoardSection.style.display = duelMode ? 'none' : 'block';
+      duelSection.classList.toggle('show', duelMode);
+      clearInterval(duelTimerInterval);
+      resizeBoard();
+      if (duelMode) {
+        resetDuelRound();
+      } else {
+        render();
+      }
+    }
+
+    btnDuel.addEventListener('click', () => { playClick(); toggleDuelMode(); });
+    btnDuelExit.addEventListener('click', () => { playClick(); toggleDuelMode(false); });
+    btnDuelNew.addEventListener('click', () => { playClick(); newPuzzle(); });
+    btnDuelUndo1.addEventListener('click', () => undoDuelPlayer(duelPlayers[0]));
+    btnDuelUndo2.addEventListener('click', () => undoDuelPlayer(duelPlayers[1]));
+    btnDuelClear1.addEventListener('click', () => {
+      if (duelFinished) return;
+      saveDuelHistory(duelPlayers[0]);
+      playClick();
+      letters.forEach(l => { duelPlayers[0].paths[l] = []; });
+      updateDuelPaths(duelPlayers[0]);
+    });
+    btnDuelClear2.addEventListener('click', () => {
+      if (duelFinished) return;
+      saveDuelHistory(duelPlayers[1]);
+      playClick();
+      letters.forEach(l => { duelPlayers[1].paths[l] = []; });
+      updateDuelPaths(duelPlayers[1]);
+    });
+
+    /* Klavye Kısayolları (Ctrl+Z: Geri Al, Escape: Modal/İpucu Kapat) */
+    window.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
+        if (seedModal.classList.contains('show') || pdfModal.classList.contains('show')) return;
+        e.preventDefault();
+        if (!duelMode) {
+          btnUndo.click();
+        }
+        return;
+      }
+      if (e.key === 'Escape') {
+        if (badgeModal && badgeModal.classList.contains('show')) { closeBadgeModal(); return; }
+        if (seedModal.classList.contains('show')) { closeSeedModal(); return; }
+        if (pdfModal.classList.contains('show')) { closePdfModal(); return; }
+        if (overlay.classList.contains('show')) { hideToast(); return; }
+        if (hintArmed) { hintArmed = false; updateHintUI(); updateHalos(); return; }
+      }
+    });
+
+    /* Mobil / Android Geri Tuşu Koruması (Uygulamadan kazara çıkışı önler) */
+    try { history.replaceState({ page: 'game' }, ''); } catch (_) {}
+    window.addEventListener('popstate', () => {
+      if (badgeModal && badgeModal.classList.contains('show')) { closeBadgeModal(); try { history.pushState({ page: 'game' }, ''); } catch (_) {} return; }
+      if (seedModal.classList.contains('show')) { closeSeedModal(); try { history.pushState({ page: 'game' }, ''); } catch (_) {} return; }
+      if (pdfModal.classList.contains('show')) { closePdfModal(); try { history.pushState({ page: 'game' }, ''); } catch (_) {} return; }
+      if (overlay.classList.contains('show')) { hideToast(); try { history.pushState({ page: 'game' }, ''); } catch (_) {} return; }
+      if (duelMode) { toggleDuelMode(false); try { history.pushState({ page: 'game' }, ''); } catch (_) {} return; }
+      if (rushMode) { stopRushMode(false); try { history.pushState({ page: 'game' }, ''); } catch (_) {} return; }
+    });
+
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        resizeBoard();
+        render();
+        if (duelMode) renderDuelBoards();
+      }, 120);
+    });
+
+    /* PDF ve Yazdırma Desteği */
+    const btnPdf = document.getElementById('btnPdf');
+    const pdfOverlay = document.getElementById('pdfOverlay');
+    const pdfModal = document.getElementById('pdfModal');
+    const pdfScope = document.getElementById('pdfScope');
+    const pdfCount = document.getElementById('pdfCount');
+    const pdfPerPage = document.getElementById('pdfPerPage');
+    const pdfAnswers = document.getElementById('pdfAnswers');
+    const pdfSummary = document.getElementById('pdfSummary');
+    const pdfCancel = document.getElementById('pdfCancel');
+    const pdfCreate = document.getElementById('pdfCreate');
+    const printArea = document.getElementById('printArea');
+
+    const PRINT_RULES =
+      'ABC Bağlamaca, zekâ oyunlarının uzamsal algı türlerindendir. Temel amaç tüm noktaları ' +
+      'kullanarak aynı harfleri birbirine bağlamaktır. Yalnızca yatay ve dikey çizgiler kullanılır, ' +
+      'çizgiler birbirini kesmez, başka bir harfin veya engelin üzerinden geçmez ve bitişte tek bir nokta bile açıkta kalmaz.';
+
+    const LAYOUT = {
+      1: { cols: 1, svgMax: '115mm' },
+      2: { cols: 1, svgMax: '92mm' },
+      4: { cols: 2, svgMax: '76mm' },
+      6: { cols: 2, svgMax: '60mm' }
+    };
+
+    function puzzleSvgMarkup(puzzle, withSolution) {
+      const n = puzzle.s;
+      const gap = 10;
+      const padU = 7;
+      const W = padU * 2 + (n - 1) * gap;
+      const fontSize = gap * 0.62;
+      const strokeW = gap * 0.3;
+      const dotR = 0.8;
+      const obsSet = new Set(puzzle.obstacles || []);
+      const xy = i => ({ x: padU + (i % n) * gap, y: padU + Math.floor(i / n) * gap });
+
+      let lines = '';
+      if (withSolution) {
+        puzzle.sol.forEach((cells, li) => {
+          const color = PATH_COLORS[LETTERS[li]];
+          const pts = cells.map(i => { const p = xy(i); return p.x + ',' + p.y; }).join(' ');
+          lines += `<polyline points="${pts}" fill="none" stroke="${color}" stroke-width="${strokeW}"` +
+                   ' stroke-linecap="round" stroke-linejoin="round"/>';
+        });
+      }
+
+      const epMap = new Map();
+      puzzle.sol.forEach((cells, li) => {
+        epMap.set(cells[0], LETTERS[li]);
+        epMap.set(cells[cells.length - 1], LETTERS[li]);
+      });
+
+      let dots = '';
+      let texts = '';
+      const obsSize = gap * 0.56;
+      for (let i = 0; i < n * n; i++) {
+        const p = xy(i);
+        if (obsSet.has(i)) {
+          dots += `<rect x="${p.x - obsSize / 2}" y="${p.y - obsSize / 2}" width="${obsSize}" height="${obsSize}" rx="1.4" fill="#37474f"/>`;
+          continue;
+        }
+        const letter = epMap.get(i);
+        if (letter) {
+          const sym = getSymbol(letter, true);
+          const outline = withSolution
+            ? ' stroke="#fff" stroke-width="1.5" stroke-linejoin="round" paint-order="stroke"'
+            : '';
+          texts += `<text x="${p.x}" y="${p.y}" font-size="${fontSize}"` +
+                   ' font-family="Arial, Helvetica, sans-serif" font-weight="bold" fill="#231f20"' +
+                   ` text-anchor="middle" dominant-baseline="central"${outline}>${sym}</text>`;
+        } else {
+          dots += `<circle cx="${p.x}" cy="${p.y}" r="${dotR}" fill="#231f20"/>`;
+        }
+      }
+
+      return `<svg viewBox="0 0 ${W} ${W}" xmlns="http://www.w3.org/2000/svg">${lines}${dots}${texts}</svg>`;
+    }
+
+    function buildPrintItems(scope, count) {
+      const items = [];
+
+      function addLevel(gi, li, n) {
+        const cfg = GRADES[gi].levels[li];
+        const v = variantFor(gi, li, solvedCount(gi, li));
+        const range = difficultyRange(gi, li);
+        for (let i = 0; i < n; i++) {
+          const p = n === 1
+            ? percentileFor(gi, li, solvedCount(gi, li))
+            : range.start + (range.max - range.start) * (i / (n - 1));
+          const puzzle = generatePuzzle(v.size, v.pairs, p, null, 40, {
+            gi, li, withObstacles: obstacleMode
+          });
+          if (!puzzle) continue;
+          items.push({
+            puzzle,
+            caption: `${GRADES[gi].label} · Seviye ${cfg.level} · Soru ${i + 1} (${v.size}×${v.size} · #${puzzle.code})`
+          });
+        }
+      }
+
+      if (scope === 'question') {
+        const sol = letters.map(l => solution[l].map(([r, c]) => r * size + c));
+        const obsIdx = obstacles.map(([r, c]) => r * size + c);
+        items.push({
+          puzzle: { s: size, sol, obstacles: obsIdx, code: currentSeedCode },
+          caption: `${GRADES[gradeIdx].label} · Seviye ${levelCfg().level} · Soru #${currentSeedCode} (${size}×${size})`
+        });
+      } else if (scope === 'level') {
+        addLevel(gradeIdx, levelIdx, count);
+      } else if (scope === 'grade') {
+        GRADES[gradeIdx].levels.forEach((_, li) => addLevel(gradeIdx, li, count));
+      } else {
+        GRADES.forEach((g, gi) => g.levels.forEach((_, li) => addLevel(gi, li, count)));
+      }
+      return items;
+    }
+
+    function chunk(arr, n) {
+      const out = [];
+      for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
+      return out;
+    }
+
+    function buildPrintPages(items, perPage, withAnswers) {
+      const layout = LAYOUT[perPage] || LAYOUT[4];
+      const pages = chunk(items, perPage);
+      const totalPages = pages.length * (withAnswers ? 2 : 1);
+      let pageNo = 0;
+      let html = '';
+
+      function renderSet(showSolution) {
+        pages.forEach((group, gi) => {
+          pageNo++;
+          html += '<section class="print-page">';
+          html += '<div class="print-banner">' +
+                  '<div class="t1">ZEKA VE AKIL OYUNLARI</div>' +
+                  '<div class="t2">ABC BAĞLAMACA</div></div>';
+
+          if (showSolution) {
+            html += '<div style="text-align:center">' +
+                    '<span class="print-answer-tag">CEVAP ANAHTARI</span></div>';
+          } else if (gi === 0) {
+            html += '<div class="print-student-info">' +
+                    '<span>Adı Soyadı: ........................................</span>' +
+                    '<span>Sınıfı / No: ....................</span>' +
+                    '<span>Tarih: .... / .... / 202..</span>' +
+                    '<span>Puan: ..........</span>' +
+                    '</div>';
+            html += `<div class="print-rules">${PRINT_RULES}</div>`;
+          }
+
+          html += `<div class="print-grid" style="grid-template-columns:repeat(${layout.cols},1fr)">`;
+          group.forEach(item => {
+            html += '<div class="print-card">' +
+                    `<div class="cap">${item.caption}</div>` +
+                    `<div class="frame" style="max-width:${layout.svgMax}">` +
+                    puzzleSvgMarkup(item.puzzle, showSolution) +
+                    '</div></div>';
+          });
+          html += '</div>';
+
+          html += '<div class="print-foot">' +
+                  '<span>MiniBilge · ABC Bağlamaca Etkinliği</span>' +
+                  `<span>Sayfa ${pageNo} / ${totalPages}</span></div>`;
+          html += '</section>';
+        });
+      }
+
+      renderSet(false);
+      if (withAnswers) renderSet(true);
+      return html;
+    }
+
+    function scopeCount(scope, count) {
+      if (scope === 'question') return 1;
+      if (scope === 'level') return count;
+      if (scope === 'grade') return count * GRADES[gradeIdx].levels.length;
+      return count * GRADES.reduce((s, g) => s + g.levels.length, 0);
+    }
+
+    function scopeLabel(scope) {
+      const cfg = levelCfg();
+      const label = GRADES[gradeIdx].label;
+      if (scope === 'question') return `${label} · Seviye ${cfg.level} · Ekrandaki soru`;
+      if (scope === 'level') return `${label} · Seviye ${cfg.level}`;
+      if (scope === 'grade') return `${label} Grubu`;
+      return 'Tüm Zorluklar';
+    }
+
+    function updatePdfSummary() {
+      const scope = pdfScope.value;
+      const count = parseInt(pdfCount.value, 10);
+      const perPage = parseInt(pdfPerPage.value, 10);
+      const total = scopeCount(scope, count);
+      const pages = Math.ceil(total / perPage) * (pdfAnswers.checked ? 2 : 1);
+      pdfCount.disabled = (scope === 'question');
+      pdfSummary.textContent = `${scopeLabel(scope)} · ${total} bulmaca · ${pages} sayfa`;
+    }
+
+    function openPdfModal() {
+      updatePdfSummary();
+      pdfOverlay.classList.add('show');
+      pdfModal.classList.add('show');
+    }
+    function closePdfModal() {
+      pdfOverlay.classList.remove('show');
+      pdfModal.classList.remove('show');
+    }
+
+    function createPdf() {
+      const scope = pdfScope.value;
+      const count = parseInt(pdfCount.value, 10);
+      const perPage = parseInt(pdfPerPage.value, 10);
+      const withAnswers = pdfAnswers.checked;
+
+      pdfCreate.disabled = true;
+      pdfCreate.textContent = 'Hazırlanıyor…';
+
+      setTimeout(() => {
+        const items = buildPrintItems(scope, count);
+        printArea.innerHTML = buildPrintPages(items, perPage, withAnswers);
+
+        const safeTitle = ('ABC-Baglamaca-' + scopeLabel(scope) + (withAnswers ? '-cevapli' : ''))
+          .replace(/[^\w\sğüşıöçĞÜŞİÖÇ.-]/g, '')
+          .replace(/\s+/g, '-');
+
+        const prevTitle = document.title;
+        document.title = safeTitle;
+        pdfCreate.disabled = false;
+        pdfCreate.textContent = 'Oluştur';
+        closePdfModal();
+
+        setTimeout(() => {
+          window.print();
+          document.title = prevTitle;
+        }, 60);
+      }, 40);
+    }
+
+    btnPdf.addEventListener('click', () => { playClick(); openPdfModal(); });
+    pdfCancel.addEventListener('click', () => { playClick(); closePdfModal(); });
+    pdfOverlay.addEventListener('click', closePdfModal);
+    pdfCreate.addEventListener('click', createPdf);
+    pdfScope.addEventListener('change', updatePdfSummary);
+    pdfCount.addEventListener('change', updatePdfSummary);
+    pdfPerPage.addEventListener('change', updatePdfSummary);
+    pdfAnswers.addEventListener('change', updatePdfSummary);
+    window.addEventListener('afterprint', () => { printArea.innerHTML = ''; });
+
+    /* Başlat */
+    buildGradeButtons();
+    buildLevelButtons();
+    newPuzzle();
+    if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    }
+  })();
+  </script>
+</body>
+</html>
