@@ -1,0 +1,27 @@
+{
+  "name": "ABC Bağlamaca: Akıl ve Zekâ Oyunu - MiniBilge",
+  "short_name": "ABC Bağlamaca",
+  "description": "Anasınıfı, ilkokul ve ortaokul için 30 seviyeli uzamsal algı, akıl ve zekâ oyunu. Tek kişilik, 2 kişilik düello, hafıza ve hız modları.",
+  "lang": "tr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eef1f6",
+  "theme_color": "#2e3a92",
+  "categories": ["education", "games", "puzzle"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
