@@ -1507,9 +1507,12 @@
   <!-- ADIM 3 & ADIM 4: Küresel Haftalık Lig Sıralaması (Leaderboard) ve Kaşif Profili Modalı -->
   <div class="modal-overlay" id="profileOverlay"></div>
   <div class="modal" id="profileModal" style="max-width:480px;">
-    <h3>🌍 Küresel Haftalık Lig Sıralaması</h3>
-    <p class="modal-note">
-      Her hafta sıfırlanan 4 basamaklı lig piramidinde bulmacaları çözerek zirveye tırman! İstersen Kaşif adını aşağıdan dilediğin zaman özelleştirebilirsin.
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px;">
+      <h3 style="margin:0;">🌍 Küresel Haftalık Lig Sıralaması</h3>
+      <button type="button" class="pal-btn" id="btnRefreshCloudLb" style="font-size:0.7rem;padding:4px 9px;" title="Arkadaşlarının ve tüm oyuncuların anlık puanlarını buluttan yenile">🔄 Canlı Yenile</button>
+    </div>
+    <p class="modal-note" id="cloudSyncStatusNote">
+      🟢 Canlı Bulut Senkronizasyonu Aktif: Oyunu oynayan tüm arkadaşlarınla aynı ortak lig sıralamasındasın!
     </p>
     <!-- 4 Basamaklı Lig Piramidi -->
     <div class="league-pyramid" id="leaguePyramid"></div>
@@ -5344,15 +5347,16 @@
         appData.unlockedHats[questObj.rewardHat] = true;
       }
 
-      // ADIM 3 & 4: Haftalık Küresel Lig Puanını Güncelle
+      // ADIM 3 & 4: Haftalık Küresel Lig Puanını Güncelle ve Ortak Bulut Tablosuna Gönder
       ensureLeagueWeekSync();
       const gainedLeaguePts = (gi + 1) * 25 + (li + 1) * 10 + (hintsUsed === 0 ? 15 : 0);
       appData.weeklyLeagueScore = (appData.weeklyLeagueScore || 0) + gainedLeaguePts;
       updateProfileButtonUI();
       saveAppData();
+      syncPlayerToCloudLeaderboard(false);
     }
 
-    // --- ADIM 3 & ADIM 4: OTOMATİK HAVALI RUMUZ, KÜRESEL HAFTALIK SIRALAMA VE 4 BASAMAKLI LİG PİRAMİDİ ---
+    // --- ADIM 3 & ADIM 4: OTOMATİK HAVALI RUMUZ, CANLI BULUT ORTAK SIRALAMA (CLOUD LEADERBOARD) VE 4 BASAMAKLI LİG PİRAMİDİ ---
     const btnProfile = document.getElementById('btnProfile');
     const profileOverlay = document.getElementById('profileOverlay');
     const profileModal = document.getElementById('profileModal');
@@ -5363,6 +5367,113 @@
     const leaguePyramidEl = document.getElementById('leaguePyramid');
     const leagueGentleBannerEl = document.getElementById('leagueGentleBanner');
     const leaderboardListEl = document.getElementById('leaderboardList');
+    const btnRefreshCloudLb = document.getElementById('btnRefreshCloudLb');
+    const cloudSyncStatusNote = document.getElementById('cloudSyncStatusNote');
+
+    // Ortak Bulut Puan Tablosu Yapılandırması (Tüm gerçek oyuncuları ve arkadaşları aynı listede buluşturur)
+    const CLOUD_KV_APP_KEY = 'yrh5yet9';
+    const CLOUD_KV_BASE = 'https://keyvalue.immanuel.co/api/KeyVal';
+
+    function ensureDeviceUid() {
+      if (!appData.deviceUid) {
+        appData.deviceUid = 'u_' + Math.random().toString(36).slice(2, 8) + Date.now().toString(36).slice(-4);
+        saveAppData();
+      }
+      return appData.deviceUid;
+    }
+
+    function getCurrentPlayerCloudId() {
+      const uid = ensureDeviceUid();
+      const slot = appData.activeProfileIdx || 0;
+      return `${uid}_p${slot}`;
+    }
+
+    function encodeCloudPayload(obj) {
+      try {
+        const json = JSON.stringify(obj);
+        const b64 = btoa(unescape(encodeURIComponent(json)));
+        return b64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      } catch (_) {
+        return '';
+      }
+    }
+
+    function decodeCloudPayload(str) {
+      try {
+        if (!str || typeof str !== 'string') return null;
+        let b64 = str.replace(/^"+|"+$/g, '').replace(/-/g, '+').replace(/_/g, '/');
+        while (b64.length % 4) b64 += '=';
+        const json = decodeURIComponent(escape(atob(b64)));
+        return JSON.parse(json);
+      } catch (_) {
+        return null;
+      }
+    }
+
+    async function syncPlayerToCloudLeaderboard(renderAfter = false) {
+      try {
+        ensureLeagueWeekSync();
+        ensureProfilesInit();
+        const wkKey = 'abc_lb_' + (appData.leagueWeek || '2026-W45').replace(/[^a-zA-Z0-9_]/g, '_');
+        if (cloudSyncStatusNote && renderAfter) {
+          cloudSyncStatusNote.textContent = '🔄 Ortak bulut sıralaması güncelleniyor...';
+        }
+
+        // 1. Buluttaki mevcut haftalık oyuncu listesini çek
+        const getRes = await fetch(`${CLOUD_KV_BASE}/GetValue/${CLOUD_KV_APP_KEY}/${wkKey}`, { cache: 'no-store' });
+        let cloudObj = null;
+        if (getRes.ok) {
+          const rawText = await getRes.text();
+          cloudObj = decodeCloudPayload(rawText);
+        }
+        if (!cloudObj || typeof cloudObj !== 'object' || !cloudObj.p) {
+          cloudObj = { w: appData.leagueWeek, p: {} };
+        }
+
+        // 2. Aktif oyuncunun (ve bu cihazdaki diğer profillerin) güncel ismini ve puanını ekle/güncelle
+        const activeIdx = appData.activeProfileIdx || 0;
+        const curProfile = appData.profiles[activeIdx];
+        const myCloudId = getCurrentPlayerCloudId();
+        const myScore = Math.max(40, (appData.weeklyLeagueScore || appData.score || 60));
+
+        if (curProfile && curProfile.name) {
+          cloudObj.p[myCloudId] = {
+            n: curProfile.name.slice(0, 20),
+            s: myScore,
+            t: Date.now()
+          };
+        }
+
+        // Boyut sınırı aşılmasın diye en yüksek puanlı ilk 65 gerçek oyuncuyu tut
+        const sortedIds = Object.keys(cloudObj.p).sort((a, b) => (cloudObj.p[b].s || 0) - (cloudObj.p[a].s || 0));
+        if (sortedIds.length > 65) {
+          sortedIds.slice(65).forEach(oldId => { delete cloudObj.p[oldId]; });
+        }
+
+        // Yerel önbelleğe kaydet
+        appData.cloudPlayersCache = cloudObj.p;
+        saveAppData();
+
+        // 3. Güncellenmiş tabloyu buluta geri yaz
+        const encoded = encodeCloudPayload(cloudObj);
+        if (encoded) {
+          await fetch(`${CLOUD_KV_BASE}/UpdateValue/${CLOUD_KV_APP_KEY}/${wkKey}/${encoded}`, { method: 'POST' });
+        }
+
+        const realCount = Object.keys(cloudObj.p).length;
+        if (cloudSyncStatusNote) {
+          cloudSyncStatusNote.innerHTML = `🟢 <strong>Canlı Ortak Sıralama Aktif:</strong> Şu an bu haftaki ortak tabloda <strong>${realCount} gerçek oyuncu (arkadaşın)</strong> yarışıyor!`;
+        }
+        updateProfileButtonUI();
+        if (renderAfter && profileModal && profileModal.classList.contains('show')) {
+          renderProfileModal(false);
+        }
+      } catch (_) {
+        if (cloudSyncStatusNote) {
+          cloudSyncStatusNote.textContent = '🌐 Çevrimdışı görünüm (İnternet bağlandığında arkadaşlarının puanları otomatik güncellenir).';
+        }
+      }
+    }
 
     const COOL_NICK_ADJECTIVES = ['Zeki', 'Çevik', 'Cesur', 'Bilge', 'Parlak', 'Atom', 'Yıldız', 'Süper', 'Usta', 'Kutup'];
     const COOL_NICK_NOUNS = ['Kaşif', 'Kaptan', 'Mucit', 'Gezgin', 'Şampiyon', 'Analist', 'Pilot', 'Dehası'];
@@ -5390,13 +5501,14 @@
 
     function ensureLeagueWeekSync() {
       const wk = currentIsoWeekKey();
-      if (typeof appData.weeklyLeagueScore !== 'number') {
+      if (typeof appData.weeklyLeagueScore !== 'number' || appData.weeklyLeagueScore < (appData.score || 0)) {
         appData.weeklyLeagueScore = Math.max(80, (appData.score || 0));
       }
       if (appData.leagueWeek && appData.leagueWeek !== wk) {
         // Haftalık sıfırlanma: Kucaklayıcı ve teşvik edici geçiş mesajı kaydet
         appData.lastWeekLeagueNote = '🌱 Yeni hafta, yepyeni bir başlangıç! Hadi bu hafta tekrar üst lige tırmanmak için harika bir şans!';
         appData.weeklyLeagueScore = 60;
+        appData.cloudPlayersCache = {};
       }
       appData.leagueWeek = wk;
     }
@@ -5406,9 +5518,40 @@
       ensureProfilesInit();
       const activeProfile = appData.profiles[appData.activeProfileIdx || 0];
       const myName = activeProfile ? activeProfile.name : 'Zeki Kaşif #42';
-      const myWeeklyScore = Math.max(40, (appData.weeklyLeagueScore || 0));
+      const myWeeklyScore = Math.max(40, (appData.weeklyLeagueScore || appData.score || 0));
+      const myCloudId = getCurrentPlayerCloudId();
 
-      // Haftaya göre deterministik 55 küresel rakip kaşif üret
+      const peers = [];
+      const seenNames = new Set();
+
+      // 1. Önce buluttaki tüm GERÇEK oyuncuları (arkadaşlarımızı) ekle
+      const cloudMap = appData.cloudPlayersCache || {};
+      Object.keys(cloudMap).forEach(cid => {
+        if (cid === myCloudId) return; // Kendimizi aşağıda 'isMe: true' olarak ekleyeceğiz
+        const item = cloudMap[cid];
+        if (!item || !item.n) return;
+        const cleanN = String(item.n).trim();
+        const normKey = cleanN.toLowerCase();
+        if (normKey === myName.trim().toLowerCase()) return;
+        if (seenNames.has(normKey)) return;
+        seenNames.add(normKey);
+        peers.push({
+          name: `🟢 ${cleanN}`,
+          score: Math.max(40, Number(item.s) || 60),
+          isMe: false,
+          isRealFriend: true
+        });
+      });
+
+      // 2. Kendimizi ekle
+      peers.push({
+        name: `🌟 ${myName} (Sen)`,
+        score: myWeeklyScore,
+        isMe: true,
+        isRealFriend: true
+      });
+
+      // 3. Toplam 55 kişilik 4 lig basamağını tamamlamak için kalan boşlukları sistem kaşifleriyle doldur
       const wkSeedStr = appData.leagueWeek || '2026-W45';
       let hash = 2166136261;
       for (let i = 0; i < wkSeedStr.length; i++) {
@@ -5417,25 +5560,21 @@
       }
       const rng = mulberry32(hash >>> 0);
       const flags = ['🇹🇷', '🇯🇵', '🇩🇪', '🇰🇷', '🇬🇧', '🇫🇷', '🇨🇦', '🇧🇷', '🇳🇱', '🇪🇸', '🇮🇹', '🇦🇿'];
-      const peers = [];
-      for (let i = 0; i < 55; i++) {
+      const neededBots = Math.max(10, 56 - peers.length);
+      for (let i = 0; i < neededBots; i++) {
         const adj = COOL_NICK_ADJECTIVES[Math.floor(rng() * COOL_NICK_ADJECTIVES.length)];
         const noun = COOL_NICK_NOUNS[Math.floor(rng() * COOL_NICK_NOUNS.length)];
         const num = 10 + Math.floor(rng() * 89);
         const flag = flags[Math.floor(rng() * flags.length)];
-        // Puan dağılımı: 45 ile 1350 arası dengeli dağılım (öğrenci çözdükçe 51+'dan İlk 10'a tırmanır!)
         const baseScore = Math.round(45 + Math.pow(rng(), 1.65) * 1280);
         peers.push({
           name: `${flag} ${adj} ${noun} #${num}`,
           score: baseScore,
-          isMe: false
+          isMe: false,
+          isRealFriend: false
         });
       }
-      peers.push({
-        name: `🌟 ${myName} (Sen)`,
-        score: myWeeklyScore,
-        isMe: true
-      });
+
       peers.sort((a, b) => b.score - a.score || (a.isMe ? -1 : 1));
       peers.forEach((p, idx) => { p.rank = idx + 1; });
       return peers;
@@ -5548,9 +5687,12 @@
       newPuzzle();
     }
 
-    function renderProfileModal() {
+    function renderProfileModal(triggerCloudSync = true) {
       ensureProfilesInit();
       syncCurrentToActiveProfile();
+      if (triggerCloudSync) {
+        syncPlayerToCloudLeaderboard(true);
+      }
       const activeIdx = appData.activeProfileIdx || 0;
       if (profileNameInput) {
         profileNameInput.value = appData.profiles[activeIdx].name;
@@ -5642,6 +5784,7 @@
       profileModal.classList.remove('show');
     }
     if (btnProfile) btnProfile.addEventListener('click', () => { playClick(); openProfileModal(); });
+    if (btnRefreshCloudLb) btnRefreshCloudLb.addEventListener('click', () => { playClick(); syncPlayerToCloudLeaderboard(true); });
     if (profileClose) profileClose.addEventListener('click', () => { playClick(); closeProfileModal(); });
     if (profileOverlay) profileOverlay.addEventListener('click', closeProfileModal);
     if (profileSave) {
@@ -5656,10 +5799,14 @@
         syncCurrentToActiveProfile();
         saveAppData();
         updateProfileButtonUI();
-        renderProfileModal();
+        syncPlayerToCloudLeaderboard(true);
+        renderProfileModal(false);
         closeProfileModal();
       });
     }
+
+    // Açılışta mevcut oyuncuyu ve puanını ortak bulut tablosuyla senkronize et
+    setTimeout(() => { syncPlayerToCloudLeaderboard(false); }, 600);
 
     // --- ADIM 2: "🖥️ AKILLI TAHTA MODU" (SINIF / ATÖLYE TAM EKRAN & ERGONOMİ OPTİMİZASYONU) ---
     const btnLowReachTop = document.getElementById('btnLowReachTop');
