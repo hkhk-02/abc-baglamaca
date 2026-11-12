@@ -2845,16 +2845,24 @@
       activeRng = mulberry32(fullSeed);
 
       try {
-        const want = poolSize || 90;
-        const iterations = 260 + size * 90;
+        const isSmallScreen = typeof window !== 'undefined' && window.innerWidth <= 768;
+        const defaultPool = isSmallScreen ? 32 : 60;
+        const want = poolSize ? (isSmallScreen ? Math.min(poolSize, 36) : poolSize) : defaultPool;
+        const iterations = 220 + size * 70;
         const obsCount = (opts.withObstacles && size >= 3 && (size * size - 1 >= pairs * MIN_PATH_CELLS))
           ? (size >= 7 ? 2 : 1)
           : 0;
         const candidates = [];
         let guard = 0;
+        const maxGuard = want * 18;
+        const startTs = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
 
-        while (candidates.length < want && guard < want * 30) {
+        while (candidates.length < want && guard < maxGuard) {
           guard++;
+          if (candidates.length >= 6 && (guard & 7) === 0) {
+            const nowTs = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
+            if (nowTs - startTs > 140) break;
+          }
           const ham = randomHamiltonian(size, iterations);
           const obsCells = obsCount > 0 ? ham.slice(0, obsCount) : [];
           const usablePath = obsCount > 0 ? ham.slice(obsCount) : ham;
@@ -8779,6 +8787,19 @@
       }
     }
 
+    async function fetchWithTimeout(url, options = {}, timeoutMs = 6000) {
+      if (typeof AbortController === 'undefined') {
+        return fetch(url, options);
+      }
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => { try { ctrl.abort(); } catch (_) {} }, timeoutMs);
+      try {
+        return await fetch(url, Object.assign({}, options, { signal: ctrl.signal }));
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
     async function syncPlayerToCloudLeaderboard(renderAfter = false) {
       try {
         ensureLeagueWeekSync();
@@ -8789,7 +8810,7 @@
         }
 
         // 1. Buluttaki mevcut haftalık oyuncu listesini çek
-        const getRes = await fetch(`${CLOUD_KV_BASE}/GetValue/${CLOUD_KV_APP_KEY}/${wkKey}`, { cache: 'no-store' });
+        const getRes = await fetchWithTimeout(`${CLOUD_KV_BASE}/GetValue/${CLOUD_KV_APP_KEY}/${wkKey}`, { cache: 'no-store' }, 6000);
         let cloudObj = null;
         if (getRes.ok) {
           const rawText = await getRes.text();
@@ -8839,7 +8860,7 @@
         // 3. Güncellenmiş tabloyu buluta geri yaz
         const encoded = encodeCloudPayload(cloudObj);
         if (encoded) {
-          await fetch(`${CLOUD_KV_BASE}/UpdateValue/${CLOUD_KV_APP_KEY}/${wkKey}/${encoded}`, { method: 'POST' });
+          await fetchWithTimeout(`${CLOUD_KV_BASE}/UpdateValue/${CLOUD_KV_APP_KEY}/${wkKey}/${encoded}`, { method: 'POST' }, 6000);
         }
 
         const realCount = Object.keys(cloudObj.p).length;
@@ -9360,8 +9381,8 @@
       });
     }
 
-    // Açılışta mevcut oyuncuyu ve puanını ortak bulut tablosuyla senkronize et
-    setTimeout(() => { syncPlayerToCloudLeaderboard(false); }, 600);
+    // Açılışta ilk çizim tamamlandıktan sonra mevcut oyuncuyu ve puanını ortak bulut tablosuyla senkronize et
+    setTimeout(() => { syncPlayerToCloudLeaderboard(false); }, 2500);
 
     /* Başlat: Açık olan en son seviyeden başlat */
     if ((appData.goldTour || 0) === 0) {
