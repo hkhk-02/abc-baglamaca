@@ -588,7 +588,7 @@
       max-height: 100dvh !important;
       border-radius: 0 !important;
       border: none !important;
-      padding: clamp(6px, 1.2vmin, 16px) clamp(8px, 2vw, 28px);
+      padding: clamp(5px, 1vmin, 14px) clamp(8px, 1.8vw, 24px);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -604,58 +604,217 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
-      padding-bottom: 6px;
+      gap: 6px;
+      padding-bottom: 5px;
       margin-bottom: 4px;
-      border-bottom: 2px solid var(--border-color);
-      flex-wrap: wrap;
+      border-bottom: 1.5px solid var(--border-color);
+      flex-wrap: nowrap;
       flex-shrink: 0;
+    }
+    .jigsaw-top-header h3 {
+      margin: 0;
+      font-size: clamp(0.84rem, 2vmin, 1.25rem);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .jigsaw-back-home-btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: clamp(6px, 1vmin, 10px) clamp(11px, 1.6vw, 18px);
+      gap: 4px;
+      padding: clamp(5px, 0.9vmin, 9px) clamp(9px, 1.4vw, 15px);
       border-radius: 10px;
       border: 2px solid #c62828;
       background: linear-gradient(180deg, #ef5350, #c62828);
       color: #fff;
-      font-size: clamp(0.76rem, 1.4vmin, 0.92rem);
+      font-size: clamp(0.72rem, 1.3vmin, 0.88rem);
       font-weight: 900;
       cursor: pointer;
-      box-shadow: 0 3px 8px rgba(198, 40, 40, 0.3);
+      box-shadow: 0 2px 6px rgba(198, 40, 40, 0.28);
       transition: transform 0.14s, filter 0.14s;
       touch-action: manipulation;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .jigsaw-back-home-btn:hover {
       transform: translateY(-1px);
       filter: brightness(1.06);
     }
-    .jigsaw-tier-bar, .jigsaw-level-bar, .jigsaw-style-bar {
-      display: flex;
-      gap: clamp(4px, 0.8vmin, 8px);
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 4px;
+
+    /* 📱 Telefon & Tablet Dostu Gruplanmış Açılır Menü Çubuğu (Zorluk · Seviye · Stil · İpucu) */
+    .jigsaw-menu-system {
+      position: relative;
       flex-shrink: 0;
+      margin-bottom: 4px;
+      z-index: 30;
     }
-    .jigsaw-lvl-chip {
+    .jigsaw-group-bar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(4px, 0.8vw, 8px);
+      align-items: stretch;
+    }
+    .jigsaw-group-bar.no-ghost-btn {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .jigsaw-group-btn {
+      border: 2px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-main);
+      border-radius: 11px;
+      padding: 4px 6px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1px;
+      transition: all 0.15s ease;
+      touch-action: manipulation;
+      box-shadow: 0 2px 6px rgba(46, 58, 146, 0.08);
+      min-width: 0;
+    }
+    .jigsaw-group-btn:hover {
+      background: var(--blue-pale);
+      border-color: var(--blue-soft);
+    }
+    .jigsaw-group-btn.open {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(46, 58, 146, 0.32);
+    }
+    .jigsaw-group-btn .jg-top {
+      font-size: clamp(0.56rem, 1.05vmin, 0.68rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      opacity: 0.75;
+      line-height: 1.1;
+      white-space: nowrap;
+    }
+    .jigsaw-group-btn.open .jg-top {
+      opacity: 0.92;
+      color: #e8eaf6;
+    }
+    .jigsaw-group-btn .jg-val {
+      font-size: clamp(0.68rem, 1.3vmin, 0.84rem);
+      font-weight: 900;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .jigsaw-group-btn.hint-toggle-btn {
+      background: #fff8e1;
+      border-color: #fbc02d;
+      color: #e65100;
+    }
+    body.dark-theme .jigsaw-group-btn.hint-toggle-btn {
+      background: rgba(249, 168, 37, 0.16);
+      border-color: #fbc02d;
+      color: #ffd54f;
+    }
+    .jigsaw-group-btn.hint-toggle-btn.ghost-off {
+      background: var(--card-bg);
+      border-color: var(--border-color);
+      color: var(--muted-text);
+    }
+
+    /* Açılır Seçim Panelleri (Butona Tıklayınca Açılan Liste) */
+    .jigsaw-dropdown-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.22);
+      z-index: 28;
+    }
+    .jigsaw-dropdown-backdrop.show {
+      display: block;
+    }
+    .jigsaw-dropdown-panel {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: var(--card-bg);
+      border: 2.5px solid var(--blue);
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+      z-index: 35;
+      animation: jigsawMenuFade 0.16s ease-out;
+    }
+    @keyframes jigsawMenuFade {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .jigsaw-dropdown-panel.show {
+      display: block;
+    }
+    .jigsaw-dropdown-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: var(--accent-text);
+      margin-bottom: 8px;
+      padding-bottom: 5px;
+      border-bottom: 1.5px solid var(--border-color);
+    }
+    .jigsaw-dropdown-close {
+      border: none;
+      background: rgba(0,0,0,0.07);
+      color: var(--text-main);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .jigsaw-tier-bar, .jigsaw-level-bar, .jigsaw-style-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+      gap: 6px;
+    }
+    @media (max-width: 480px) {
+      .jigsaw-tier-bar, .jigsaw-level-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .jigsaw-style-bar {
+        grid-template-columns: 1fr;
+      }
+    }
+    .jigsaw-lvl-chip, .jigsaw-style-bar .pal-btn {
       border: 2px solid var(--border-color);
       background: var(--card-bg);
       color: var(--text-main);
       border-radius: 10px;
-      padding: clamp(4px, 0.7vmin, 7px) clamp(8px, 1.2vw, 13px);
-      font-size: clamp(0.7rem, 1.3vmin, 0.86rem);
+      padding: 8px 10px;
+      font-size: 0.78rem;
       font-weight: 800;
       cursor: pointer;
       transition: 0.15s;
-      display: inline-flex;
+      display: flex;
       align-items: center;
-      gap: 4px;
+      justify-content: space-between;
+      gap: 6px;
+      text-align: left;
       touch-action: manipulation;
+      width: 100%;
     }
-    .jigsaw-lvl-chip:hover { background: var(--blue-pale); }
-    .jigsaw-lvl-chip.active {
+    .jigsaw-lvl-chip:hover, .jigsaw-style-bar .pal-btn:hover { background: var(--blue-pale); }
+    .jigsaw-lvl-chip.active, .jigsaw-style-bar .pal-btn.active {
       background: var(--blue);
       border-color: var(--blue);
       color: #fff;
@@ -677,8 +836,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: clamp(10px, 1.8vmin, 22px);
-      margin: 4px 0;
+      gap: clamp(6px, 1.4vmin, 18px);
+      margin: 2px 0;
       user-select: none;
       touch-action: none;
     }
@@ -697,39 +856,54 @@
       align-items: center;
       justify-content: center;
       background: linear-gradient(180deg, #fffdf2 0%, #fff3e0 100%);
-      border: 3px solid #ef6c00;
-      border-radius: 14px;
-      padding: clamp(5px, 0.9vmin, 10px);
-      box-shadow: 0 5px 16px rgba(239, 108, 0, 0.18);
+      border: 2.5px solid #ef6c00;
+      border-radius: 12px;
+      padding: clamp(4px, 0.8vmin, 9px);
+      box-shadow: 0 4px 14px rgba(239, 108, 0, 0.18);
       flex-shrink: 0;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .jigsaw-ref-panel.zoomed-ref {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(1);
+      z-index: 90;
+      padding: 12px;
+      box-shadow: 0 0 0 100vmax rgba(0,0,0,0.55), 0 12px 32px rgba(0,0,0,0.45);
+    }
+    .jigsaw-ref-panel.zoomed-ref .jigsaw-ref-canvas {
+      width: min(78vw, 72dvh) !important;
+      height: min(78vw, 72dvh) !important;
     }
     body.dark-theme .jigsaw-ref-panel {
       background: linear-gradient(180deg, #2b2118 0%, #1f1710 100%);
       border-color: #ffb74d;
     }
     .jigsaw-ref-title {
-      font-size: clamp(0.68rem, 1.25vmin, 0.85rem);
+      font-size: clamp(0.62rem, 1.15vmin, 0.82rem);
       font-weight: 900;
       color: #e65100;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
       text-align: center;
       white-space: nowrap;
     }
     body.dark-theme .jigsaw-ref-title { color: #ffcc80; }
     .jigsaw-ref-canvas {
-      width: clamp(104px, min(28vw, 24dvh), 165px);
-      height: clamp(104px, min(28vw, 24dvh), 165px);
-      border-radius: 9px;
+      width: clamp(88px, min(24vw, 22dvh), 165px);
+      height: clamp(88px, min(24vw, 22dvh), 165px);
+      border-radius: 8px;
       border: 2px solid #fff;
       box-shadow: 0 3px 10px rgba(0,0,0,0.18);
       display: block;
       background: #fff;
     }
     .jigsaw-ref-sub {
-      font-size: clamp(0.62rem, 1.1vmin, 0.76rem);
+      font-size: clamp(0.58rem, 1vmin, 0.74rem);
       font-weight: 800;
       color: #6d4c41;
-      margin-top: 4px;
+      margin-top: 3px;
       text-align: center;
     }
     body.dark-theme .jigsaw-ref-sub { color: #d7ccc8; }
@@ -738,7 +912,7 @@
       background: var(--blue-pale);
       border: 3.5px solid var(--blue);
       border-radius: 14px;
-      padding: clamp(6px, 1vmin, 12px);
+      padding: clamp(5px, 1vmin, 12px);
       box-shadow: inset 0 2px 10px rgba(0,0,0,0.14), 0 6px 18px rgba(46,58,146,0.15);
       flex-shrink: 0;
     }
@@ -754,27 +928,57 @@
     }
     .jigsaw-ghost-canvas {
       position: absolute;
-      inset: clamp(6px, 1vmin, 12px);
-      width: calc(100% - 2 * clamp(6px, 1vmin, 12px));
-      height: calc(100% - 2 * clamp(6px, 1vmin, 12px));
+      inset: clamp(5px, 1vmin, 12px);
+      width: calc(100% - 2 * clamp(5px, 1vmin, 12px));
+      height: calc(100% - 2 * clamp(5px, 1vmin, 12px));
       border-radius: 8px;
       opacity: 0.28;
       pointer-events: none;
       transition: opacity 0.2s;
     }
     .jigsaw-ghost-canvas.hide-ghost { opacity: 0; }
-    /* Telefon & Dikey Tablet Boyutu */
+    /* Telefon & Dikey Tablet Boyutu (Tek Ekrana Rahat Sığan Geniş Tahta) */
     .jigsaw-board-grid {
       position: relative;
       display: grid;
       gap: 2.5px;
-      width: clamp(238px, min(84vw, 41dvh), 380px);
-      height: clamp(238px, min(84vw, 41dvh), 380px);
+      width: clamp(236px, min(84vw, 43dvh), 380px);
+      height: clamp(236px, min(84vw, 43dvh), 380px);
       z-index: 2;
     }
     .jigsaw-stage.has-ref-panel .jigsaw-board-grid {
-      width: clamp(198px, min(55vw, 39dvh), 340px);
-      height: clamp(198px, min(55vw, 39dvh), 340px);
+      width: clamp(210px, min(64vw, 41dvh), 350px);
+      height: clamp(210px, min(64vw, 41dvh), 350px);
+    }
+    @media (max-width: 560px) {
+      /* Telefonda Zor/Uzman modda örnek görsel üstte kompakt bar olur, tahta daralmaz! */
+      .jigsaw-play-area {
+        flex-direction: column;
+        gap: 6px;
+      }
+      .jigsaw-stage.has-ref-panel .jigsaw-board-grid {
+        width: clamp(232px, min(84vw, 38dvh), 350px);
+        height: clamp(232px, min(84vw, 38dvh), 350px);
+      }
+      .jigsaw-ref-panel:not(.zoomed-ref) {
+        flex-direction: row;
+        gap: 10px;
+        padding: 4px 10px;
+        width: 100%;
+        justify-content: center;
+      }
+      .jigsaw-ref-panel:not(.zoomed-ref) .jigsaw-ref-canvas {
+        width: 58px;
+        height: 58px;
+      }
+      .jigsaw-ref-panel:not(.zoomed-ref) .jigsaw-ref-title {
+        margin-bottom: 0;
+        font-size: 0.72rem;
+      }
+      .jigsaw-ref-panel:not(.zoomed-ref) .jigsaw-ref-sub {
+        margin-top: 2px;
+        font-size: 0.64rem;
+      }
     }
     .jigsaw-board-grid.interlock-grid {
       gap: 0px;
@@ -788,12 +992,12 @@
         gap: clamp(12px, 2.2vw, 32px);
       }
       .jigsaw-board-grid {
-        width: clamp(290px, min(54dvh, 45vw), 520px);
-        height: clamp(290px, min(54dvh, 45vw), 520px);
+        width: clamp(290px, min(58dvh, 45vw), 520px);
+        height: clamp(290px, min(58dvh, 45vw), 520px);
       }
       .jigsaw-stage.has-ref-panel .jigsaw-board-grid {
-        width: clamp(265px, min(52dvh, 34vw), 470px);
-        height: clamp(265px, min(52dvh, 34vw), 470px);
+        width: clamp(265px, min(55dvh, 34vw), 470px);
+        height: clamp(265px, min(55dvh, 34vw), 470px);
       }
       .jigsaw-ref-canvas {
         width: clamp(150px, min(32dvh, 18vw), 240px);
@@ -802,8 +1006,8 @@
       .jigsaw-tray {
         flex: 1;
         max-width: 540px;
-        min-height: clamp(265px, min(52dvh, 42vw), 500px) !important;
-        max-height: 62dvh;
+        min-height: clamp(265px, min(55dvh, 42vw), 500px) !important;
+        max-height: 66dvh;
         overflow-y: auto;
         align-content: center;
       }
@@ -884,15 +1088,19 @@
     .jigsaw-tray {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
+      gap: 6px;
       justify-content: center;
       align-items: center;
-      min-height: 84px;
+      min-height: 74px;
+      max-height: 26dvh;
+      overflow-y: auto;
       width: 100%;
-      padding: 8px;
+      padding: 6px;
       background: rgba(46, 58, 146, 0.07);
       border: 2px dashed var(--border-color);
       border-radius: 12px;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
     }
     .jigsaw-piece {
       position: relative;
@@ -2070,36 +2278,95 @@
   <div class="modal-overlay" id="jigsawOverlay"></div>
   <div class="modal jigsaw-fullscreen" id="jigsawModal">
     <div class="jigsaw-top-header">
-      <button type="button" class="jigsaw-back-home-btn" id="jigsawBackHomeBtn" title="Yapbozdan çık ve ABC Bağlamaca ana menüsüne dön">⬅️ Ana Menüye Dön</button>
-      <h3 style="margin:0;font-size:clamp(0.95rem, 2.2vmin, 1.35rem);">🧩 Çocuk Yapboz Akademisi</h3>
-      <div style="display:flex;align-items:center;gap:6px;">
-        <span class="tourney-pill" id="jigsawScoreBadge" style="background:#00695c;color:#fff;font-weight:900;font-size:0.78rem;padding:5px 10px;">⭐ 0 / 16 Seviye</span>
-        <button type="button" class="pal-btn" id="btnJigsawFullscreen" title="Akıllı Tahta / Tablet Tam Ekran Modu" style="padding:5px 9px;font-weight:900;">⛶ Tam Ekran</button>
+      <button type="button" class="jigsaw-back-home-btn" id="jigsawBackHomeBtn" title="Yapbozdan çık ve ABC Bağlamaca ana menüsüne dön">⬅️ Menü</button>
+      <h3>🧩 Yapboz Akademisi</h3>
+      <div style="display:flex;align-items:center;gap:5px;flex-shrink:0;">
+        <span class="tourney-pill" id="jigsawScoreBadge" style="background:#00695c;color:#fff;font-weight:900;font-size:0.72rem;padding:4px 8px;">⭐ 0 / 16</span>
+        <button type="button" class="pal-btn" id="btnJigsawFullscreen" title="Tam Ekran Modu" style="padding:4px 8px;font-weight:900;font-size:0.75rem;">⛶</button>
       </div>
     </div>
-    <p class="modal-note" style="margin-bottom:6px;text-align:center;">
-      Kolaydan zora <strong>16 seviye</strong> ve <strong>5 farklı yapboz stili!</strong> Parçaları sürükleyip veya dokunup doğru karelere yerleştir.
-    </p>
-    <!-- 1. Zorluk Kademesi Seçici (Kolaydan Zora 5 Kademe) -->
-    <div class="jigsaw-tier-bar" id="jigsawTierBar"></div>
-    <!-- 2. Kademe İçi Seviye ve Yapboz Stili Seçici -->
-    <div class="jigsaw-level-bar" id="jigsawLevelBar"></div>
-    <!-- 3. Stil Değiştirici & İpucu Kontrolü (4 Pedagojik Format + Canlı Bulmaca) -->
-    <div class="jigsaw-style-bar" id="jigsawStyleBar">
-      <button type="button" class="pal-btn active" data-jstyle="0" title="Karton veya ahşap şablon üzerine kilitli girintili-çıkıntılı parçalar (Köpek, Araba, Denizaltı, Gökkuşağı)">🚗 Figürlü Kilitli Şablon</button>
-      <button type="button" class="pal-btn" data-jstyle="1" title="Kaplumbağa, araba ve robot gibi nesnelerin organik parçalarını (kafa, gövde, ayaklar) birleştirme">🐢 Parça Birleştir (Kes-Yapıştır)</button>
-      <button type="button" class="pal-btn" data-jstyle="2" title="Dikey dilimlerin altındaki sayıları (1–10) sıraya dizerek resmi tamamlama ve ritmik sayma">🔢 Sayı Sıralamalı Şerit (1–10)</button>
-      <button type="button" class="pal-btn" data-jstyle="3" title="Düz kesikli makas çizgileriyle kolayca kesilip birleştirilen 4×4 kare çalışma kağıdı">✂️ Kare Kesimli (4×4 Kağıt)</button>
-      <button type="button" class="pal-btn" data-jstyle="4" title="Ekrandaki ABC Bağlamaca bulmacasının renkli çözüm yollarını kilitli yapboza dönüştürür!">🎯 ABC Bulmacası</button>
-      <button type="button" class="pal-btn" id="btnJigsawGhost" style="background:#fff8e1;border-color:#fbc02d;color:#e65100;">👁️ İpucu: Açık</button>
+
+    <!-- 📱 Telefonda ve Tablette Rahat Oynanış İçin Gruplanmış Tek Satır Kontrol Butonları -->
+    <div class="jigsaw-menu-system" id="jigsawMenuSystem">
+      <div class="jigsaw-group-bar" id="jigsawGroupBar">
+        <button type="button" class="jigsaw-group-btn" id="btnJigsawTierGroup" title="Zorluk kademesini seç (Başlangıç, Kolay, Orta, Zor, Uzman)">
+          <span class="jg-top">Seviye Zorluğu</span>
+          <span class="jg-val" id="jigsawTierBtnLabel">🌱 Başlangıç ▾</span>
+        </button>
+        <button type="button" class="jigsaw-group-btn" id="btnJigsawLevelGroup" title="Bölüm veya sonsuz yapboz teması seç">
+          <span class="jg-top">Bölüm Seç</span>
+          <span class="jg-val" id="jigsawLevelBtnLabel">🧩 Seviye 1 ▾</span>
+        </button>
+        <button type="button" class="jigsaw-group-btn" id="btnJigsawStyleGroup" title="Yapboz kesim ve oyun stilini seç">
+          <span class="jg-top">Yapboz Stili</span>
+          <span class="jg-val" id="jigsawStyleBtnLabel">🚗 Kilitli ▾</span>
+        </button>
+        <button type="button" class="jigsaw-group-btn hint-toggle-btn" id="btnJigsawGhost" title="Tahta altındaki ipucu resmini aç veya gizle">
+          <span class="jg-top">Yardım</span>
+          <span class="jg-val" id="jigsawGhostBtnLabel">👁️ İpucu: Açık</span>
+        </button>
+      </div>
+
+      <div class="jigsaw-dropdown-backdrop" id="jigsawDropdownBackdrop"></div>
+
+      <!-- 1. Zorluk Kademesi Açılır Menüsü (Başlangıç, Kolay, Orta, Zor, Uzman) -->
+      <div class="jigsaw-dropdown-panel" id="jigsawTierPanel">
+        <div class="jigsaw-dropdown-header">
+          <span>🎯 Seviye Zorluğu Seçin (Başlangıç → Uzman)</span>
+          <button type="button" class="jigsaw-dropdown-close" data-jclose="tier">✕</button>
+        </div>
+        <div class="jigsaw-tier-bar" id="jigsawTierBar"></div>
+      </div>
+
+      <!-- 2. Kademe İçi Bölüm / Tema Açılır Menüsü -->
+      <div class="jigsaw-dropdown-panel" id="jigsawLevelPanel">
+        <div class="jigsaw-dropdown-header">
+          <span>🧩 Bölüm / Tema Seçin</span>
+          <button type="button" class="jigsaw-dropdown-close" data-jclose="level">✕</button>
+        </div>
+        <div class="jigsaw-level-bar" id="jigsawLevelBar"></div>
+      </div>
+
+      <!-- 3. Yapboz Stili Açılır Menüsü (5 Pedagojik Stil) -->
+      <div class="jigsaw-dropdown-panel" id="jigsawStylePanel">
+        <div class="jigsaw-dropdown-header">
+          <span>🎨 Yapboz Stilini Seçin</span>
+          <button type="button" class="jigsaw-dropdown-close" data-jclose="style">✕</button>
+        </div>
+        <div class="jigsaw-style-bar" id="jigsawStyleBar">
+          <button type="button" class="pal-btn active" data-jstyle="0" data-short="🚗 Kilitli" title="Karton veya ahşap şablon üzerine kilitli girintili-çıkıntılı parçalar">
+            <span>🚗 Figürlü Kilitli Şablon</span>
+            <span style="font-size:0.68rem;opacity:0.8;">Klasik Yapboz</span>
+          </button>
+          <button type="button" class="pal-btn" data-jstyle="1" data-short="🐢 Birleştir" title="Kaplumbağa, araba ve robot gibi nesnelerin organik parçalarını birleştirme">
+            <span>🐢 Parça Birleştir (Kes-Yapıştır)</span>
+            <span style="font-size:0.68rem;opacity:0.8;">Organik Parçalar</span>
+          </button>
+          <button type="button" class="pal-btn" data-jstyle="2" data-short="🔢 Şerit" title="Dikey dilimlerin altındaki sayıları (1–10) sıraya dizerek resmi tamamlama">
+            <span>🔢 Sayı Sıralamalı Şerit (1–10)</span>
+            <span style="font-size:0.68rem;opacity:0.8;">Ritmik Dikey Şerit</span>
+          </button>
+          <button type="button" class="pal-btn" data-jstyle="3" data-short="✂️ Kare" title="Düz kesikli makas çizgileriyle kolayca kesilip birleştirilen kare çalışma kağıdı">
+            <span>✂️ Kare Kesimli (Makaslı Kağıt)</span>
+            <span style="font-size:0.68rem;opacity:0.8;">Düz Kare Kesim</span>
+          </button>
+          <button type="button" class="pal-btn" data-jstyle="4" data-short="🎯 ABC" title="Ekrandaki ABC Bağlamaca bulmacasının renkli çözüm yollarını kilitli yapboza dönüştürür!">
+            <span>🎯 ABC Bulmacası Yapbozu</span>
+            <span style="font-size:0.68rem;opacity:0.8;">Canlı Çözüm Yolu</span>
+          </button>
+        </div>
+      </div>
     </div>
+
     <div class="jigsaw-stage" id="jigsawStage">
       <div class="jigsaw-play-area">
-        <!-- Yanda Genel Yapılmış Görsel Paneli (Yalnızca Zor ve Uzman - İpucusuz Modda Görünür) -->
-        <div class="jigsaw-ref-panel" id="jigsawRefPanel" style="display:none;">
-          <div class="jigsaw-ref-title">🖼️ Yapılmış Görsel</div>
+        <!-- Yanda / Üstte Genel Yapılmış Görsel Paneli (Yalnızca Zor ve Uzman - İpucusuz Modda Görünür, Dokununca Büyür!) -->
+        <div class="jigsaw-ref-panel" id="jigsawRefPanel" style="display:none;" title="Büyütmek / Küçültmek için dokun!">
           <canvas class="jigsaw-ref-canvas" id="jigsawRefCanvas" width="504" height="504"></canvas>
-          <div class="jigsaw-ref-sub" id="jigsawRefSub">Bakarak Birleştir</div>
+          <div style="display:flex;flex-direction:column;align-items:center;">
+            <div class="jigsaw-ref-title">🖼️ Yapılmış Görsel</div>
+            <div class="jigsaw-ref-sub" id="jigsawRefSub">Bakarak Yap (🔍 Dokun Büyüt)</div>
+          </div>
         </div>
         <div class="jigsaw-board-wrap" id="jigsawBoardWrap">
           <canvas class="jigsaw-ghost-canvas" id="jigsawGhostCanvas" width="504" height="504"></canvas>
@@ -2108,11 +2375,11 @@
       </div>
       <div class="jigsaw-tray" id="jigsawTray"></div>
     </div>
-    <div class="modal-summary" id="jigsawStatus" style="margin-bottom:8px;">Parçaları sürükleyip doğru karelere yerleştir!</div>
-    <div class="modal-actions" style="grid-template-columns: 1.1fr 1.1fr 1.4fr;">
-      <button type="button" class="btn" id="jigsawClose">⬅️ Ana Menüye Dön</button>
-      <button type="button" class="btn btn-hint" id="jigsawShuffleBtn">🔀 Karıştır</button>
-      <button type="button" class="btn btn-check" id="jigsawNextThemeBtn">▶️ Sonraki Seviye →</button>
+    <div class="modal-summary" id="jigsawStatus" style="margin-bottom:5px;padding:5px 8px;font-size:0.74rem;">Parçaları sürükleyip veya dokunup doğru karelere yerleştir!</div>
+    <div class="modal-actions" style="grid-template-columns: 0.9fr 1fr 1.35fr; gap:6px;">
+      <button type="button" class="btn" id="jigsawClose" style="padding:7px 4px;font-size:0.74rem;">⬅️ Ana Menü</button>
+      <button type="button" class="btn btn-hint" id="jigsawShuffleBtn" style="padding:7px 4px;font-size:0.74rem;">🔀 Karıştır</button>
+      <button type="button" class="btn btn-check" id="jigsawNextThemeBtn" style="padding:7px 4px;font-size:0.74rem;">▶️ Sonraki Seviye →</button>
     </div>
   </div>
 
@@ -6586,6 +6853,18 @@
     const jigsawTierBar = document.getElementById('jigsawTierBar');
     const jigsawLevelBar = document.getElementById('jigsawLevelBar');
     const jigsawStyleBar = document.getElementById('jigsawStyleBar');
+    const jigsawGroupBar = document.getElementById('jigsawGroupBar');
+    const btnJigsawTierGroup = document.getElementById('btnJigsawTierGroup');
+    const btnJigsawLevelGroup = document.getElementById('btnJigsawLevelGroup');
+    const btnJigsawStyleGroup = document.getElementById('btnJigsawStyleGroup');
+    const jigsawTierBtnLabel = document.getElementById('jigsawTierBtnLabel');
+    const jigsawLevelBtnLabel = document.getElementById('jigsawLevelBtnLabel');
+    const jigsawStyleBtnLabel = document.getElementById('jigsawStyleBtnLabel');
+    const jigsawGhostBtnLabel = document.getElementById('jigsawGhostBtnLabel');
+    const jigsawDropdownBackdrop = document.getElementById('jigsawDropdownBackdrop');
+    const jigsawTierPanel = document.getElementById('jigsawTierPanel');
+    const jigsawLevelPanel = document.getElementById('jigsawLevelPanel');
+    const jigsawStylePanel = document.getElementById('jigsawStylePanel');
     const btnJigsawGhost = document.getElementById('btnJigsawGhost');
     const jigsawBoardWrap = document.getElementById('jigsawBoardWrap');
     const jigsawGhostCanvas = document.getElementById('jigsawGhostCanvas');
@@ -7478,9 +7757,66 @@
       }
     }
 
+    const JIGSAW_STYLE_SHORT_LABELS = [
+      '🚗 Kilitli',
+      '🐢 Birleştir',
+      '🔢 Şerit',
+      '✂️ Kare',
+      '🎯 ABC'
+    ];
+
+    function closeAllJigsawMenus() {
+      if (jigsawTierPanel) jigsawTierPanel.classList.remove('show');
+      if (jigsawLevelPanel) jigsawLevelPanel.classList.remove('show');
+      if (jigsawStylePanel) jigsawStylePanel.classList.remove('show');
+      if ( btnJigsawTierGroup) btnJigsawTierGroup.classList.remove('open');
+      if (btnJigsawLevelGroup) btnJigsawLevelGroup.classList.remove('open');
+      if (btnJigsawStyleGroup) btnJigsawStyleGroup.classList.remove('open');
+      if (jigsawDropdownBackdrop) jigsawDropdownBackdrop.classList.remove('show');
+    }
+
+    function toggleJigsawMenu(menuType) {
+      const map = {
+        tier:  { panel: jigsawTierPanel,  btn: btnJigsawTierGroup },
+        level: { panel: jigsawLevelPanel, btn: btnJigsawLevelGroup },
+        style: { panel: jigsawStylePanel, btn: btnJigsawStyleGroup }
+      };
+      const target = map[menuType];
+      if (!target || !target.panel) return;
+      const isAlreadyOpen = target.panel.classList.contains('show');
+      closeAllJigsawMenus();
+      if (!isAlreadyOpen) {
+        target.panel.classList.add('show');
+        if (target.btn) target.btn.classList.add('open');
+        if (jigsawDropdownBackdrop) jigsawDropdownBackdrop.classList.add('show');
+      }
+    }
+
     function renderJigsawSelectors() {
       const { lvlObj, tierObj, styleIdx } = getActiveJigsawConfig();
       const doneMap = ensureJigsawProgress();
+      const eStep = tierObj.endless ? (jigsawEndlessStep[tierObj.id] || 0) : 0;
+
+      // Üst Gruplanmış Ana Buton Etiketlerini Güncelle
+      if (jigsawTierBtnLabel) {
+        jigsawTierBtnLabel.textContent = `${tierObj.label} ▾`;
+      }
+      if (jigsawLevelBtnLabel) {
+        if (tierObj.endless) {
+          const tierLevels = JIGSAW_LEVELS.filter(l => l.tier === tierObj.id);
+          const tIdx = Math.max(0, tierLevels.findIndex(l => l.lvl === lvlObj.lvl));
+          jigsawLevelBtnLabel.textContent = eStep > 0
+            ? `♾️ Sonsuz #${lvlObj.endlessNum} ▾`
+            : `🧩 Tema ${tIdx + 1} ▾`;
+        } else {
+          const isCurDone = !!doneMap['L' + lvlObj.lvl];
+          jigsawLevelBtnLabel.textContent = `${isCurDone ? '⭐' : '🧩'} Seviye ${lvlObj.lvl} ▾`;
+        }
+      }
+      if (jigsawStyleBtnLabel) {
+        const shortSt = JIGSAW_STYLE_SHORT_LABELS[styleIdx] || '🚗 Kilitli';
+        jigsawStyleBtnLabel.textContent = `${shortSt} ▾`;
+      }
 
       // 1. Zorluk Kademesi Butonları (5 Kademe: Başlangıç -> Uzman)
       if (jigsawTierBar) {
@@ -7506,6 +7842,7 @@
             if (firstInTier !== -1) {
               jigsawCurLevelIdx = firstInTier;
               jigsawCustomStyle = null;
+              closeAllJigsawMenus();
               initJigsawGame();
             }
           });
@@ -7515,20 +7852,21 @@
       // 2. Kademe İçi Seviye Seçici (Zor ve Uzman'da Sonsuz Yapboz Üreticiyle Birlikte!)
       if (jigsawLevelBar) {
         const tierLevels = JIGSAW_LEVELS.filter(l => l.tier === tierObj.id);
-        const eStep = tierObj.endless ? (jigsawEndlessStep[tierObj.id] || 0) : 0;
         let html = tierLevels.map((l, i) => {
           const idx = l.lvl - 1;
           const isAct = (idx === jigsawCurLevelIdx && eStep === 0);
           const isDone = !!doneMap['L' + l.lvl];
           const btnLabel = tierObj.endless ? `Tema ${i + 1}` : `Seviye ${l.lvl}`;
           return `<button type="button" class="jigsaw-lvl-chip ${isAct ? 'active' : ''} ${isDone ? 'done' : ''}" data-jlvl="${idx}">
-            ${isDone ? '⭐' : '🧩'} ${btnLabel}
+            <span>${isDone ? '⭐' : '🧩'} ${btnLabel}</span>
+            <span style="font-size:0.65rem;opacity:0.8;">${isDone ? 'Tamamlandı' : 'Oyna'}</span>
           </button>`;
         }).join('');
 
         if (tierObj.endless) {
-          html += `<button type="button" class="jigsaw-lvl-chip ${eStep > 0 ? 'active' : ''}" id="btnJigsawEndlessGen" style="border-color:#ef6c00;background:${eStep > 0 ? '#ef6c00' : '#fff3e0'};color:${eStep > 0 ? '#fff' : '#e65100'};">
-            ♾️ Sonsuz Yapboz #${lvlObj.endlessNum} · 🎲 Yeni Üret
+          html += `<button type="button" class="jigsaw-lvl-chip ${eStep > 0 ? 'active' : ''}" id="btnJigsawEndlessGen" style="grid-column: 1 / -1; border-color:#ef6c00;background:${eStep > 0 ? '#ef6c00' : '#fff3e0'};color:${eStep > 0 ? '#fff' : '#e65100'};">
+            <span>♾️ Sonsuz Yapboz #${lvlObj.endlessNum}</span>
+            <span>🎲 Yeni Üret</span>
           </button>`;
         }
         jigsawLevelBar.innerHTML = html;
@@ -7539,6 +7877,7 @@
             jigsawCurLevelIdx = parseInt(btn.getAttribute('data-jlvl'), 10) || 0;
             if (tierObj.endless) jigsawEndlessStep[tierObj.id] = 0;
             jigsawCustomStyle = null;
+            closeAllJigsawMenus();
             initJigsawGame();
           });
         });
@@ -7548,6 +7887,7 @@
           btnEndlessGen.addEventListener('click', () => {
             playClick();
             jigsawEndlessStep[tierObj.id] = (jigsawEndlessStep[tierObj.id] || 0) + 1;
+            closeAllJigsawMenus();
             initJigsawGame();
           });
         }
@@ -7564,7 +7904,7 @@
       // 4. Alt İlerleme Butonu Metni (Zor & Uzman'da Sonsuz Yeni Yapboz)
       if (jigsawNextThemeBtn) {
         jigsawNextThemeBtn.innerHTML = tierObj.endless
-          ? '♾️ Yeni Sonsuz Yapboz →'
+          ? '♾️ Yeni Yapboz →'
           : '▶️ Sonraki Seviye →';
       }
     }
@@ -7572,6 +7912,7 @@
     function initJigsawGame() {
       jigsawSolvedLock = false;
       jigsawSelectedPiece = null;
+      if (jigsawRefPanel) jigsawRefPanel.classList.remove('zoomed-ref');
       const { tierObj } = getActiveJigsawConfig();
       // Başlangıç (0), Kolay (1) ve Orta (2) seviyelerinde ipucu baştaki gibi açık; Zor (3) ve Uzman (4) seviyelerinde kapalı!
       jigsawShowGhost = tierObj.id < 3;
@@ -7654,10 +7995,10 @@
       spawnConfetti();
       if (jigsawStatus) {
         if (tierObj.endless) {
-          jigsawStatus.innerHTML = `🎉 <strong>Sonsuz Yapboz #${lvlObj.endlessNum} Tamamlandı!</strong> <strong>+${bonusPts} Akıl Puanı</strong> kazandın! <strong>"♾️ Yeni Sonsuz Yapboz →"</strong> butonuna basarak sıradaki yapboza geç!`;
+          jigsawStatus.innerHTML = `🎉 <strong>Sonsuz Yapboz #${lvlObj.endlessNum} Tamamlandı!</strong> <strong>+${bonusPts} Puan!</strong> Sıradaki için <strong>"♾️ Yeni Yapboz →"</strong> butonuna bas!`;
         } else {
           const nextLvl = (jigsawCurLevelIdx + 1 < JIGSAW_LEVELS.length) ? (lvlObj.lvl + 1) : 1;
-          jigsawStatus.innerHTML = `🎉 <strong>Seviye ${lvlObj.lvl} Tamamlandı!</strong> <strong>+${bonusPts} Akıl Puanı</strong> kazandın! Şimdi <strong>Seviye ${nextLvl}</strong>'e geçebilirsin.`;
+          jigsawStatus.innerHTML = `🎉 <strong>Seviye ${lvlObj.lvl} Tamamlandı!</strong> <strong>+${bonusPts} Akıl Puanı!</strong> Şimdi <strong>Seviye ${nextLvl}</strong>'e geçebilirsin.`;
         }
       }
     }
@@ -7758,7 +8099,10 @@
         jigsawRefPanel.style.display = isHintFreeTier ? 'flex' : 'none';
       }
       if (jigsawRefSub && isHintFreeTier) {
-        jigsawRefSub.textContent = `Bakarak Yap · #${lvlObj.endlessNum}`;
+        const isZoomed = jigsawRefPanel && jigsawRefPanel.classList.contains('zoomed-ref');
+        jigsawRefSub.textContent = isZoomed
+          ? `Küçültmek İçin Dokun ✕`
+          : `Bakarak Yap · #${lvlObj.endlessNum} (🔍 Büyüt)`;
       }
 
       if (jigsawBoardWrap) {
@@ -7767,9 +8111,15 @@
       if (jigsawGhostCanvas) {
         jigsawGhostCanvas.classList.toggle('hide-ghost', isHintFreeTier || !jigsawShowGhost);
       }
+      if (jigsawGroupBar) {
+        jigsawGroupBar.classList.toggle('no-ghost-btn', isHintFreeTier);
+      }
       if (btnJigsawGhost) {
         btnJigsawGhost.style.display = isHintFreeTier ? 'none' : '';
-        btnJigsawGhost.textContent = jigsawShowGhost ? '👁️ İpucu: Açık' : '👁️ İpucu: Gizli';
+        btnJigsawGhost.classList.toggle('ghost-off', !jigsawShowGhost);
+        if (jigsawGhostBtnLabel) {
+          jigsawGhostBtnLabel.textContent = jigsawShowGhost ? '👁️ Açık' : '👁️ Gizli';
+        }
       }
 
       jigsawBoardGrid.classList.toggle('interlock-grid', isInterlock);
@@ -7821,13 +8171,15 @@
         jigsawBoardGrid.appendChild(slot);
       }
 
-      const boardPx = Math.max(220, (jigsawBoardGrid && jigsawBoardGrid.clientWidth) ? jigsawBoardGrid.clientWidth : 300);
+      const isMobilePhone = window.innerWidth <= 560;
+      const boardPx = Math.max(210, (jigsawBoardGrid && jigsawBoardGrid.clientWidth) ? jigsawBoardGrid.clientWidth : 280);
+      const scaleRatio = (isMobilePhone && total >= 9) ? 0.62 : 0.74;
       const trayW = isStrip
-        ? Math.max(32, Math.floor((boardPx * 0.90) / tierObj.cols))
-        : Math.max(52, Math.floor((boardPx * 0.76) / tierObj.cols));
+        ? Math.max(28, Math.floor((boardPx * (isMobilePhone ? 0.82 : 0.90)) / tierObj.cols))
+        : Math.max(44, Math.floor((boardPx * scaleRatio) / tierObj.cols));
       const trayH = isStrip
-        ? Math.max(120, Math.floor(boardPx * 0.48))
-        : Math.max(52, Math.floor((boardPx * 0.76) / tierObj.rows));
+        ? Math.max(96, Math.floor(boardPx * (isMobilePhone ? 0.38 : 0.48)))
+        : Math.max(44, Math.floor((boardPx * scaleRatio) / tierObj.rows));
 
       jigsawTray.innerHTML = '';
       jigsawTrayState.forEach(pId => {
@@ -7836,8 +8188,8 @@
           (isInterlock ? ' interlock-tray-piece' : '') +
           (isScissors ? ' scissors-tray-piece' : '') +
           (jigsawSelectedPiece === pId ? ' selected-piece' : '');
-        pEl.style.width = (isInterlock ? Math.round(trayW * 1.24) : trayW) + 'px';
-        pEl.style.height = (isInterlock ? Math.round(trayH * 1.24) : trayH) + 'px';
+        pEl.style.width = (isInterlock ? Math.round(trayW * 1.22) : trayW) + 'px';
+        pEl.style.height = (isInterlock ? Math.round(trayH * 1.22) : trayH) + 'px';
         pEl.appendChild(createPieceCanvas(pId, tierObj.rows, tierObj.cols, tierObj.cutType));
         bindPieceDragAndTap(pEl, pId);
         jigsawTray.appendChild(pEl);
@@ -7845,11 +8197,11 @@
 
       if (!jigsawSolvedLock && jigsawStatus) {
         if (jigsawSelectedPiece !== null) {
-          jigsawStatus.innerHTML = `✨ Parça seçildi! Şimdi tahtada yerleştirmek istediğin <strong>bölgeye dokun</strong> veya sürükle.`;
+          jigsawStatus.innerHTML = `✨ Parça seçildi! Tahtada yerleştirmek istediğin <strong>kareye dokun</strong> veya sürükle.`;
         } else if (isHintFreeTier) {
-          jigsawStatus.innerHTML = `🖼️ <strong>Yandaki Yapılmış Görsele Bakarak Birleştir:</strong> ${lvlObj.title} · Doğru: <strong>${correctCount} / ${total}</strong>`;
+          jigsawStatus.innerHTML = `🖼️ <strong>Görsele Bakarak Birleştir:</strong> ${lvlObj.title} · Doğru: <strong>${correctCount}/${total}</strong>`;
         } else {
-          jigsawStatus.innerHTML = `<strong>${lvlObj.title}</strong> · Doğru Yerleşen: <strong>${correctCount} / ${total}</strong>`;
+          jigsawStatus.innerHTML = `<strong>${lvlObj.title}</strong> · Doğru: <strong>${correctCount}/${total}</strong>`;
         }
       }
     }
@@ -7859,12 +8211,15 @@
       const firstUnsolved = JIGSAW_LEVELS.findIndex(l => !doneMap['L' + l.lvl]);
       if (firstUnsolved !== -1) jigsawCurLevelIdx = firstUnsolved;
       jigsawCustomStyle = null;
+      closeAllJigsawMenus();
       if (jigsawOverlay) jigsawOverlay.classList.add('show');
       if (jigsawModal) jigsawModal.classList.add('show');
       initJigsawGame();
       requestAnimationFrame(() => renderJigsawUI());
     }
     function closeJigsawModal() {
+      closeAllJigsawMenus();
+      if (jigsawRefPanel) jigsawRefPanel.classList.remove('zoomed-ref');
       if (jigsawOverlay) jigsawOverlay.classList.remove('show');
       if (jigsawModal) jigsawModal.classList.remove('show');
     }
@@ -7874,6 +8229,52 @@
     if (btnJigsaw) btnJigsaw.addEventListener('click', () => { playClick(); openJigsawModal(); });
     if (jigsawClose) jigsawClose.addEventListener('click', () => { playClick(); closeJigsawModal(); });
     if (jigsawBackHomeBtn) jigsawBackHomeBtn.addEventListener('click', () => { playClick(); closeJigsawModal(); });
+
+    // Gruplanmış Açılır Menü Buton Dinleyicileri (Zorluk, Bölüm/Tema, Stil)
+    if (btnJigsawTierGroup) {
+      btnJigsawTierGroup.addEventListener('click', (e) => {
+        e.stopPropagation();
+        playClick();
+        toggleJigsawMenu('tier');
+      });
+    }
+    if (btnJigsawLevelGroup) {
+      btnJigsawLevelGroup.addEventListener('click', (e) => {
+        e.stopPropagation();
+        playClick();
+        toggleJigsawMenu('level');
+      });
+    }
+    if (btnJigsawStyleGroup) {
+      btnJigsawStyleGroup.addEventListener('click', (e) => {
+        e.stopPropagation();
+        playClick();
+        toggleJigsawMenu('style');
+      });
+    }
+    if (jigsawDropdownBackdrop) {
+      jigsawDropdownBackdrop.addEventListener('click', () => {
+        playClick();
+        closeAllJigsawMenus();
+      });
+    }
+    document.querySelectorAll('.jigsaw-dropdown-close').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        playClick();
+        closeAllJigsawMenus();
+      });
+    });
+
+    // Zor ve Uzman modda örnek görsele dokununca büyüt/küçült (Telefonda rahat inceleme)
+    if (jigsawRefPanel) {
+      jigsawRefPanel.addEventListener('click', () => {
+        playClick();
+        jigsawRefPanel.classList.toggle('zoomed-ref');
+        renderJigsawUI();
+      });
+    }
+
     if (btnJigsawFullscreen) {
       btnJigsawFullscreen.addEventListener('click', () => {
         playClick();
@@ -7891,10 +8292,11 @@
       }
     });
     if (jigsawOverlay) jigsawOverlay.addEventListener('click', closeJigsawModal);
-    if (jigsawShuffleBtn) jigsawShuffleBtn.addEventListener('click', () => { playClick(); initJigsawGame(); });
+    if (jigsawShuffleBtn) jigsawShuffleBtn.addEventListener('click', () => { playClick(); closeAllJigsawMenus(); initJigsawGame(); });
     if (jigsawNextThemeBtn) {
       jigsawNextThemeBtn.addEventListener('click', () => {
         playClick();
+        closeAllJigsawMenus();
         const { tierObj } = getActiveJigsawConfig();
         if (tierObj.endless) {
           // Zor ve Uzman kademelerinde sonsuz sayıda yeni yapboz üretir!
@@ -7910,6 +8312,7 @@
     if (btnJigsawGhost) {
       btnJigsawGhost.addEventListener('click', () => {
         playClick();
+        closeAllJigsawMenus();
         jigsawShowGhost = !jigsawShowGhost;
         renderJigsawUI();
       });
@@ -7919,6 +8322,7 @@
         btn.addEventListener('click', () => {
           playClick();
           jigsawCustomStyle = parseInt(btn.getAttribute('data-jstyle'), 10);
+          closeAllJigsawMenus();
           initJigsawGame();
         });
       });
