@@ -1,4 +1,4 @@
-const CACHE_NAME = 'abc-baglamaca-v10';
+﻿const CACHE_NAME = 'abc-baglamaca-v14';
 const ASSETS = [
   './',
   './index.html',
@@ -34,8 +34,3 @@ self.addEventListener('fetch', (event) => {
       .catch(() => caches.match(event.request))
   );
 });
-
-
-
-
-
