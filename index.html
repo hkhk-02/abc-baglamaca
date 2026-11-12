@@ -355,6 +355,69 @@
       }
     }
 
+    /* =========================================================================
+       ABC BAĞLAMACA ANA SAYFA TAM EKRAN MODU (AKILLI TAHTA / TABLET / TELEFON)
+       - İstenildiğinde "⛶ Tam Ekran" ile açılır, "↙️ Tam Ekrandan Çık" ile çıkılır.
+       ========================================================================= */
+    .main-fs-toggle-btn {
+      border: 2px solid rgba(255,255,255,0.88);
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      font-weight: 900;
+      font-size: 0.72rem;
+      padding: 5px 11px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: transform 0.15s, background 0.15s, box-shadow 0.15s;
+      white-space: nowrap;
+      touch-action: manipulation;
+    }
+    .main-fs-toggle-btn:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-1px);
+    }
+    .main-fs-toggle-btn.active {
+      background: linear-gradient(180deg, #ef5350, #c62828);
+      border-color: #ffcdd2;
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(198, 40, 40, 0.38);
+    }
+    body.main-fullscreen-mode {
+      padding: 0 8px 10px;
+      min-height: 100dvh;
+    }
+    body.main-fullscreen-mode .app {
+      width: 100% !important;
+      max-width: 100vw !important;
+      min-height: calc(100dvh - 10px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 0 clamp(4px, 1.4vw, 24px);
+    }
+    body.main-fullscreen-mode .hero {
+      margin: 0 0 10px;
+      border-radius: 0 0 18px 18px;
+      padding: 10px clamp(12px, 2vw, 28px);
+    }
+    @media (min-width: 860px) {
+      body.main-fullscreen-mode .main-stage {
+        flex: 1;
+        grid-template-columns: clamp(320px, 27vw, 430px) 1fr;
+        gap: clamp(16px, 2.4vw, 34px);
+        align-items: center;
+      }
+      body.main-fullscreen-mode #singleBoardSection {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: clamp(12px, 1.8vmin, 22px);
+      }
+    }
+
     .low-reach-toggle-pill {
       border: 2px solid #f9a825;
       background: #fff8e1;
@@ -511,27 +574,85 @@
       border-color: #2e7d32;
     }
 
-    /* 🧩 Çocuk Yapboz (Jigsaw Puzzle) Sürükle-Bırak Akademisi Stilleri */
+    /* 🧩 Çocuk Yapboz (Jigsaw Puzzle) Sürükle-Bırak Akademisi Stilleri (Akıllı Tahta, Tablet ve Telefon Tam Ekran Modu) */
+    #jigsawModal.jigsaw-fullscreen {
+      position: fixed;
+      inset: 0;
+      top: 0 !important;
+      left: 0 !important;
+      transform: scale(0.97) !important;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      max-height: 100dvh !important;
+      border-radius: 0 !important;
+      border: none !important;
+      padding: clamp(6px, 1.2vmin, 16px) clamp(8px, 2vw, 28px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+      overflow-x: hidden;
+      box-shadow: none;
+      z-index: 250;
+    }
+    #jigsawModal.jigsaw-fullscreen.show {
+      transform: scale(1) !important;
+    }
+    .jigsaw-top-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-bottom: 6px;
+      margin-bottom: 4px;
+      border-bottom: 2px solid var(--border-color);
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+    .jigsaw-back-home-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: clamp(6px, 1vmin, 10px) clamp(11px, 1.6vw, 18px);
+      border-radius: 10px;
+      border: 2px solid #c62828;
+      background: linear-gradient(180deg, #ef5350, #c62828);
+      color: #fff;
+      font-size: clamp(0.76rem, 1.4vmin, 0.92rem);
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(198, 40, 40, 0.3);
+      transition: transform 0.14s, filter 0.14s;
+      touch-action: manipulation;
+    }
+    .jigsaw-back-home-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.06);
+    }
     .jigsaw-tier-bar, .jigsaw-level-bar, .jigsaw-style-bar {
       display: flex;
-      gap: 5px;
+      gap: clamp(4px, 0.8vmin, 8px);
       justify-content: center;
       flex-wrap: wrap;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
+      flex-shrink: 0;
     }
     .jigsaw-lvl-chip {
       border: 2px solid var(--border-color);
       background: var(--card-bg);
       color: var(--text-main);
       border-radius: 10px;
-      padding: 4px 8px;
-      font-size: 0.72rem;
+      padding: clamp(4px, 0.7vmin, 7px) clamp(8px, 1.2vw, 13px);
+      font-size: clamp(0.7rem, 1.3vmin, 0.86rem);
       font-weight: 800;
       cursor: pointer;
       transition: 0.15s;
       display: inline-flex;
       align-items: center;
       gap: 4px;
+      touch-action: manipulation;
     }
     .jigsaw-lvl-chip:hover { background: var(--blue-pale); }
     .jigsaw-lvl-chip.active {
@@ -550,40 +671,160 @@
       color: #fff;
     }
     .jigsaw-stage {
+      flex: 1;
+      min-height: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 9px;
-      margin: 6px 0;
+      justify-content: center;
+      gap: clamp(10px, 1.8vmin, 22px);
+      margin: 4px 0;
       user-select: none;
       touch-action: none;
     }
+    .jigsaw-play-area {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(8px, 1.5vw, 18px);
+      flex-shrink: 0;
+    }
+    /* Zor ve Uzman Seviyeleri: Yanda Genel Yapılmış Görsel Paneli */
+    .jigsaw-ref-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #fffdf2 0%, #fff3e0 100%);
+      border: 3px solid #ef6c00;
+      border-radius: 14px;
+      padding: clamp(5px, 0.9vmin, 10px);
+      box-shadow: 0 5px 16px rgba(239, 108, 0, 0.18);
+      flex-shrink: 0;
+    }
+    body.dark-theme .jigsaw-ref-panel {
+      background: linear-gradient(180deg, #2b2118 0%, #1f1710 100%);
+      border-color: #ffb74d;
+    }
+    .jigsaw-ref-title {
+      font-size: clamp(0.68rem, 1.25vmin, 0.85rem);
+      font-weight: 900;
+      color: #e65100;
+      margin-bottom: 4px;
+      text-align: center;
+      white-space: nowrap;
+    }
+    body.dark-theme .jigsaw-ref-title { color: #ffcc80; }
+    .jigsaw-ref-canvas {
+      width: clamp(104px, min(28vw, 24dvh), 165px);
+      height: clamp(104px, min(28vw, 24dvh), 165px);
+      border-radius: 9px;
+      border: 2px solid #fff;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+      display: block;
+      background: #fff;
+    }
+    .jigsaw-ref-sub {
+      font-size: clamp(0.62rem, 1.1vmin, 0.76rem);
+      font-weight: 800;
+      color: #6d4c41;
+      margin-top: 4px;
+      text-align: center;
+    }
+    body.dark-theme .jigsaw-ref-sub { color: #d7ccc8; }
     .jigsaw-board-wrap {
       position: relative;
       background: var(--blue-pale);
-      border: 3px solid var(--blue);
-      border-radius: 12px;
-      padding: 6px;
-      box-shadow: inset 0 2px 8px rgba(0,0,0,0.12);
+      border: 3.5px solid var(--blue);
+      border-radius: 14px;
+      padding: clamp(6px, 1vmin, 12px);
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.14), 0 6px 18px rgba(46,58,146,0.15);
+      flex-shrink: 0;
+    }
+    .jigsaw-board-wrap.wood-board {
+      background: repeating-linear-gradient(
+        18deg,
+        #9c6434 0px,
+        #8d5524 8px,
+        #a66d3b 16px
+      );
+      border: 4px solid #5d3a1a;
+      box-shadow: inset 0 4px 12px rgba(0,0,0,0.42), 0 8px 20px rgba(0,0,0,0.22);
     }
     .jigsaw-ghost-canvas {
       position: absolute;
-      inset: 6px;
-      width: calc(100% - 12px);
-      height: calc(100% - 12px);
+      inset: clamp(6px, 1vmin, 12px);
+      width: calc(100% - 2 * clamp(6px, 1vmin, 12px));
+      height: calc(100% - 2 * clamp(6px, 1vmin, 12px));
       border-radius: 8px;
-      opacity: 0.24;
+      opacity: 0.28;
       pointer-events: none;
       transition: opacity 0.2s;
     }
     .jigsaw-ghost-canvas.hide-ghost { opacity: 0; }
+    /* Telefon & Dikey Tablet Boyutu */
     .jigsaw-board-grid {
       position: relative;
       display: grid;
-      gap: 2px;
-      width: 252px;
-      height: 252px;
+      gap: 2.5px;
+      width: clamp(238px, min(84vw, 41dvh), 380px);
+      height: clamp(238px, min(84vw, 41dvh), 380px);
       z-index: 2;
+    }
+    .jigsaw-stage.has-ref-panel .jigsaw-board-grid {
+      width: clamp(198px, min(55vw, 39dvh), 340px);
+      height: clamp(198px, min(55vw, 39dvh), 340px);
+    }
+    .jigsaw-board-grid.interlock-grid {
+      gap: 0px;
+    }
+    /* Yatay Tablet, Bilgisayar ve Akıllı Tahta (Yan Yana Geniş Düzen) */
+    @media (min-width: 720px), (orientation: landscape) and (min-width: 580px) {
+      .jigsaw-stage {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(12px, 2.2vw, 32px);
+      }
+      .jigsaw-board-grid {
+        width: clamp(290px, min(54dvh, 45vw), 520px);
+        height: clamp(290px, min(54dvh, 45vw), 520px);
+      }
+      .jigsaw-stage.has-ref-panel .jigsaw-board-grid {
+        width: clamp(265px, min(52dvh, 34vw), 470px);
+        height: clamp(265px, min(52dvh, 34vw), 470px);
+      }
+      .jigsaw-ref-canvas {
+        width: clamp(150px, min(32dvh, 18vw), 240px);
+        height: clamp(150px, min(32dvh, 18vw), 240px);
+      }
+      .jigsaw-tray {
+        flex: 1;
+        max-width: 540px;
+        min-height: clamp(265px, min(52dvh, 42vw), 500px) !important;
+        max-height: 62dvh;
+        overflow-y: auto;
+        align-content: center;
+      }
+    }
+    /* Büyük Sınıf Akıllı Tahtası (1400px+) */
+    @media (min-width: 1400px) {
+      .jigsaw-board-grid {
+        width: clamp(420px, min(58dvh, 44vw), 600px);
+        height: clamp(420px, min(58dvh, 44vw), 600px);
+      }
+      .jigsaw-stage.has-ref-panel .jigsaw-board-grid {
+        width: clamp(380px, min(56dvh, 34vw), 540px);
+        height: clamp(380px, min(56dvh, 34vw), 540px);
+      }
+      .jigsaw-ref-canvas {
+        width: clamp(210px, min(36dvh, 18vw), 290px);
+        height: clamp(210px, min(36dvh, 18vw), 290px);
+      }
+      .jigsaw-tray {
+        max-width: 620px;
+      }
     }
     .jigsaw-slot {
       position: relative;
@@ -596,18 +837,40 @@
       overflow: hidden;
       transition: border-color 0.15s, background 0.15s, transform 0.15s;
     }
+    .jigsaw-slot.interlock-slot {
+      overflow: visible;
+      border-radius: 2px;
+      border: 1px dashed rgba(255, 248, 225, 0.45);
+      background: rgba(62, 39, 35, 0.42);
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.38);
+    }
+    .jigsaw-slot.interlock-slot.filled-slot {
+      background: transparent;
+      border-color: transparent;
+      box-shadow: none;
+    }
+    .jigsaw-slot.scissors-slot {
+      border: 2px dashed #d84315;
+      border-radius: 3px;
+      background: rgba(255, 253, 231, 0.48);
+    }
     body.dark-theme .jigsaw-slot {
       background: rgba(0, 0, 0, 0.28);
       border-color: rgba(144, 202, 249, 0.4);
     }
     .jigsaw-slot.drag-over {
-      border-color: #ef6c00;
-      background: rgba(255, 183, 77, 0.38);
+      border-color: #ef6c00 !important;
+      background: rgba(255, 183, 77, 0.44) !important;
       transform: scale(1.03);
+      z-index: 6;
     }
     .jigsaw-slot.correct-lock {
       border: 2px solid #2e7d32;
       box-shadow: 0 0 0 1px rgba(46,125,50,0.3);
+    }
+    .jigsaw-slot.interlock-slot.correct-lock {
+      border-color: transparent;
+      box-shadow: none;
     }
     @keyframes jigsawSnapPop {
       0% { transform: scale(0.9); box-shadow: 0 0 0 0 rgba(67, 160, 71, 0.85); }
@@ -616,17 +879,17 @@
     }
     .jigsaw-slot.snap-pop {
       animation: jigsawSnapPop 0.42s cubic-bezier(0.22, 1, 0.36, 1);
-      z-index: 4;
+      z-index: 8;
     }
     .jigsaw-tray {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 7px;
       justify-content: center;
       align-items: center;
-      min-height: 76px;
+      min-height: 84px;
       width: 100%;
-      padding: 7px;
+      padding: 8px;
       background: rgba(46, 58, 146, 0.07);
       border: 2px dashed var(--border-color);
       border-radius: 12px;
@@ -638,15 +901,32 @@
       box-shadow: 0 3px 8px rgba(0,0,0,0.22);
       cursor: grab;
       touch-action: none;
-      transition: transform 0.12s, box-shadow 0.12s;
+      transition: transform 0.12s, box-shadow 0.12s, filter 0.12s;
       overflow: hidden;
       background: #fff;
     }
+    .jigsaw-piece.interlock-tray-piece {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      overflow: visible;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.35));
+    }
+    .jigsaw-piece.scissors-tray-piece {
+      border: 2px dashed #d84315;
+      border-radius: 3px;
+    }
     .jigsaw-piece:hover { transform: scale(1.05); }
-    .jigsaw-piece.selected-piece {
-      border-color: #ef6c00;
-      box-shadow: 0 0 0 3px rgba(239, 108, 0, 0.45), 0 4px 10px rgba(0,0,0,0.25);
-      transform: scale(1.07);
+    .jigsaw-piece.selected-piece,
+    .jigsaw-slot.selected-slot {
+      border-color: #ef6c00 !important;
+      box-shadow: 0 0 0 3px rgba(239, 108, 0, 0.55), 0 4px 10px rgba(0,0,0,0.25) !important;
+      transform: scale(1.06);
+      z-index: 7;
+    }
+    .jigsaw-piece.interlock-tray-piece.selected-piece {
+      box-shadow: none !important;
+      filter: drop-shadow(0 0 6px #ff6d00) drop-shadow(0 4px 8px rgba(0,0,0,0.4));
     }
     .jigsaw-piece canvas {
       display: block;
@@ -659,6 +939,19 @@
       height: 100% !important;
       border-width: 1px;
       box-shadow: none;
+      pointer-events: none;
+    }
+    .jigsaw-slot .jigsaw-piece.interlock-board-piece {
+      position: absolute;
+      left: -20%;
+      top: -20%;
+      width: 140% !important;
+      height: 140% !important;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      overflow: visible;
+      pointer-events: none;
     }
     .jigsaw-floating-drag {
       position: fixed;
@@ -669,6 +962,13 @@
       box-shadow: 0 10px 24px rgba(0,0,0,0.38);
       transform: translate(-50%, -50%) scale(1.08);
       overflow: hidden;
+    }
+    .jigsaw-floating-drag.interlock-float {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      overflow: visible;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.48));
     }
 
     /* ADIM 3: Kendi Bulmacanı Tasarla (Sandbox) Stilleri */
@@ -1546,6 +1846,7 @@
         </div>
       </div>
       <div class="hero-btns">
+        <button type="button" class="main-fs-toggle-btn" id="btnMainFullscreen" title="ABC Bağlamaca Ana Sayfasında Tam Ekran Modunu Aç / Kapat">⛶ Tam Ekran</button>
         <button class="low-reach-toggle-pill" id="btnProfile" title="Küresel Haftalık Lig Sıralamasını (Leaderboard) ve Kaşif Profilini Aç">🏆 Zeki Kaşif</button>
       </div>
     </header>
@@ -1765,39 +2066,51 @@
     </div>
   </div>
 
-  <!-- 🧩 Çocuk Yapboz Akademisi (5 Zorluk Kademesi · 16 Seviye & 5 Farklı Yapboz Stili) Modalı -->
+  <!-- 🧩 Çocuk Yapboz Akademisi (5 Zorluk Kademesi · 16 Seviye & 5 Farklı Yapboz Stili - Büyük Oyun Ekranı) Modalı -->
   <div class="modal-overlay" id="jigsawOverlay"></div>
-  <div class="modal" id="jigsawModal" style="max-width:455px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px;">
-      <h3 style="margin:0;">🧩 Çocuk Yapboz Akademisi</h3>
-      <span class="tourney-pill" id="jigsawScoreBadge" style="background:#00695c;color:#fff;font-weight:900;">⭐ 0 / 16 Seviye</span>
+  <div class="modal jigsaw-fullscreen" id="jigsawModal">
+    <div class="jigsaw-top-header">
+      <button type="button" class="jigsaw-back-home-btn" id="jigsawBackHomeBtn" title="Yapbozdan çık ve ABC Bağlamaca ana menüsüne dön">⬅️ Ana Menüye Dön</button>
+      <h3 style="margin:0;font-size:clamp(0.95rem, 2.2vmin, 1.35rem);">🧩 Çocuk Yapboz Akademisi</h3>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <span class="tourney-pill" id="jigsawScoreBadge" style="background:#00695c;color:#fff;font-weight:900;font-size:0.78rem;padding:5px 10px;">⭐ 0 / 16 Seviye</span>
+        <button type="button" class="pal-btn" id="btnJigsawFullscreen" title="Akıllı Tahta / Tablet Tam Ekran Modu" style="padding:5px 9px;font-weight:900;">⛶ Tam Ekran</button>
+      </div>
     </div>
-    <p class="modal-note" style="margin-bottom:6px;">
+    <p class="modal-note" style="margin-bottom:6px;text-align:center;">
       Kolaydan zora <strong>16 seviye</strong> ve <strong>5 farklı yapboz stili!</strong> Parçaları sürükleyip veya dokunup doğru karelere yerleştir.
     </p>
     <!-- 1. Zorluk Kademesi Seçici (Kolaydan Zora 5 Kademe) -->
     <div class="jigsaw-tier-bar" id="jigsawTierBar"></div>
     <!-- 2. Kademe İçi Seviye ve Yapboz Stili Seçici -->
     <div class="jigsaw-level-bar" id="jigsawLevelBar"></div>
-    <!-- 3. Stil Değiştirici & İpucu Kontrolü -->
+    <!-- 3. Stil Değiştirici & İpucu Kontrolü (4 Pedagojik Format + Canlı Bulmaca) -->
     <div class="jigsaw-style-bar" id="jigsawStyleBar">
-      <button type="button" class="pal-btn active" data-jstyle="0" title="Gerçek yapboz girintili-çıkıntılı resimli hikaye sahneleri">🎨 Resimli Sahne</button>
-      <button type="button" class="pal-btn" data-jstyle="1" title="Renkli geometrik şekiller, üçgenler ve mandala simetrisi">🔷 Tangram & Mandala</button>
-      <button type="button" class="pal-btn" data-jstyle="2" title="Birbiriyle birleşen gökkuşağı rayları ve enerji boruları">🛤️ Yol & Boru Bağla</button>
-      <button type="button" class="pal-btn" data-jstyle="3" title="Kenar renkleri ve sembol örüntüleriyle eşleşen akıl küpü">🔢 Akıl Örüntüsü</button>
-      <button type="button" class="pal-btn" data-jstyle="4" title="Ekrandaki ABC Bağlamaca bulmacasının renkli çözüm yollarını yapboza dönüştürür!">🎯 ABC Bulmacası</button>
+      <button type="button" class="pal-btn active" data-jstyle="0" title="Karton veya ahşap şablon üzerine kilitli girintili-çıkıntılı parçalar (Köpek, Araba, Denizaltı, Gökkuşağı)">🚗 Figürlü Kilitli Şablon</button>
+      <button type="button" class="pal-btn" data-jstyle="1" title="Kaplumbağa, araba ve robot gibi nesnelerin organik parçalarını (kafa, gövde, ayaklar) birleştirme">🐢 Parça Birleştir (Kes-Yapıştır)</button>
+      <button type="button" class="pal-btn" data-jstyle="2" title="Dikey dilimlerin altındaki sayıları (1–10) sıraya dizerek resmi tamamlama ve ritmik sayma">🔢 Sayı Sıralamalı Şerit (1–10)</button>
+      <button type="button" class="pal-btn" data-jstyle="3" title="Düz kesikli makas çizgileriyle kolayca kesilip birleştirilen 4×4 kare çalışma kağıdı">✂️ Kare Kesimli (4×4 Kağıt)</button>
+      <button type="button" class="pal-btn" data-jstyle="4" title="Ekrandaki ABC Bağlamaca bulmacasının renkli çözüm yollarını kilitli yapboza dönüştürür!">🎯 ABC Bulmacası</button>
       <button type="button" class="pal-btn" id="btnJigsawGhost" style="background:#fff8e1;border-color:#fbc02d;color:#e65100;">👁️ İpucu: Açık</button>
     </div>
-    <div class="jigsaw-stage">
-      <div class="jigsaw-board-wrap">
-        <canvas class="jigsaw-ghost-canvas" id="jigsawGhostCanvas" width="252" height="252"></canvas>
-        <div class="jigsaw-board-grid" id="jigsawBoardGrid"></div>
+    <div class="jigsaw-stage" id="jigsawStage">
+      <div class="jigsaw-play-area">
+        <!-- Yanda Genel Yapılmış Görsel Paneli (Yalnızca Zor ve Uzman - İpucusuz Modda Görünür) -->
+        <div class="jigsaw-ref-panel" id="jigsawRefPanel" style="display:none;">
+          <div class="jigsaw-ref-title">🖼️ Yapılmış Görsel</div>
+          <canvas class="jigsaw-ref-canvas" id="jigsawRefCanvas" width="504" height="504"></canvas>
+          <div class="jigsaw-ref-sub" id="jigsawRefSub">Bakarak Birleştir</div>
+        </div>
+        <div class="jigsaw-board-wrap" id="jigsawBoardWrap">
+          <canvas class="jigsaw-ghost-canvas" id="jigsawGhostCanvas" width="504" height="504"></canvas>
+          <div class="jigsaw-board-grid" id="jigsawBoardGrid"></div>
+        </div>
       </div>
       <div class="jigsaw-tray" id="jigsawTray"></div>
     </div>
     <div class="modal-summary" id="jigsawStatus" style="margin-bottom:8px;">Parçaları sürükleyip doğru karelere yerleştir!</div>
-    <div class="modal-actions" style="grid-template-columns: 1fr 1.1fr 1.4fr;">
-      <button type="button" class="btn" id="jigsawClose">Kapat</button>
+    <div class="modal-actions" style="grid-template-columns: 1.1fr 1.1fr 1.4fr;">
+      <button type="button" class="btn" id="jigsawClose">⬅️ Ana Menüye Dön</button>
       <button type="button" class="btn btn-hint" id="jigsawShuffleBtn">🔀 Karıştır</button>
       <button type="button" class="btn btn-check" id="jigsawNextThemeBtn">▶️ Sonraki Seviye →</button>
     </div>
@@ -3118,6 +3431,23 @@
     function resizeBoard() {
       const vw = window.innerWidth;
       const vh = window.innerHeight;
+      const isMainFs = document.body.classList.contains('main-fullscreen-mode') || !!document.fullscreenElement;
+      if (isMainFs) {
+        const fsCap = vw >= 860
+          ? Math.min(Math.floor(vw * 0.56), Math.floor(vh * 0.68), 720)
+          : Math.min(vw - 26, Math.floor(vh * 0.60), 560);
+        const maxW = Math.min(vw - 26, fsCap);
+        cellGap = Math.floor(maxW / (size - 1 + 0.5));
+        if (size >= 10) cellGap = Math.max(26, Math.min(cellGap, 62));
+        else if (size >= 9) cellGap = Math.max(28, Math.min(cellGap, 66));
+        else if (size >= 8) cellGap = Math.max(30, Math.min(cellGap, 70));
+        else if (size >= 7) cellGap = Math.max(34, Math.min(cellGap, 76));
+        else if (size >= 6) cellGap = Math.max(38, Math.min(cellGap, 84));
+        else if (size >= 5) cellGap = Math.max(42, Math.min(cellGap, 92));
+        else cellGap = Math.max(46, Math.min(cellGap, 104));
+        pad = Math.round(cellGap * 0.32);
+        return;
+      }
       const singleCap = vw >= 1100 ? Math.min(490, Math.floor(vh * 0.56)) : (vw >= 768 ? 450 : 420);
       const maxW = Math.min(vw - 44, singleCap);
       cellGap = Math.floor(maxW / (size - 1 + 0.5));
@@ -5350,7 +5680,52 @@
         if (pdfModal.classList.contains('show')) { closePdfModal(); return; }
         if (overlay.classList.contains('show')) { hideToast(); return; }
         if (hintArmed) { hintArmed = false; updateHintUI(); updateHalos(); return; }
+        if (document.body.classList.contains('main-fullscreen-mode')) { setMainFullscreen(false); return; }
       }
+    });
+
+    /* ABC Bağlamaca Ana Sayfa Tam Ekran Modu Kontrolü */
+    const btnMainFullscreen = document.getElementById('btnMainFullscreen');
+    function syncMainFullscreenUI() {
+      const isFs = document.body.classList.contains('main-fullscreen-mode');
+      if (btnMainFullscreen) {
+        btnMainFullscreen.classList.toggle('active', isFs);
+        btnMainFullscreen.innerHTML = isFs ? '↙️ Tam Ekrandan Çık' : '⛶ Tam Ekran';
+      }
+      if (typeof btnJigsawFullscreen !== 'undefined' && btnJigsawFullscreen) {
+        btnJigsawFullscreen.innerHTML = document.fullscreenElement ? '↙️ Tam Ekrandan Çık' : '⛶ Tam Ekran';
+      }
+      resizeBoard();
+      render();
+    }
+    function setMainFullscreen(enable) {
+      if (enable) {
+        document.body.classList.add('main-fullscreen-mode');
+        if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        }
+      } else {
+        document.body.classList.remove('main-fullscreen-mode');
+        if (document.fullscreenElement && document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+      syncMainFullscreenUI();
+    }
+    if (btnMainFullscreen) {
+      btnMainFullscreen.addEventListener('click', () => {
+        playClick();
+        const isCurrentlyFs = document.body.classList.contains('main-fullscreen-mode');
+        setMainFullscreen(!isCurrentlyFs);
+      });
+    }
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement && document.body.classList.contains('main-fullscreen-mode')) {
+        document.body.classList.remove('main-fullscreen-mode');
+      } else if (document.fullscreenElement && !(typeof jigsawModal !== 'undefined' && jigsawModal && jigsawModal.classList.contains('show'))) {
+        document.body.classList.add('main-fullscreen-mode');
+      }
+      syncMainFullscreenUI();
     });
 
     /* Mobil / Android Geri Tuşu Koruması (Uygulamadan kazara çıkışı önler) */
@@ -5670,10 +6045,10 @@
       const customTitle = (opts.customTitle || '').trim();
       const totalPages = withAnswers ? 2 : 1;
       const specs = [
-        { title: 'Etkinlik 1 · Uzay Roketi (Resimli Sahne · 2×2)', rows: 2, cols: 2, style: 0, scene: 0, order: [2, 0, 3, 1] },
-        { title: 'Etkinlik 2 · Renkli Yıldız (Tangram & Mandala · 2×2)', rows: 2, cols: 2, style: 1, scene: 1, order: [3, 1, 0, 2] },
-        { title: 'Etkinlik 3 · Gökkuşağı Köprüsü (Yol & Boru Bağla · 2×3)', rows: 2, cols: 3, style: 2, scene: 2, order: [4, 1, 5, 0, 3, 2] },
-        { title: 'Etkinlik 4 · Canlı ABC Bağlamaca Yapbozu (Akıl Küpü · 3×3)', rows: 3, cols: 3, style: 4, scene: 3, order: [5, 2, 7, 0, 8, 3, 1, 6, 4] }
+        { title: '1. Parça Birleştirme (Kes-Yapıştır): Sevimli Kaplumbağa (Kafa, Gövde, Ayaklar · 2×2)', rows: 2, cols: 2, style: 1, scene: 0, order: [2, 0, 3, 1] },
+        { title: '2. Sayı Sıralamalı Şerit Yapboz: Ritmik Sayma Şeridi (1–6 Dikey Dilimler)', rows: 1, cols: 6, style: 2, scene: 0, order: [3, 0, 5, 1, 4, 2] },
+        { title: '3. Kare Kesimli Çalışma Kağıdı: Makasla Kolay Kesilen 4×4 Izgara', rows: 4, cols: 4, style: 3, scene: 1, order: [5, 0, 11, 2, 14, 7, 1, 9, 12, 4, 15, 6, 3, 10, 8, 13] },
+        { title: '4. Figürlü Klasik Kilitli Şablon: Kırmızı Araba & Sevimli Köpek (3×3)', rows: 3, cols: 3, style: 0, scene: 1, order: [5, 2, 7, 0, 8, 3, 1, 6, 4] }
       ];
 
       function renderSpecData(sp) {
@@ -5681,8 +6056,8 @@
         const cv = document.createElement('canvas');
         cv.width = W; cv.height = H;
         const ctx = cv.getContext('2d');
-        if (sp.style === 0 && typeof drawStyle0Scene === 'function') drawStyle0Scene(ctx, W, H, sp.scene);
-        else if (sp.style === 1 && typeof drawStyle1TangramMandala === 'function') drawStyle1TangramMandala(ctx, W, H, sp.scene);
+        if (sp.style === 0 && typeof drawStyle0Scene === 'function') drawStyle0Scene(ctx, W, H, sp.scene, sp.rows, sp.cols);
+        else if (sp.style === 1 && typeof drawStyle1TangramMandala === 'function') drawStyle1TangramMandala(ctx, W, H, sp.scene, sp.rows, sp.cols);
         else if (sp.style === 2 && typeof drawStyle2PipeTracks === 'function') drawStyle2PipeTracks(ctx, W, H, sp.rows, sp.cols, sp.scene);
         else if (sp.style === 4 && typeof drawStyle4LiveAbcPuzzle === 'function') drawStyle4LiveAbcPuzzle(ctx, W, H);
         else if (typeof drawStyle3PatternMatrix === 'function') drawStyle3PatternMatrix(ctx, W, H, sp.rows, sp.cols, sp.scene);
@@ -6200,14 +6575,19 @@
     if (adventureClose) adventureClose.addEventListener('click', () => { playClick(); closeAdventureModal(); });
     if (adventureOverlay) adventureOverlay.addEventListener('click', closeAdventureModal);
 
-    // --- 🧩 ÇOCUK YAPBOZ AKADEMİSİ (15 SEVİYE · KOLAYDAN ZORA · 4 FARKLI YAPBOZ STİLİ) ---
+    // --- 🧩 ÇOCUK YAPBOZ AKADEMİSİ (16 SEVİYE + ZOR & UZMAN SONSUZ YAPBOZ MODU · 4 PEDAGOJİK FORMAT + CANLI BULMACA) ---
     const btnJigsaw = document.getElementById('btnJigsaw');
     const jigsawOverlay = document.getElementById('jigsawOverlay');
     const jigsawModal = document.getElementById('jigsawModal');
+    const jigsawStage = document.getElementById('jigsawStage');
+    const jigsawRefPanel = document.getElementById('jigsawRefPanel');
+    const jigsawRefCanvas = document.getElementById('jigsawRefCanvas');
+    const jigsawRefSub = document.getElementById('jigsawRefSub');
     const jigsawTierBar = document.getElementById('jigsawTierBar');
     const jigsawLevelBar = document.getElementById('jigsawLevelBar');
     const jigsawStyleBar = document.getElementById('jigsawStyleBar');
     const btnJigsawGhost = document.getElementById('btnJigsawGhost');
+    const jigsawBoardWrap = document.getElementById('jigsawBoardWrap');
     const jigsawGhostCanvas = document.getElementById('jigsawGhostCanvas');
     const jigsawBoardGrid = document.getElementById('jigsawBoardGrid');
     const jigsawTray = document.getElementById('jigsawTray');
@@ -6217,359 +6597,633 @@
     const jigsawShuffleBtn = document.getElementById('jigsawShuffleBtn');
     const jigsawNextThemeBtn = document.getElementById('jigsawNextThemeBtn');
 
-    // 5 Zorluk Kademesi × 3 Seviye = 15 Seviye (Kolaydan Zora: 2x2 -> 2x3 -> 3x3 -> 3x4 -> 4x4)
+    // 5 Zorluk Kademesi (Başlangıç, Kolay ve Orta'da ipucu baştaki gibi açık; Zor ve Uzman'da ipucusuz + yanda yapılmış görsel + sonsuz yapboz!)
     const JIGSAW_TIERS = [
-      { id: 0, label: '🌱 Başlangıç', sub: '2×2 (4P)', rows: 2, cols: 2, bonus: 20, cutType: 'round' },
-      { id: 1, label: '🌿 Kolay',     sub: '2×3 (6P)', rows: 2, cols: 3, bonus: 30, cutType: 'diamond' },
-      { id: 2, label: '⭐ Orta',      sub: '3×3 (9P)', rows: 3, cols: 3, bonus: 45, cutType: 'round' },
-      { id: 3, label: '🔥 Zor',       sub: '3×4 (12P)', rows: 3, cols: 4, bonus: 65, cutType: 'wave' },
-      { id: 4, label: '👑 Uzman',     sub: '4×4 (16P)', rows: 4, cols: 4, bonus: 90, cutType: 'diamond' }
+      { id: 0, label: '🌱 Başlangıç', sub: '2×2 / 4 Şerit',  rows: 2, cols: 2, stripCols: 4,  bonus: 20, cutType: 'interlock', endless: false },
+      { id: 1, label: '🌿 Kolay',     sub: '2×3 / 5 Şerit',  rows: 2, cols: 3, stripCols: 5,  bonus: 30, cutType: 'interlock', endless: false },
+      { id: 2, label: '⭐ Orta',      sub: '3×3 / 6 Şerit',  rows: 3, cols: 3, stripCols: 6,  bonus: 45, cutType: 'interlock', endless: false },
+      { id: 3, label: '🔥 Zor',       sub: '3×4 / 8 Şerit',  rows: 3, cols: 4, stripCols: 8,  bonus: 65, cutType: 'interlock', endless: true  },
+      { id: 4, label: '👑 Uzman',     sub: '4×4 / 10 Şerit', rows: 4, cols: 4, stripCols: 10, bonus: 90, cutType: 'interlock', endless: true  }
     ];
 
-    // 15 Seviyenin her birine özel yapboz tanımı (farklı stiller ve sahneler)
+    const JIGSAW_SCENE_NAMES = [
+      '🐶 Sevimli Yavru Köpek',
+      '🚗 Klasik Kırmızı Otomobil',
+      '🤿 Sarı Denizaltı Keşfi',
+      '🌈 Gökkuşağı Kilitli Bloklar',
+      '🚀 Uzay Roketi & Gezegenler',
+      '🦁 Neşeli Orman Safarisi',
+      '🚂 Renkli Buharlı Tren',
+      '🏰 Masal Şatosu & Balonlar',
+      '⛵ Korsan Gemisi & Hazine Adası',
+      '🦉 Bilge Baykuş Gece Ormanı'
+    ];
+
+    // 16 Temel Seviye (Başlangıç, Kolay ve Orta ipuçlu; Zor ve Uzman yandaki yapılmış görsele bakarak sonsuz yapbozlu)
     const JIGSAW_LEVELS = [
-      // Kademe 0 (2x2 - Başlangıç)
-      { lvl: 1,  tier: 0, style: 0, scene: 0, title: 'Seviye 1 · Uzay Roketi (Resimli)' },
-      { lvl: 2,  tier: 0, style: 1, scene: 0, title: 'Seviye 2 · Renkli Yıldız (Tangram)' },
-      { lvl: 3,  tier: 0, style: 2, scene: 0, title: 'Seviye 3 · Gökkuşağı Köprüsü (Yol Bağla)' },
-      // Kademe 1 (2x3 - Kolay)
-      { lvl: 4,  tier: 1, style: 0, scene: 1, title: 'Seviye 4 · Neşeli Orman (Resimli)' },
-      { lvl: 5,  tier: 1, style: 3, scene: 1, title: 'Seviye 5 · Sayı & Sembol Bahçesi (Örüntü)' },
-      { lvl: 6,  tier: 1, style: 1, scene: 1, title: 'Seviye 6 · Elmas Simetri (Mandala)' },
-      // Kademe 2 (3x3 - Orta)
-      { lvl: 7,  tier: 2, style: 0, scene: 2, title: 'Seviye 7 · Deniz Altı Dünyası (Resimli)' },
-      { lvl: 8,  tier: 2, style: 2, scene: 2, title: 'Seviye 8 · Enerji Boru Hattı (Yol Bağla)' },
-      { lvl: 9,  tier: 2, style: 3, scene: 2, title: 'Seviye 9 · Pusula & Renk Küpü (Örüntü)' },
-      // Kademe 3 (3x4 - Zor)
-      { lvl: 10, tier: 3, style: 0, scene: 3, title: 'Seviye 10 · Dinozor Vadisi (Resimli)' },
-      { lvl: 11, tier: 3, style: 1, scene: 3, title: 'Seviye 11 · Kraliyet Mandalası (Tangram)' },
-      { lvl: 12, tier: 3, style: 2, scene: 3, title: 'Seviye 12 · Büyük Tren Kavşağı (Yol Bağla)' },
-      // Kademe 4 (4x4 - Uzman & Canlı Bulmaca Bonusu)
-      { lvl: 13, tier: 4, style: 0, scene: 4, title: 'Seviye 13 · Bilim & Keşif Kalesi (Resimli)' },
-      { lvl: 14, tier: 4, style: 3, scene: 4, title: 'Seviye 14 · Galaksi Matrisi (Örüntü)' },
-      { lvl: 15, tier: 4, style: 1, scene: 4, title: 'Seviye 15 · Usta Prizma Mozaik (Tangram)' },
-      { lvl: 16, tier: 4, style: 4, scene: 4, title: 'Seviye 16 · Canlı ABC Bulmacası (Bonus)' }
+      // Kademe 0 (Başlangıç - İpuçlu)
+      { lvl: 1,  tier: 0, style: 1, scene: 0, title: 'Seviye 1 · Sevimli Kaplumbağa (Parça Birleştir · Kafa, Gövde, Ayaklar)' },
+      { lvl: 2,  tier: 0, style: 2, scene: 0, title: 'Seviye 2 · Ritmik Sayı Şeridi 1–4 (Sayı Sıralamalı Dikey Şerit)' },
+      { lvl: 3,  tier: 0, style: 0, scene: 0, title: 'Seviye 3 · Sevimli Yavru Köpek (Figürlü Kilitli Ahşap Yapboz)' },
+      // Kademe 1 (Kolay - İpuçlu)
+      { lvl: 4,  tier: 1, style: 0, scene: 1, title: 'Seviye 4 · Kırmızı Klasik Araba (Figürlü Kilitli Şablon)' },
+      { lvl: 5,  tier: 1, style: 2, scene: 1, title: 'Seviye 5 · Ritmik Sayı Şeridi 1–5 (Sayı Sıralamalı Dikey Şerit)' },
+      { lvl: 6,  tier: 1, style: 3, scene: 1, title: 'Seviye 6 · Kare Kesimli Makas Etkinliği (Düz Kesikli 2×3)' },
+      // Kademe 2 (Orta - Baştaki Gibi İpuçlu)
+      { lvl: 7,  tier: 2, style: 0, scene: 2, title: 'Seviye 7 · Sarı Denizaltı Keşfi (Figürlü Kilitli Ahşap Yapboz)' },
+      { lvl: 8,  tier: 2, style: 1, scene: 2, title: 'Seviye 8 · Bilge Robot Parçaları (Organik Parça Birleştirme)' },
+      { lvl: 9,  tier: 2, style: 2, scene: 2, title: 'Seviye 9 · Ritmik Sayı Şeridi 1–6 (Sayı Sıralamalı Dikey Şerit)' },
+      // Kademe 3 (Zor - İpucusuz · Yandaki Görsele Bakarak · Sonsuz Yapboz)
+      { lvl: 10, tier: 3, style: 0, scene: 3, title: 'Zor · Gökkuşağı Kilitli Bloklar (Yandaki Görsele Bakarak)' },
+      { lvl: 11, tier: 3, style: 1, scene: 5, title: 'Zor · Neşeli Orman Safarisi (Parça Birleştirme · Bakarak Yap)' },
+      { lvl: 12, tier: 3, style: 2, scene: 6, title: 'Zor · Buharlı Tren 8 Şerit (İpucusuz · Bakarak Yap)' },
+      // Kademe 4 (Uzman - İpucusuz · Yandaki Görsele Bakarak · Sonsuz Yapboz)
+      { lvl: 13, tier: 4, style: 3, scene: 7, title: 'Uzman · Masal Şatosu 4×4 Kare Kesim (Bakarak Yap)' },
+      { lvl: 14, tier: 4, style: 2, scene: 8, title: 'Uzman · Hazine Adası 10 Şerit (İpucusuz · Bakarak Yap)' },
+      { lvl: 15, tier: 4, style: 0, scene: 9, title: 'Uzman · Bilge Baykuş 4×4 Kilitli Şablon (Bakarak Yap)' },
+      { lvl: 16, tier: 4, style: 4, scene: 4, title: 'Uzman · Canlı ABC Bulmacası (4×4 Kilitli Bonus Yapboz)' }
     ];
 
-    const JIGSAW_SCENES = [
-      {
-        bg: ['#0d1b3e', '#1a237e', '#311b92'],
-        decor: (ctx, W, H) => {
-          ctx.fillStyle = '#fff59d';
-          [[32, 34, 3.5], [218, 28, 4], [74, 92, 2.5], [175, 68, 3], [40, 188, 3], [220, 175, 3.5], [126, 32, 3]].forEach(([x, y, r]) => {
-            ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
-          });
-          ctx.fillStyle = '#ffd54f';
-          ctx.beginPath(); ctx.arc(54, 56, 26, 0, Math.PI * 2); ctx.fill();
-          ctx.strokeStyle = '#ff8a65'; ctx.lineWidth = 5;
-          ctx.beginPath(); ctx.ellipse(195, 64, 34, 12, -0.35, 0, Math.PI * 2); ctx.stroke();
-          ctx.fillStyle = '#ff7043';
-          ctx.beginPath(); ctx.arc(195, 64, 17, 0, Math.PI * 2); ctx.fill();
-          ctx.fillStyle = '#26a69a';
-          ctx.beginPath(); ctx.arc(126, 275, 95, 0, Math.PI * 2); ctx.fill();
-        },
-        items: [
-          { e: '🚀', x: 126, y: 126, s: 76 },
-          { e: '👨‍🚀', x: 64, y: 178, s: 48 },
-          { e: '🛸', x: 192, y: 168, s: 48 },
-          { e: '🌟', x: 126, y: 44, s: 38 }
-        ]
-      },
-      {
-        bg: ['#81d4fa', '#c8e6c9', '#66bb6a'],
-        decor: (ctx, W, H) => {
-          ctx.fillStyle = '#fdd835';
-          ctx.beginPath(); ctx.arc(210, 44, 25, 0, Math.PI * 2); ctx.fill();
-          ctx.fillStyle = 'rgba(255,255,255,0.9)';
-          [[55, 42, 18], [75, 40, 22], [95, 44, 16]].forEach(([x, y, r]) => {
-            ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
-          });
-          ctx.fillStyle = '#81c784';
-          ctx.beginPath(); ctx.arc(75, 262, 125, 0, Math.PI * 2); ctx.fill();
-          ctx.fillStyle = '#43a047';
-          ctx.beginPath(); ctx.arc(195, 268, 120, 0, Math.PI * 2); ctx.fill();
-          // Gökkuşağı yayı
-          ['#ef5350', '#ffa726', '#ffee58', '#66bb6a', '#42a5f5'].forEach((c, i) => {
-            ctx.strokeStyle = c; ctx.lineWidth = 4;
-            ctx.beginPath(); ctx.arc(126, 175, 92 - i * 5, Math.PI * 1.12, Math.PI * 1.88); ctx.stroke();
-          });
-        },
-        items: [
-          { e: '🌳', x: 48, y: 118, s: 58 },
-          { e: '🌳', x: 204, y: 122, s: 56 },
-          { e: '🦁', x: 126, y: 148, s: 70 },
-          { e: '🦊', x: 58, y: 196, s: 46 },
-          { e: '🐰', x: 194, y: 196, s: 46 },
-          { e: '🦋', x: 126, y: 66, s: 36 }
-        ]
-      },
-      {
-        bg: ['#29b6f6', '#0288d1', '#01579b'],
-        decor: (ctx, W, H) => {
-          ctx.strokeStyle = 'rgba(255,255,255,0.3)'; ctx.lineWidth = 3;
-          for (let y = 38; y < 190; y += 45) {
-            ctx.beginPath();
-            ctx.moveTo(16, y);
-            ctx.quadraticCurveTo(72, y - 12, 126, y);
-            ctx.quadraticCurveTo(180, y + 12, 236, y);
-            ctx.stroke();
-          }
-          ctx.fillStyle = '#ffe082';
-          ctx.fillRect(0, 214, W, 38);
-        },
-        items: [
-          { e: '🐬', x: 122, y: 98, s: 70 },
-          { e: '🐢', x: 58, y: 156, s: 50 },
-          { e: '🐙', x: 192, y: 160, s: 52 },
-          { e: '🐠', x: 190, y: 66, s: 42 },
-          { e: '🦀', x: 76, y: 222, s: 40 },
-          { e: '🐚', x: 168, y: 224, s: 36 }
-        ]
-      },
-      {
-        bg: ['#ffcc80', '#fff59d', '#a5d6a7'],
-        decor: (ctx, W, H) => {
-          ctx.fillStyle = '#8d6e63';
-          ctx.beginPath(); ctx.moveTo(120, 175); ctx.lineTo(174, 58); ctx.lineTo(228, 175); ctx.closePath(); ctx.fill();
-          ctx.fillStyle = '#ff7043';
-          ctx.beginPath(); ctx.moveTo(159, 88); ctx.lineTo(174, 58); ctx.lineTo(189, 88); ctx.closePath(); ctx.fill();
-          ctx.fillStyle = '#66bb6a';
-          ctx.fillRect(0, 175, W, 77);
-        },
-        items: [
-          { e: '🦕', x: 76, y: 142, s: 70 },
-          { e: '🦖', x: 184, y: 160, s: 64 },
-          { e: '🌴', x: 40, y: 86, s: 52 },
-          { e: '🌋', x: 174, y: 76, s: 46 },
-          { e: '🥚', x: 126, y: 208, s: 40 }
-        ]
-      },
-      {
-        bg: ['#e1bee7', '#bbdefb', '#c8e6c9'],
-        decor: (ctx, W, H) => {
-          ctx.strokeStyle = 'rgba(106,27,154,0.24)'; ctx.lineWidth = 4;
-          ctx.beginPath(); ctx.arc(126, 126, 94, 0, Math.PI * 2); ctx.stroke();
-          ctx.beginPath(); ctx.arc(126, 126, 56, 0, Math.PI * 2); ctx.stroke();
-        },
-        items: [
-          { e: '🦉', x: 126, y: 126, s: 70 },
-          { e: '🔬', x: 56, y: 68, s: 46 },
-          { e: '🧪', x: 196, y: 68, s: 46 },
-          { e: '🧲', x: 56, y: 186, s: 46 },
-          { e: '💡', x: 196, y: 186, s: 48 },
-          { e: '🌈', x: 126, y: 44, s: 42 }
-        ]
-      }
-    ];
-
-    let jigsawCurLevelIdx = 0; // 0..14 (Seviye 1..15)
-    let jigsawCustomStyle = null; // null ise seviyenin kendi stili, seçilirse 0..3
+    let jigsawCurLevelIdx = 0;
+    let jigsawCustomStyle = null;
     let jigsawShowGhost = true;
     let jigsawBoardState = [];
     let jigsawTrayState = [];
     let jigsawSelectedPiece = null;
     let jigsawSolvedLock = false;
-    const JIGSAW_CANVAS_SIZE = 252;
+    // Zor (3) ve Uzman (4) kademelerinde sonsuz yapboz sayacı ve tohum (seed) değeri
+    let jigsawEndlessStep = { 3: 0, 4: 0 };
+    let jigsawActiveSeed = 0;
+    const JIGSAW_LOGICAL_SIZE = 252;
+    const JIGSAW_CANVAS_SIZE = 504;
     let jigsawMasterCanvas = document.createElement('canvas');
     jigsawMasterCanvas.width = JIGSAW_CANVAS_SIZE;
     jigsawMasterCanvas.height = JIGSAW_CANVAS_SIZE;
 
     function getActiveJigsawConfig() {
-      const lvlObj = JIGSAW_LEVELS[jigsawCurLevelIdx] || JIGSAW_LEVELS[0];
-      const tierObj = JIGSAW_TIERS[lvlObj.tier] || JIGSAW_TIERS[0];
-      const styleIdx = (jigsawCustomStyle !== null) ? jigsawCustomStyle : lvlObj.style;
+      const baseLvl = JIGSAW_LEVELS[jigsawCurLevelIdx] || JIGSAW_LEVELS[0];
+      const baseTier = JIGSAW_TIERS[baseLvl.tier] || JIGSAW_TIERS[0];
+      const eStep = baseTier.endless ? (jigsawEndlessStep[baseTier.id] || 0) : 0;
+      const styleIdx = (jigsawCustomStyle !== null)
+        ? jigsawCustomStyle
+        : (eStep > 0 ? ((baseLvl.style + eStep) % 5) : baseLvl.style);
+      const sceneSeed = (eStep > 0) ? (baseLvl.scene + eStep * 3 + baseTier.id) : baseLvl.scene;
+      jigsawActiveSeed = sceneSeed;
+
+      let rows = baseTier.rows;
+      let cols = baseTier.cols;
+      let cutType = 'interlock';
+      if (styleIdx === 2) {
+        rows = 1;
+        cols = baseTier.stripCols || 5;
+        cutType = 'strip';
+      } else if (styleIdx === 3) {
+        cutType = 'scissors';
+      } else if (styleIdx === 1) {
+        cutType = 'organic';
+      } else {
+        cutType = 'interlock';
+      }
+
+      const sceneLabel = JIGSAW_SCENE_NAMES[sceneSeed % JIGSAW_SCENE_NAMES.length];
+      const endlessNum = eStep + 1;
+      const dynamicTitle = baseTier.endless
+        ? `${baseTier.label} · ♾️ Sonsuz Yapboz #${endlessNum} (${sceneLabel})`
+        : baseLvl.title;
+
+      const lvlObj = Object.assign({}, baseLvl, { scene: sceneSeed, title: dynamicTitle, endlessNum });
+      const tierObj = Object.assign({}, baseTier, { rows, cols, cutType });
       return { lvlObj, tierObj, styleIdx };
     }
 
-    // Stil 0: Resimli Hikâye Sahnesi
-    function drawStyle0Scene(ctx, W, H, sceneIdx) {
-      const scene = JIGSAW_SCENES[sceneIdx % JIGSAW_SCENES.length];
-      const grad = ctx.createLinearGradient(0, 0, 0, H);
-      grad.addColorStop(0, scene.bg[0]);
-      grad.addColorStop(0.55, scene.bg[1]);
-      grad.addColorStop(1, scene.bg[2]);
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, W, H);
-      if (scene.decor) scene.decor(ctx, W, H);
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      scene.items.forEach(it => {
-        ctx.font = `${it.s}px "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif`;
-        ctx.fillText(it.e, it.x, it.y);
-      });
+    // Komşu yapboz parçaları arasında birbirine tam kilitlenen (+1 çıkıntı / -1 girinti) deterministik kenar yönü
+    function getInterlockEdges(r, c, rows, cols) {
+      const sd = jigsawActiveSeed || 0;
+      const hSign = (rr, cc) => (((rr * 7 + cc * 13 + sd * 5 + 3) % 2 === 0) ? 1 : -1);
+      const vSign = (rr, cc) => (((rr * 11 + cc * 5 + sd * 7 + 1) % 2 === 0) ? -1 : 1);
+      return {
+        top:    (r === 0)        ? 0 : -hSign(r - 1, c),
+        bottom: (r === rows - 1) ? 0 :  hSign(r, c),
+        left:   (c === 0)        ? 0 : -vSign(r, c - 1),
+        right:  (c === cols - 1) ? 0 :  vSign(r, c)
+      };
     }
 
-    // Stil 1: 🔷 Geometrik Tangram & Simetrik Mandala Yapbozu
-    function drawStyle1TangramMandala(ctx, W, H, seedIdx) {
-      const palettes = [
-        ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#1e88e5', '#8e24aa', '#00acc1', '#f4511e'],
-        ['#ec407a', '#ab47bc', '#5c6bc0', '#26c6da', '#66bb6a', '#ffca28', '#ff7043', '#26a69a'],
-        ['#1565c0', '#00897b', '#c0ca33', '#ffb300', '#e65100', '#ad1457', '#6a1b9a', '#283593']
-      ];
-      const pal = palettes[seedIdx % palettes.length];
-      const cx = W / 2, cy = H / 2;
+    // Gerçek Bezier girintili-çıkıntılı kilitli yapboz parçası konturu çizici
+    function traceInterlockingPiecePath(ctx, x0, y0, w, h, edges) {
+      const tabH = Math.min(w, h) * 0.175;
+      const neck = 0.10;
+      const head = 0.17;
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
 
-      // Arka plan 8 dilimli tangram yelkenleri
-      const slices = 8 + (seedIdx % 3) * 2;
-      for (let i = 0; i < slices; i++) {
-        const a1 = (i * Math.PI * 2) / slices;
-        const a2 = ((i + 1) * Math.PI * 2) / slices;
-        ctx.fillStyle = pal[i % pal.length];
-        ctx.beginPath();
-        ctx.moveTo(cx, cy);
-        ctx.arc(cx, cy, W * 0.75, a1, a2);
-        ctx.closePath();
-        ctx.fill();
+      // Üst kenar (soldan sağa)
+      if (!edges.top) {
+        ctx.lineTo(x0 + w, y0);
+      } else {
+        const s = edges.top; // +1 dışarı (yukarı), -1 içeri (aşağı)
+        const ny = -s * tabH;
+        ctx.lineTo(x0 + w * (0.5 - neck), y0);
+        ctx.bezierCurveTo(
+          x0 + w * (0.5 - neck * 0.6), y0 + ny * 0.35,
+          x0 + w * (0.5 - head),       y0 + ny * 0.95,
+          x0 + w * 0.5,                y0 + ny
+        );
+        ctx.bezierCurveTo(
+          x0 + w * (0.5 + head),       y0 + ny * 0.95,
+          x0 + w * (0.5 + neck * 0.6), y0 + ny * 0.35,
+          x0 + w * (0.5 + neck),       y0
+        );
+        ctx.lineTo(x0 + w, y0);
       }
 
-      // Köşe tangram üçgenleri (asimetrik renk ipuçları sayesinde her köşe benzersizdir!)
-      const cornerColors = [pal[0], pal[2], pal[4], pal[6]];
-      [[0, 0, 1, 1], [W, 0, -1, 1], [0, H, 1, -1], [W, H, -1, -1]].forEach(([x, y, dx, dy], idx) => {
-        ctx.fillStyle = cornerColors[idx];
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + dx * 82, y);
-        ctx.lineTo(x, y + dy * 82);
-        ctx.closePath();
-        ctx.fill();
-        ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 3;
-        ctx.stroke();
-      });
-
-      // İç içe geometrik halkalar ve yıldız poligonu
-      for (let r = 98; r >= 26; r -= 24) {
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate((r + seedIdx * 20) * 0.015);
-        ctx.beginPath();
-        const pts = 6 + (seedIdx % 3) * 2;
-        for (let k = 0; k < pts * 2; k++) {
-          const rad = (k % 2 === 0) ? r : r * 0.62;
-          const ang = (k * Math.PI) / pts;
-          const px = Math.cos(ang) * rad;
-          const py = Math.sin(ang) * rad;
-          if (k === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-        }
-        ctx.closePath();
-        ctx.fillStyle = pal[(r / 24 | 0) % pal.length];
-        ctx.fill();
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = 3;
-        ctx.stroke();
-        ctx.restore();
+      // Sağ kenar (yukarıdan aşağıya)
+      if (!edges.right) {
+        ctx.lineTo(x0 + w, y0 + h);
+      } else {
+        const s = edges.right; // +1 dışarı (sağa), -1 içeri (sola)
+        const nx = s * tabH;
+        ctx.lineTo(x0 + w, y0 + h * (0.5 - neck));
+        ctx.bezierCurveTo(
+          x0 + w + nx * 0.35, y0 + h * (0.5 - neck * 0.6),
+          x0 + w + nx * 0.95, y0 + h * (0.5 - head),
+          x0 + w + nx,        y0 + h * 0.5
+        );
+        ctx.bezierCurveTo(
+          x0 + w + nx * 0.95, y0 + h * (0.5 + head),
+          x0 + w + nx * 0.35, y0 + h * (0.5 + neck * 0.6),
+          x0 + w,             y0 + h * (0.5 + neck)
+        );
+        ctx.lineTo(x0 + w, y0 + h);
       }
 
-      // 4 çeyrek bölgeye farklı geometrik rozetler
-      const badges = ['⭐', '🔶', '💠', '🌸'];
-      ctx.font = '28px "Segoe UI Emoji", sans-serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      [[54, 54], [W - 54, 54], [54, H - 54], [W - 54, H - 54]].forEach(([bx, by], i) => {
-        ctx.fillText(badges[(i + seedIdx) % badges.length], bx, by);
-      });
+      // Alt kenar (sağdan sola)
+      if (!edges.bottom) {
+        ctx.lineTo(x0, y0 + h);
+      } else {
+        const s = edges.bottom; // +1 dışarı (aşağı), -1 içeri (yukarı)
+        const ny = s * tabH;
+        ctx.lineTo(x0 + w * (0.5 + neck), y0 + h);
+        ctx.bezierCurveTo(
+          x0 + w * (0.5 + neck * 0.6), y0 + h + ny * 0.35,
+          x0 + w * (0.5 + head),       y0 + h + ny * 0.95,
+          x0 + w * 0.5,                y0 + h + ny
+        );
+        ctx.bezierCurveTo(
+          x0 + w * (0.5 - head),       y0 + h + ny * 0.95,
+          x0 + w * (0.5 - neck * 0.6), y0 + h + ny * 0.35,
+          x0 + w * (0.5 - neck),       y0 + h
+        );
+        ctx.lineTo(x0, y0 + h);
+      }
+
+      // Sol kenar (aşağıdan yukarıya)
+      if (!edges.left) {
+        ctx.lineTo(x0, y0);
+      } else {
+        const s = edges.left; // +1 dışarı (sola), -1 içeri (sağa)
+        const nx = -s * tabH;
+        ctx.lineTo(x0, y0 + h * (0.5 + neck));
+        ctx.bezierCurveTo(
+          x0 + nx * 0.35, y0 + h * (0.5 + neck * 0.6),
+          x0 + nx * 0.95, y0 + h * (0.5 + head),
+          x0 + nx,        y0 + h * 0.5
+        );
+        ctx.bezierCurveTo(
+          x0 + nx * 0.95, y0 + h * (0.5 - head),
+          x0 + nx * 0.35, y0 + h * (0.5 - neck * 0.6),
+          x0,             y0 + h * (0.5 - neck)
+        );
+        ctx.lineTo(x0, y0);
+      }
+      ctx.closePath();
     }
 
-    // Stil 2: 🛤️ Boru, Gökkuşağı Rayı ve Yol Bağlama Yapbozu
-    function drawStyle2PipeTracks(ctx, W, H, rows, cols, seedIdx) {
-      const bgGrad = ctx.createLinearGradient(0, 0, W, H);
-      bgGrad.addColorStop(0, '#f1f8e9');
-      bgGrad.addColorStop(1, '#e0f7fa');
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, W, H);
+    // FORMAT 0 (🚗 Figürlü Klasik Kilitli Şablon): 10 Zengin Vektörel Sahne + Sonsuz Varyasyon
+    function drawStyle0Scene(ctx, W, H, sceneIdx, rows = 3, cols = 3) {
+      const mode = sceneIdx % 10;
+      const variant = Math.floor(sceneIdx / 10);
+      if (mode === 0) {
+        // Sahne 0: 🐶 Sevimli Yavru Köpek
+        const bg = ctx.createLinearGradient(0, 0, 0, H);
+        bg.addColorStop(0, variant % 2 === 1 ? '#1d3557' : '#1b4332');
+        bg.addColorStop(0.45, variant % 2 === 1 ? '#457b9d' : '#52b788');
+        bg.addColorStop(1, '#74c69d');
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, W, H);
 
-      // Arka plan hafif çim/şehir dokusu
-      ctx.strokeStyle = 'rgba(0, 105, 92, 0.12)';
-      ctx.lineWidth = 1.5;
-      for (let x = 21; x < W; x += 21) {
-        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(0, x); ctx.lineTo(W, x); ctx.stroke();
-      }
-
-      // Tüm karoların üzerinden geçen 3 farklı renkte kesintisiz kıvrımlı yol/ray sistemi
-      const tracks = [
-        { color: '#e53935', inner: '#ffcdd2', pts: [[24, 34], [126, 52], [218, 44], [205, 130], [116, 124], [42, 140], [48, 218], [148, 212], [224, 216]], startIc: '🚂', endIc: '🏁' },
-        { color: '#1e88e5', inner: '#bbdefb', pts: [[36, 224], [34, 88], [128, 86], [134, 178], [216, 174], [218, 82]], startIc: '💧', endIc: '🌊' },
-        { color: '#43a047', inner: '#c8e6c9', pts: [[126, 22], [78, 66], [176, 104], [74, 168], [168, 228]], startIc: '⚡', endIc: '💡' }
-      ];
-
-      tracks.forEach((tr, idx) => {
-        const shift = (seedIdx * 17 + idx * 11) % 16 - 8;
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-        // Dış boru gövdesi
-        ctx.strokeStyle = tr.color;
-        ctx.lineWidth = 18;
-        ctx.beginPath();
-        tr.pts.forEach(([x, y], i) => {
-          const px = Math.max(18, Math.min(W - 18, x + shift));
-          const py = Math.max(18, Math.min(H - 18, y - shift));
-          if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+        [['rgba(255,255,255,0.22)', 48, 42, 22], ['rgba(255,245,157,0.28)', 202, 54, 28], ['rgba(255,255,255,0.18)', 38, 170, 26]].forEach(([c, x, y, r]) => {
+          ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
         });
-        ctx.stroke();
 
-        // İç enerji/ray şeridi
-        ctx.strokeStyle = tr.inner;
-        ctx.lineWidth = 7;
-        ctx.setLineDash([8, 8]);
-        ctx.stroke();
+        ctx.fillStyle = '#f5ebe0';
+        ctx.beginPath(); ctx.ellipse(126, 212, 66, 56, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#d4a373';
+        ctx.beginPath(); ctx.ellipse(84, 225, 22, 34, 0.2, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(168, 225, 22, 34, -0.2, 0, Math.PI * 2); ctx.fill();
+
+        ctx.fillStyle = '#b07d4f';
+        ctx.beginPath(); ctx.ellipse(62, 114, 26, 48, 0.32, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(190, 114, 26, 48, -0.32, 0, Math.PI * 2); ctx.fill();
+
+        ctx.fillStyle = '#d4a373';
+        ctx.beginPath(); ctx.arc(126, 108, 60, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#faedcd';
+        ctx.beginPath(); ctx.ellipse(98, 96, 26, 32, -0.15, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.ellipse(154, 96, 26, 32, 0.15, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath(); ctx.ellipse(126, 126, 36, 28, 0, 0, Math.PI * 2); ctx.fill();
+
+        [[98, 96], [154, 96]].forEach(([ex, ey]) => {
+          ctx.fillStyle = '#1f1300';
+          ctx.beginPath(); ctx.arc(ex, ey, 10.5, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath(); ctx.arc(ex - 3, ey - 3.5, 3.5, 0, Math.PI * 2); ctx.fill();
+        });
+
+        ctx.fillStyle = '#f28482';
+        ctx.beginPath(); ctx.ellipse(126, 148, 12, 16, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#e56b6f'; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.moveTo(126, 136); ctx.lineTo(126, 158); ctx.stroke();
+
+        ctx.fillStyle = '#2b2d42';
+        ctx.beginPath(); ctx.ellipse(126, 120, 14, 10, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        ctx.beginPath(); ctx.ellipse(122, 117, 4, 2.5, 0, 0, Math.PI * 2); ctx.fill();
+        if (variant > 0) {
+          ctx.font = '28px "Segoe UI Emoji", sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillText('🦋', 42, 48); ctx.fillText('🌼', 214, 218); ctx.fillText('🦴', 44, 222);
+        }
+      } else if (mode === 1) {
+        // Sahne 1: 🚗 Figürlü Klasik Araba Şablonu
+        const carColors = ['#e63946', '#1e88e5', '#fb8c00', '#8e24aa', '#2e7d32'];
+        const bodyCol = carColors[variant % carColors.length];
+        const sky = ctx.createLinearGradient(0, 0, 0, H);
+        sky.addColorStop(0, '#90e0ef');
+        sky.addColorStop(0.65, '#caf0f8');
+        sky.addColorStop(0.65, '#81c784');
+        sky.addColorStop(1, '#4caf50');
+        ctx.fillStyle = sky;
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.fillStyle = '#ffb703';
+        ctx.beginPath(); ctx.arc(46, 44, 22, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        [[175, 42, 16], [192, 38, 20], [210, 44, 15]].forEach(([x, y, r]) => {
+          ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+        });
+
+        ctx.fillStyle = '#455a64';
+        ctx.fillRect(0, 182, W, 46);
+        ctx.strokeStyle = '#ffd166'; ctx.lineWidth = 4; ctx.setLineDash([14, 10]);
+        ctx.beginPath(); ctx.moveTo(0, 205); ctx.lineTo(W, 205); ctx.stroke();
         ctx.setLineDash([]);
 
-        // Başlangıç ve bitiş istasyonları
-        ctx.font = '26px "Segoe UI Emoji", sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        const sPt = tr.pts[0];
-        const ePt = tr.pts[tr.pts.length - 1];
-        ctx.fillText(tr.startIc, Math.max(22, Math.min(W - 22, sPt[0] + shift)), Math.max(22, Math.min(H - 22, sPt[1] - shift)));
-        ctx.fillText(tr.endIc, Math.max(22, Math.min(W - 22, ePt[0] + shift)), Math.max(22, Math.min(H - 22, ePt[1] - shift)));
-      });
+        ctx.fillStyle = bodyCol;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(26, 172);
+        ctx.lineTo(26, 138);
+        ctx.quadraticCurveTo(30, 118, 62, 114);
+        ctx.quadraticCurveTo(84, 72, 132, 72);
+        ctx.quadraticCurveTo(178, 72, 194, 114);
+        ctx.quadraticCurveTo(226, 118, 228, 144);
+        ctx.lineTo(228, 172);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#a8dadc';
+        ctx.beginPath();
+        ctx.moveTo(74, 114);
+        ctx.quadraticCurveTo(90, 82, 124, 82);
+        ctx.lineTo(124, 114);
+        ctx.closePath();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(132, 82);
+        ctx.quadraticCurveTo(168, 82, 182, 114);
+        ctx.lineTo(132, 114);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = '#ffd166';
+        ctx.beginPath(); ctx.arc(222, 136, 9, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#ffb703';
+        ctx.fillRect(118, 128, 18, 6);
+
+        [[74, 174], [182, 174]].forEach(([wx, wy]) => {
+          ctx.fillStyle = '#1d3557';
+          ctx.beginPath(); ctx.arc(wx, wy, 26, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = '#f1faee';
+          ctx.beginPath(); ctx.arc(wx, wy, 14, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = bodyCol;
+          ctx.beginPath(); ctx.arc(wx, wy, 6, 0, Math.PI * 2); ctx.fill();
+        });
+      } else if (mode === 2) {
+        // Sahne 2: 🤿 Sarı Denizaltı Keşfi
+        const sea = ctx.createLinearGradient(0, 0, 0, H);
+        sea.addColorStop(0, '#0077b6');
+        sea.addColorStop(0.6, '#0096c7');
+        sea.addColorStop(1, '#03045e');
+        ctx.fillStyle = sea;
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.fillStyle = '#ffca3a';
+        ctx.beginPath(); ctx.ellipse(126, 244, 140, 28, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.font = '34px "Segoe UI Emoji", sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('🪸', 42, 214); ctx.fillText('🐠', 212, 68); ctx.fillText('🐙', 208, 206); ctx.fillText('🐢', 48, 62);
+
+        ctx.strokeStyle = '#ff9f1c'; ctx.lineWidth = 10; ctx.lineCap = 'round';
+        ctx.beginPath(); ctx.moveTo(118, 82); ctx.lineTo(118, 46); ctx.lineTo(138, 46); ctx.stroke();
+        ctx.fillStyle = '#ff9f1c';
+        ctx.beginPath(); ctx.moveTo(192, 134); ctx.lineTo(228, 108); ctx.lineTo(228, 160); ctx.closePath(); ctx.fill();
+
+        ctx.fillStyle = '#ffbe0b';
+        ctx.strokeStyle = '#fb5607';
+        ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.ellipse(122, 136, 76, 48, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+
+        ctx.fillStyle = '#caf0f8';
+        ctx.beginPath(); ctx.arc(96, 134, 28, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#ff9f1c'; ctx.lineWidth = 5; ctx.stroke();
+        ctx.font = '36px "Segoe UI Emoji", sans-serif';
+        ctx.fillText('🧒', 96, 136);
+        ctx.fillStyle = '#caf0f8';
+        ctx.beginPath(); ctx.arc(154, 134, 13, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      } else if (mode === 3) {
+        // Sahne 3: 🌈 Gökkuşağı Kilitli Yapboz Blokları
+        const colsP = ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#1e88e5', '#8e24aa', '#00acc1', '#ec407a'];
+        const icons = ['⭐', '💎', '☀️', '🍀', '🎵', '🚀', '🦋', '🎈', '👑', '⚽', '🐬', '🌺', '🦄', '🍎', '🎨', '🧩'];
+        const tw = W / cols, th = H / rows;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const idx = r * cols + c;
+            ctx.fillStyle = colsP[(r * 3 + c * 2 + variant) % colsP.length];
+            ctx.fillRect(c * tw, r * th, tw + 1, th + 1);
+            ctx.fillStyle = 'rgba(255,255,255,0.25)';
+            ctx.beginPath(); ctx.arc(c * tw + tw * 0.5, r * th + th * 0.5, Math.min(tw, th) * 0.34, 0, Math.PI * 2); ctx.fill();
+            ctx.font = `${Math.max(16, Math.floor(Math.min(tw, th) * 0.44))}px "Segoe UI Emoji", sans-serif`;
+            ctx.fillText(icons[(idx + variant * 3) % icons.length], c * tw + tw * 0.5, r * th + th * 0.5);
+          }
+        }
+      } else if (mode === 4) {
+        // Sahne 4: 🚀 Uzay Roketi & Gezegenler
+        const grad = ctx.createLinearGradient(0, 0, 0, H);
+        grad.addColorStop(0, '#0d1b3e'); grad.addColorStop(0.55, '#1a237e'); grad.addColorStop(1, '#311b92');
+        ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#ffd54f'; ctx.beginPath(); ctx.arc(54, 56, 26, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#ff8a65'; ctx.lineWidth = 5;
+        ctx.beginPath(); ctx.ellipse(195, 64, 34, 12, -0.35, 0, Math.PI * 2); ctx.stroke();
+        ctx.fillStyle = '#ff7043'; ctx.beginPath(); ctx.arc(195, 64, 17, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#26a69a'; ctx.beginPath(); ctx.arc(126, 275, 95, 0, Math.PI * 2); ctx.fill();
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        [['🚀', 126, 126, 76], ['👨‍🚀', 64, 178, 48], ['🛸', 192, 168, 48], ['🌟', 126, 44, 38]].forEach(([e, x, y, s]) => {
+          ctx.font = `${s}px "Segoe UI Emoji", sans-serif`; ctx.fillText(e, x, y);
+        });
+      } else if (mode === 5) {
+        // Sahne 5: 🦁 Neşeli Orman Safarisi (Aslan, Zürafa, Fil, Savan Güneşi)
+        const sav = ctx.createLinearGradient(0, 0, 0, H);
+        sav.addColorStop(0, '#ff9f1c'); sav.addColorStop(0.55, '#ffbf69'); sav.addColorStop(0.55, '#a7c957'); sav.addColorStop(1, '#6a994e');
+        ctx.fillStyle = sav; ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#fff3b0'; ctx.beginPath(); ctx.arc(196, 52, 28, 0, Math.PI * 2); ctx.fill();
+        // Akasya Ağacı
+        ctx.fillStyle = '#582f0e'; ctx.fillRect(52, 82, 12, 68);
+        ctx.fillStyle = '#386641'; ctx.beginPath(); ctx.ellipse(58, 76, 48, 20, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        [['🦁', 126, 174, 72], ['🦒', 198, 146, 62], ['🐘', 54, 192, 56], ['🦜', 92, 56, 36]].forEach(([e, x, y, s]) => {
+          ctx.font = `${s}px "Segoe UI Emoji", sans-serif`; ctx.fillText(e, x, y);
+        });
+      } else if (mode === 6) {
+        // Sahne 6: 🚂 Renkli Buharlı Tren & Dağ Köprüsü
+        const trSky = ctx.createLinearGradient(0, 0, 0, H);
+        trSky.addColorStop(0, '#48cae4'); trSky.addColorStop(0.62, '#ade8f4'); trSky.addColorStop(0.62, '#52b788'); trSky.addColorStop(1, '#2d6a4f');
+        ctx.fillStyle = trSky; ctx.fillRect(0, 0, W, H);
+        // Dağlar
+        ctx.fillStyle = '#6c757d';
+        ctx.beginPath(); ctx.moveTo(10, 156); ctx.lineTo(84, 62); ctx.lineTo(158, 156); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = '#adb5bd';
+        ctx.beginPath(); ctx.moveTo(110, 156); ctx.lineTo(188, 54); ctx.lineTo(250, 156); ctx.closePath(); ctx.fill();
+        // Ray & Köprü
+        ctx.fillStyle = '#7f4f24'; ctx.fillRect(0, 176, W, 16);
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        [['🚂', 78, 148, 68], ['🚃', 154, 152, 58], ['🛤️', 216, 214, 42], ['☁️', 64, 42, 42], ['☀️', 212, 42, 40]].forEach(([e, x, y, s]) => {
+          ctx.font = `${s}px "Segoe UI Emoji", sans-serif`; ctx.fillText(e, x, y);
+        });
+      } else if (mode === 7) {
+        // Sahne 7: 🏰 Masal Şatosu & Uçan Balonlar
+        const cSky = ctx.createLinearGradient(0, 0, 0, H);
+        cSky.addColorStop(0, '#7209b7'); cSky.addColorStop(0.55, '#b5179e'); cSky.addColorStop(1, '#f72585');
+        ctx.fillStyle = cSky; ctx.fillRect(0, 0, W, H);
+        // Gökkuşağı Kemeri
+        ['#ff595e', '#ffca3a', '#8ac926', '#1982c4'].forEach((col, i) => {
+          ctx.strokeStyle = col; ctx.lineWidth = 6;
+          ctx.beginPath(); ctx.arc(126, 175, 96 - i * 7, Math.PI, 0); ctx.stroke();
+        });
+        ctx.fillStyle = '#80ed99'; ctx.beginPath(); ctx.ellipse(126, 236, 140, 48, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        [['🏰', 126, 152, 82], ['🎈', 46, 74, 46], ['🎠', 202, 186, 48], ['🦄', 54, 190, 48], ['✨', 196, 62, 38]].forEach(([e, x, y, s]) => {
+          ctx.font = `${s}px "Segoe UI Emoji", sans-serif`; ctx.fillText(e, x, y);
+        });
+      } else if (mode === 8) {
+        // Sahne 8: ⛵ Korsan Gemisi & Hazine Adası
+        const iSky = ctx.createLinearGradient(0, 0, 0, H);
+        iSky.addColorStop(0, '#00b4d8'); iSky.addColorStop(0.58, '#90e0ef'); iSky.addColorStop(0.58, '#0077b6'); iSky.addColorStop(1, '#023e8a');
+        ctx.fillStyle = iSky; ctx.fillRect(0, 0, W, H);
+        // Kumlu Hazine Adası
+        ctx.fillStyle = '#ffd166'; ctx.beginPath(); ctx.ellipse(192, 168, 54, 24, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        [['⛵', 78, 138, 76], ['🌴', 194, 124, 58], ['🐬', 142, 208, 48], ['☀️', 48, 46, 44], ['🦜', 146, 56, 38]].forEach(([e, x, y, s]) => {
+          ctx.font = `${s}px "Segoe UI Emoji", sans-serif`; ctx.fillText(e, x, y);
+        });
+      } else {
+        // Sahne 9: 🦉 Bilge Baykuş & Sihirli Gece Ormanı
+        const nSky = ctx.createLinearGradient(0, 0, 0, H);
+        nSky.addColorStop(0, '#10002b'); nSky.addColorStop(0.6, '#240046'); nSky.addColorStop(1, '#3c096c');
+        ctx.fillStyle = nSky; ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#fef9ef'; ctx.beginPath(); ctx.arc(194, 58, 30, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = '#7f5539'; ctx.lineWidth = 12; ctx.lineCap = 'round';
+        ctx.beginPath(); ctx.moveTo(0, 152); ctx.quadraticCurveTo(110, 138, 220, 158); ctx.stroke();
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        [['🦉', 118, 112, 74], ['🍄', 62, 212, 48], ['🦊', 184, 208, 52], ['🌟', 54, 52, 38], ['🦋', 192, 124, 38]].forEach(([e, x, y, s]) => {
+          ctx.font = `${s}px "Segoe UI Emoji", sans-serif`; ctx.fillText(e, x, y);
+        });
+      }
     }
 
-    // Stil 3: 🔢 Akıl Küpü · Sayı, Harf ve Kenar Eşleştirme Örüntüsü
-    function drawStyle3PatternMatrix(ctx, W, H, rows, cols, seedIdx) {
+    // FORMAT 1 (🐢 Parça Birleştirme / Kes-Yapıştır): Kaplumbağa, Araba, Robot, Dinozor ve Sonsuz Organik Parçalar
+    function drawStyle1TangramMandala(ctx, W, H, seedIdx, rows = 2, cols = 2, hideHints = false) {
+      const mode = seedIdx % 6;
+      ctx.fillStyle = '#fefae0';
+      ctx.fillRect(0, 0, W, H);
+
+      ctx.strokeStyle = 'rgba(46, 125, 50, 0.22)';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 5]);
+      ctx.strokeRect(8, 8, W - 16, H - 16);
+      ctx.setLineDash([]);
+
+      if (mode === 0) {
+        // 🐢 KAPLUMBAĞA ORGANİK PARÇA BİRLEŞTİRME (Kafa, Sırt Kabuğu, Ön/Arka Ayaklar, Kuyruk)
+        ctx.fillStyle = '#e8f5e9';
+        ctx.beginPath(); ctx.arc(126, 126, 108, 0, Math.PI * 2); ctx.fill();
+
+        ctx.fillStyle = '#7cb342';
+        ctx.strokeStyle = '#33691e';
+        ctx.lineWidth = 3.5;
+
+        [[64, 74, -0.5], [188, 74, 0.5], [64, 184, 0.5], [188, 184, -0.5]].forEach(([lx, ly, rot]) => {
+          ctx.save(); ctx.translate(lx, ly); ctx.rotate(rot);
+          ctx.beginPath(); ctx.ellipse(0, 0, 26, 16, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+          ctx.fillStyle = '#fff9c4';
+          [-8, 0, 8].forEach( dy => { ctx.beginPath(); ctx.arc(lx < 126 ? -24 : 24, dy, 4, 0, Math.PI * 2); ctx.fill(); });
+          ctx.restore();
+        });
+
+        ctx.fillStyle = '#7cb342';
+        ctx.beginPath(); ctx.moveTo(116, 196); ctx.lineTo(126, 232); ctx.lineTo(136, 196); ctx.closePath(); ctx.fill(); ctx.stroke();
+
+        ctx.fillStyle = '#8bc34a';
+        ctx.beginPath(); ctx.ellipse(126, 44, 28, 25, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        [[115, 38], [137, 38]].forEach(([ex, ey]) => {
+          ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(ex, ey, 6.5, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = '#1b5e20'; ctx.beginPath(); ctx.arc(ex, ey, 3.5, 0, Math.PI * 2); ctx.fill();
+        });
+        ctx.strokeStyle = '#1b5e20'; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.arc(126, 48, 10, 0.15 * Math.PI, 0.85 * Math.PI); ctx.stroke();
+
+        ctx.fillStyle = '#2e7d32';
+        ctx.strokeStyle = '#1b5e20'; ctx.lineWidth = 4;
+        ctx.beginPath(); ctx.ellipse(126, 130, 64, 68, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+
+        ctx.fillStyle = '#66bb6a'; ctx.strokeStyle = '#fff9c4'; ctx.lineWidth = 2.5;
+        ctx.beginPath(); ctx.arc(126, 130, 28, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        for (let a = 0; a < 6; a++) {
+          const ang = (a * Math.PI) / 3;
+          const px = 126 + Math.cos(ang) * 44, py = 130 + Math.sin(ang) * 46;
+          ctx.fillStyle = (a % 2 === 0) ? '#43a047' : '#81c784';
+          ctx.beginPath(); ctx.arc(px, py, 16, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+        }
+      } else if (mode === 1) {
+        drawStyle0Scene(ctx, W, H, 1 + Math.floor(seedIdx / 6) * 10, rows, cols);
+      } else if (mode === 2) {
+        // 🤖 BİLGE ROBOT PARÇA BİRLEŞTİRME
+        ctx.fillStyle = '#e3f2fd'; ctx.fillRect(0, 0, W, H);
+        ctx.strokeStyle = '#1565c0'; ctx.lineWidth = 3.5;
+        ctx.beginPath(); ctx.moveTo(126, 18); ctx.lineTo(126, 38); ctx.stroke();
+        ctx.fillStyle = '#ff5252'; ctx.beginPath(); ctx.arc(126, 16, 7, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#90caf9'; ctx.fillRect(86, 38, 80, 52); ctx.strokeRect(86, 38, 80, 52);
+        ctx.fillStyle = '#ffca28'; ctx.beginPath(); ctx.arc(106, 60, 9, 0, Math.PI * 2); ctx.fill();
+        ctx.beginPath(); ctx.arc(146, 60, 9, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#1565c0'; ctx.fillRect(104, 76, 44, 6);
+        ctx.fillStyle = '#ffb74d';
+        ctx.fillRect(34, 104, 42, 22); ctx.strokeRect(34, 104, 42, 22);
+        ctx.fillRect(176, 104, 42, 22); ctx.strokeRect(176, 104, 42, 22);
+        ctx.fillStyle = '#42a5f5'; ctx.fillRect(76, 96, 100, 78); ctx.strokeRect(76, 96, 100, 78);
+        ctx.fillStyle = '#fff'; ctx.fillRect(92, 112, 68, 44);
+        ctx.font = '26px "Segoe UI Emoji", sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('⚙️❤️⚡', 126, 134);
+        ctx.fillStyle = '#78909c';
+        ctx.fillRect(88, 178, 28, 54); ctx.strokeRect(88, 178, 28, 54);
+        ctx.fillRect(136, 178, 28, 54); ctx.strokeRect(136, 178, 28, 54);
+      } else {
+        drawStyle0Scene(ctx, W, H, seedIdx, rows, cols);
+      }
+
+      // Başlangıç, Kolay ve Orta (hideHints === false) seviyelerinde parça ipucu etiketleri baştaki gibi gösterilir; Zor ve Uzman'da gizlenir!
+      const tw = W / cols, th = H / rows;
+      const turtleNames2x2 = ['🐢 Baş & Sol Ön Ayak', '🐢 Baş & Sağ Ön Ayak', '🐾 Kabuk & Sol Arka', '🐾 Kabuk & Sağ Arka'];
+      const partNames2x3 = ['1·Sol Üst', '2·Baş & Orta', '3·Sağ Üst', '4·Sol Alt', '5·Orta Gövde', '6·Sağ Alt'];
+      const partNames3x3 = ['1·Sol Üst', '2·Üst Baş', '3·Sağ Üst', '4·Sol Kol', '5·Merkez Gövde', '6·Sağ Kol', '7·Sol Ayak', '8·Alt Orta', '9·Sağ Ayak'];
+      ctx.strokeStyle = 'rgba(216, 67, 21, 0.65)';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([5, 4]);
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const x = c * tw, y = r * th;
+          ctx.strokeRect(x + 2, y + 2, tw - 4, th - 4);
+          if (!hideHints && rows * cols <= 9) {
+            const idx = r * cols + c;
+            const lbl = (rows === 2 && cols === 2)
+              ? turtleNames2x2[idx]
+              : ((rows === 2 && cols === 3) ? partNames2x3[idx] : (partNames3x3[idx] || `Parça ${idx + 1}`));
+            if (lbl) {
+              ctx.fillStyle = 'rgba(255, 255, 255, 0.86)';
+              ctx.fillRect(x + 4, y + th - 19, tw - 8, 14);
+              ctx.fillStyle = '#bf360c';
+              ctx.font = '800 8.5px "Segoe UI", Arial, sans-serif';
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              ctx.fillText(lbl, x + tw / 2, y + th - 12);
+            }
+          }
+        }
+      }
+      ctx.setLineDash([]);
+    }
+
+    // FORMAT 2 (🔢 Sayı Sıralamalı Şerit Yapboz): Başlangıç, Kolay ve Orta'da sayı şeritli; Zor ve Uzman'da sayı ipucusuz!
+    function drawStyle2PipeTracks(ctx, W, H, rows, cols, seedIdx, hideHints = false) {
+      const picH = hideHints ? H : Math.floor(H * 0.78);
+      const barH = H - picH;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, 0, W, picH);
+      ctx.clip();
+      if (seedIdx === 0) {
+        drawStyle1TangramMandala(ctx, W, picH, 0, 1, cols, true);
+      } else {
+        drawStyle0Scene(ctx, W, picH, seedIdx, 1, cols);
+      }
+      ctx.restore();
+
+      const stripW = W / cols;
+      const numColors = ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#00acc1', '#1e88e5', '#8e24aa', '#d81b60', '#6d4c41', '#00897b'];
+      for (let c = 0; c < cols; c++) {
+        const sx = c * stripW;
+        if (c > 0) {
+          ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+          ctx.lineWidth = 2;
+          ctx.setLineDash([6, 4]);
+          ctx.beginPath(); ctx.moveTo(sx, 0); ctx.lineTo(sx, H); ctx.stroke();
+          ctx.setLineDash([]);
+        }
+        // Başlangıç, Kolay ve Orta seviyelerinde (hideHints === false) alt sayı ipucu kutusu çizilir
+        if (!hideHints && barH > 0) {
+          ctx.fillStyle = numColors[c % numColors.length];
+          ctx.fillRect(sx, picH, stripW, barH);
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 2.5;
+          ctx.strokeRect(sx + 1, picH + 1, stripW - 2, barH - 2);
+
+          ctx.fillStyle = '#ffffff';
+          const rad = Math.min(stripW * 0.38, barH * 0.38);
+          ctx.beginPath();
+          ctx.arc(sx + stripW / 2, picH + barH / 2, rad, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = '#1a237e';
+          ctx.font = `900 ${Math.max(12, Math.floor(rad * 1.25))}px "Segoe UI", Arial, sans-serif`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(String(c + 1), sx + stripW / 2, picH + barH / 2 + 1);
+        }
+      }
+    }
+
+    // FORMAT 3 (✂️ Kare Kesimli Çalışma Kağıdı): Başlangıç, Kolay ve Orta'da köşe sıra numaralı; Zor ve Uzman'da ipucusuz!
+    function drawStyle3PatternMatrix(ctx, W, H, rows, cols, seedIdx, hideHints = false) {
+      drawStyle0Scene(ctx, W, H, seedIdx + 2, rows, cols);
+
       const tileW = W / cols;
       const tileH = H / rows;
       const edgeColors = ['#e53935', '#fb8c00', '#fdd835', '#43a047', '#00acc1', '#1e88e5', '#8e24aa', '#d81b60'];
-      const symbols = ['🦁', '🚀', '🐬', '🦉', '🦖', '🌈', '⭐', '🍎', '🎸', '👑', '🦋', '🛸', '🐢', '🌻', '💎', '⚽'];
 
-      // Köşe birleşim noktalarında paylaşılan renkli daireler çizilir; böylece komşu parçalar yarım daireleri tamamlar!
-      ctx.fillStyle = '#fffde7';
-      ctx.fillRect(0, 0, W, H);
-
-      // Her hücrenin zemin rengi ve sıra numarası / sembolü
-      let seq = 1;
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          const x = c * tileW, y = r * tileH;
-          const hue = ((r * cols + c) * (360 / (rows * cols)) + seedIdx * 45) % 360;
-          ctx.fillStyle = `hsl(${hue}, 80%, 88%)`;
-          ctx.fillRect(x, y, tileW, tileH);
-
-          // Çapraz renk kuşağı
-          ctx.fillStyle = `hsla(${(hue + 40) % 360}, 85%, 65%, 0.35)`;
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + tileW, y);
-          ctx.lineTo(x, y + tileH);
-          ctx.closePath();
-          ctx.fill();
-
-          // Merkezde sıra sayısı + sembol
-          ctx.fillStyle = '#1a237e';
-          ctx.font = `900 ${Math.max(13, Math.floor(Math.min(tileW, tileH) * 0.24))}px "Segoe UI", Arial, sans-serif`;
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          const sym = symbols[(seq - 1 + seedIdx * 3) % symbols.length];
-          ctx.fillText(`${seq}`, x + tileW * 0.28, y + tileH * 0.28);
-          ctx.font = `${Math.max(20, Math.floor(Math.min(tileW, tileH) * 0.42))}px "Segoe UI Emoji", sans-serif`;
-          ctx.fillText(sym, x + tileW * 0.54, y + tileH * 0.56);
-          seq++;
-        }
-      }
-
-      // İç kenar sınırlarının tam ortasına iki parçaya bölünen renkli eşleştirme madalyonları çiz!
-      const rad = Math.max(10, Math.min(tileW, tileH) * 0.2);
+      const rad = Math.max(8, Math.min(tileW, tileH) * 0.16);
       let colorCounter = seedIdx;
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
@@ -6577,13 +7231,36 @@
           if (c < cols - 1) {
             ctx.fillStyle = edgeColors[colorCounter++ % edgeColors.length];
             ctx.beginPath(); ctx.arc(x + tileW, y + tileH / 2, rad, 0, Math.PI * 2); ctx.fill();
-            ctx.strokeStyle = '#fff'; ctx.lineWidth = 2.5; ctx.stroke();
+            ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
           }
           if (r < rows - 1) {
             ctx.fillStyle = edgeColors[colorCounter++ % edgeColors.length];
             ctx.beginPath(); ctx.arc(x + tileW / 2, y + tileH, rad, 0, Math.PI * 2); ctx.fill();
-            ctx.strokeStyle = '#fff'; ctx.lineWidth = 2.5; ctx.stroke();
+            ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
           }
+        }
+      }
+
+      let seq = 1;
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          const x = c * tileW, y = r * tileH;
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 3;
+          ctx.setLineDash([7, 5]);
+          ctx.strokeRect(x + 1.5, y + 1.5, tileW - 3, tileH - 3);
+          ctx.setLineDash([]);
+
+          if (!hideHints) {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.beginPath(); ctx.arc(x + 14, y + 14, 10, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#d84315';
+            ctx.font = '900 10px "Segoe UI", Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(String(seq), x + 14, y + 14);
+          }
+          seq++;
         }
       }
     }
@@ -6663,30 +7340,57 @@
 
     function drawJigsawScene() {
       const { lvlObj, tierObj, styleIdx } = getActiveJigsawConfig();
-      const W = JIGSAW_CANVAS_SIZE, H = JIGSAW_CANVAS_SIZE;
+      const hideHints = tierObj.id >= 3; // Yalnızca Zor (3) ve Uzman (4) seviyelerinde ipuçları gizlenir; Başlangıç, Kolay ve Orta'da baştaki gibi açık!
+      const W = JIGSAW_LOGICAL_SIZE, H = JIGSAW_LOGICAL_SIZE;
+      const scaleF = JIGSAW_CANVAS_SIZE / JIGSAW_LOGICAL_SIZE;
       const ctx = jigsawMasterCanvas.getContext('2d');
+      ctx.save();
+      ctx.setTransform(scaleF, 0, 0, scaleF, 0, 0);
       ctx.clearRect(0, 0, W, H);
 
       if (styleIdx === 0) {
-        drawStyle0Scene(ctx, W, H, lvlObj.scene + jigsawCurLevelIdx);
+        drawStyle0Scene(ctx, W, H, lvlObj.scene, tierObj.rows, tierObj.cols);
       } else if (styleIdx === 1) {
-        drawStyle1TangramMandala(ctx, W, H, lvlObj.scene + jigsawCurLevelIdx);
+        drawStyle1TangramMandala(ctx, W, H, lvlObj.scene, tierObj.rows, tierObj.cols, hideHints);
       } else if (styleIdx === 2) {
-        drawStyle2PipeTracks(ctx, W, H, tierObj.rows, tierObj.cols, lvlObj.scene + jigsawCurLevelIdx);
+        drawStyle2PipeTracks(ctx, W, H, tierObj.rows, tierObj.cols, lvlObj.scene, hideHints);
       } else if (styleIdx === 4) {
         drawStyle4LiveAbcPuzzle(ctx, W, H);
       } else {
-        drawStyle3PatternMatrix(ctx, W, H, tierObj.rows, tierObj.cols, lvlObj.scene + jigsawCurLevelIdx);
+        drawStyle3PatternMatrix(ctx, W, H, tierObj.rows, tierObj.cols, lvlObj.scene, hideHints);
       }
 
       ctx.strokeStyle = 'rgba(255,255,255,0.7)';
       ctx.lineWidth = 4;
       ctx.strokeRect(2, 2, W - 4, H - 4);
+      ctx.restore();
 
       if (jigsawGhostCanvas) {
         const gctx = jigsawGhostCanvas.getContext('2d');
-        gctx.clearRect(0, 0, W, H);
+        gctx.clearRect(0, 0, JIGSAW_CANVAS_SIZE, JIGSAW_CANVAS_SIZE);
         gctx.drawImage(jigsawMasterCanvas, 0, 0);
+        if (tierObj.cutType === 'interlock') {
+          const tw = JIGSAW_CANVAS_SIZE / tierObj.cols;
+          const th = JIGSAW_CANVAS_SIZE / tierObj.rows;
+          gctx.save();
+          gctx.strokeStyle = 'rgba(255, 248, 225, 0.85)';
+          gctx.lineWidth = 2.5;
+          for (let r = 0; r < tierObj.rows; r++) {
+            for (let c = 0; c < tierObj.cols; c++) {
+              const edges = getInterlockEdges(r, c, tierObj.rows, tierObj.cols);
+              traceInterlockingPiecePath(gctx, c * tw, r * th, tw, th, edges);
+              gctx.stroke();
+            }
+          }
+          gctx.restore();
+        }
+      }
+
+      // Zor (3) ve Uzman (4) seviyeleri için yandaki genel yapılmış görsel tuvalini güncelle
+      if (jigsawRefCanvas) {
+        const rctx = jigsawRefCanvas.getContext('2d');
+        rctx.clearRect(0, 0, JIGSAW_CANVAS_SIZE, JIGSAW_CANVAS_SIZE);
+        rctx.drawImage(jigsawMasterCanvas, 0, 0);
       }
     }
 
@@ -6695,44 +7399,60 @@
       const c = pieceId % cols;
       const tileW = Math.floor(JIGSAW_CANVAS_SIZE / cols);
       const tileH = Math.floor(JIGSAW_CANVAS_SIZE / rows);
+
+      if (cutType === 'interlock') {
+        const padX = Math.round(tileW * 0.20);
+        const padY = Math.round(tileH * 0.20);
+        const cv = document.createElement('canvas');
+        cv.width = tileW + padX * 2;
+        cv.height = tileH + padY * 2;
+        const ctx = cv.getContext('2d');
+        const edges = getInterlockEdges(r, c, rows, cols);
+
+        ctx.save();
+        traceInterlockingPiecePath(ctx, padX, padY, tileW, tileH, edges);
+        ctx.clip();
+        ctx.drawImage(
+          jigsawMasterCanvas,
+          c * tileW - padX, r * tileH - padY, tileW + padX * 2, tileH + padY * 2,
+          0, 0, tileW + padX * 2, tileH + padY * 2
+        );
+        ctx.restore();
+
+        // 3B Ahşap/Karton Kilitli Yapboz Kenar Konturu ve Parlaklığı
+        traceInterlockingPiecePath(ctx, padX, padY, tileW, tileH, edges);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.88)';
+        ctx.lineWidth = 3.5;
+        ctx.stroke();
+        ctx.strokeStyle = 'rgba(35, 20, 10, 0.72)';
+        ctx.lineWidth = 1.6;
+        ctx.stroke();
+        return cv;
+      }
+
       const cv = document.createElement('canvas');
       cv.width = tileW;
       cv.height = tileH;
       const ctx = cv.getContext('2d');
       ctx.drawImage(jigsawMasterCanvas, c * tileW, r * tileH, tileW, tileH, 0, 0, tileW, tileH);
 
-      // Kesim stiline göre (round: klasik kulakçık, diamond: geometrik elmas diş, wave: dalga) kenar detayı
-      ctx.strokeStyle = 'rgba(255,255,255,0.85)';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(1, 1, tileW - 2, tileH - 2);
-
-      const tabR = Math.max(5, Math.min(tileW, tileH) * 0.13);
-      ctx.fillStyle = 'rgba(255,255,255,0.38)';
-      ctx.strokeStyle = 'rgba(26,35,126,0.45)';
-      ctx.lineWidth = 1.5;
-
-      const drawEdgeTab = (tx, ty) => {
-        ctx.beginPath();
-        if (cutType === 'diamond') {
-          ctx.moveTo(tx, ty - tabR);
-          ctx.lineTo(tx + tabR, ty);
-          ctx.lineTo(tx, ty + tabR);
-          ctx.lineTo(tx - tabR, ty);
-          ctx.closePath();
-        } else if (cutType === 'wave') {
-          ctx.arc(tx - tabR * 0.4, ty, tabR * 0.7, 0, Math.PI * 2);
-          ctx.arc(tx + tabR * 0.4, ty, tabR * 0.7, 0, Math.PI * 2);
-        } else {
-          ctx.arc(tx, ty, tabR, 0, Math.PI * 2);
-        }
-        ctx.fill();
-        ctx.stroke();
-      };
-
-      if (r > 0) drawEdgeTab(tileW / 2, 2);
-      if (c < cols - 1) drawEdgeTab(tileW - 2, tileH / 2);
-      if (r < rows - 1) drawEdgeTab(tileW / 2, tileH - 2);
-      if (c > 0) drawEdgeTab(2, tileH / 2);
+      if (cutType === 'scissors') {
+        ctx.strokeStyle = '#d84315';
+        ctx.lineWidth = 3;
+        ctx.setLineDash([8, 6]);
+        ctx.strokeRect(2, 2, tileW - 4, tileH - 4);
+        ctx.setLineDash([]);
+      } else if (cutType === 'strip') {
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(1.5, 1.5, tileW - 3, tileH - 3);
+      } else {
+        ctx.strokeStyle = 'rgba(46, 125, 50, 0.85)';
+        ctx.lineWidth = 3;
+        ctx.setLineDash([7, 5]);
+        ctx.strokeRect(2, 2, tileW - 4, tileH - 4);
+        ctx.setLineDash([]);
+      }
       return cv;
     }
 
@@ -6740,14 +7460,21 @@
       if (!appData.jigsawCompletedLevels || typeof appData.jigsawCompletedLevels !== 'object') {
         appData.jigsawCompletedLevels = {};
       }
+      if (!appData.jigsawEndlessWins || typeof appData.jigsawEndlessWins !== 'object') {
+        appData.jigsawEndlessWins = { 3: 0, 4: 0 };
+      }
       return appData.jigsawCompletedLevels;
     }
 
     function updateJigsawScoreBadge() {
       const doneMap = ensureJigsawProgress();
       const doneCount = Object.keys(doneMap).length;
+      const endlessTotal = ((appData.jigsawEndlessWins && appData.jigsawEndlessWins[3]) || 0) +
+                           ((appData.jigsawEndlessWins && appData.jigsawEndlessWins[4]) || 0);
       if (jigsawScoreBadge) {
-        jigsawScoreBadge.textContent = `⭐ ${doneCount} / ${JIGSAW_LEVELS.length} Seviye`;
+        jigsawScoreBadge.textContent = endlessTotal > 0
+          ? `⭐ ${doneCount} Seviye · ♾️ ${endlessTotal} Sonsuz`
+          : `⭐ ${doneCount} / ${JIGSAW_LEVELS.length} Seviye`;
       }
     }
 
@@ -6761,9 +7488,13 @@
           const isAct = t.id === tierObj.id;
           const tierTotalCount = JIGSAW_LEVELS.filter(l => l.tier === t.id).length;
           const tierDoneCount = JIGSAW_LEVELS.filter(l => l.tier === t.id && doneMap['L' + l.lvl]).length;
-          return `<button type="button" class="jigsaw-lvl-chip ${isAct ? 'active' : ''} ${tierDoneCount === tierTotalCount ? 'done' : ''}" data-jtier="${t.id}">
+          const endlessSolved = (appData.jigsawEndlessWins && appData.jigsawEndlessWins[t.id]) || 0;
+          const subText = t.endless
+            ? `${t.sub} · ♾️ Sonsuz${endlessSolved > 0 ? ' · ⭐' + endlessSolved : ''}`
+            : `${t.sub} · ${tierDoneCount}/${tierTotalCount}`;
+          return `<button type="button" class="jigsaw-lvl-chip ${isAct ? 'active' : ''} ${(tierDoneCount === tierTotalCount || endlessSolved > 0) ? 'done' : ''}" data-jtier="${t.id}">
             <span>${t.label}</span>
-            <span style="opacity:0.82;font-size:0.65rem;">(${t.sub} · ${tierDoneCount}/${tierTotalCount})</span>
+            <span style="opacity:0.85;font-size:0.65rem;">(${subText})</span>
           </button>`;
         }).join('');
 
@@ -6781,26 +7512,45 @@
         });
       }
 
-      // 2. Bu Kademedeki 3 Seviye Seçici
+      // 2. Kademe İçi Seviye Seçici (Zor ve Uzman'da Sonsuz Yapboz Üreticiyle Birlikte!)
       if (jigsawLevelBar) {
         const tierLevels = JIGSAW_LEVELS.filter(l => l.tier === tierObj.id);
-        jigsawLevelBar.innerHTML = tierLevels.map(l => {
+        const eStep = tierObj.endless ? (jigsawEndlessStep[tierObj.id] || 0) : 0;
+        let html = tierLevels.map((l, i) => {
           const idx = l.lvl - 1;
-          const isAct = idx === jigsawCurLevelIdx;
+          const isAct = (idx === jigsawCurLevelIdx && eStep === 0);
           const isDone = !!doneMap['L' + l.lvl];
+          const btnLabel = tierObj.endless ? `Tema ${i + 1}` : `Seviye ${l.lvl}`;
           return `<button type="button" class="jigsaw-lvl-chip ${isAct ? 'active' : ''} ${isDone ? 'done' : ''}" data-jlvl="${idx}">
-            ${isDone ? '⭐' : '🧩'} Seviye ${l.lvl}
+            ${isDone ? '⭐' : '🧩'} ${btnLabel}
           </button>`;
         }).join('');
+
+        if (tierObj.endless) {
+          html += `<button type="button" class="jigsaw-lvl-chip ${eStep > 0 ? 'active' : ''}" id="btnJigsawEndlessGen" style="border-color:#ef6c00;background:${eStep > 0 ? '#ef6c00' : '#fff3e0'};color:${eStep > 0 ? '#fff' : '#e65100'};">
+            ♾️ Sonsuz Yapboz #${lvlObj.endlessNum} · 🎲 Yeni Üret
+          </button>`;
+        }
+        jigsawLevelBar.innerHTML = html;
 
         jigsawLevelBar.querySelectorAll('button[data-jlvl]').forEach(btn => {
           btn.addEventListener('click', () => {
             playClick();
             jigsawCurLevelIdx = parseInt(btn.getAttribute('data-jlvl'), 10) || 0;
+            if (tierObj.endless) jigsawEndlessStep[tierObj.id] = 0;
             jigsawCustomStyle = null;
             initJigsawGame();
           });
         });
+
+        const btnEndlessGen = document.getElementById('btnJigsawEndlessGen');
+        if (btnEndlessGen) {
+          btnEndlessGen.addEventListener('click', () => {
+            playClick();
+            jigsawEndlessStep[tierObj.id] = (jigsawEndlessStep[tierObj.id] || 0) + 1;
+            initJigsawGame();
+          });
+        }
       }
 
       // 3. Stil Seçici Aktiflik Durumu
@@ -6810,12 +7560,21 @@
           b.classList.toggle('active', st === styleIdx);
         });
       }
+
+      // 4. Alt İlerleme Butonu Metni (Zor & Uzman'da Sonsuz Yeni Yapboz)
+      if (jigsawNextThemeBtn) {
+        jigsawNextThemeBtn.innerHTML = tierObj.endless
+          ? '♾️ Yeni Sonsuz Yapboz →'
+          : '▶️ Sonraki Seviye →';
+      }
     }
 
     function initJigsawGame() {
       jigsawSolvedLock = false;
       jigsawSelectedPiece = null;
       const { tierObj } = getActiveJigsawConfig();
+      // Başlangıç (0), Kolay (1) ve Orta (2) seviyelerinde ipucu baştaki gibi açık; Zor (3) ve Uzman (4) seviyelerinde kapalı!
+      jigsawShowGhost = tierObj.id < 3;
       drawJigsawScene();
       const total = tierObj.rows * tierObj.cols;
       jigsawBoardState = new Array(total).fill(null);
@@ -6877,6 +7636,9 @@
       const bonusPts = tierObj.bonus;
       const doneMap = ensureJigsawProgress();
       doneMap['L' + lvlObj.lvl] = true;
+      if (tierObj.endless) {
+        appData.jigsawEndlessWins[tierObj.id] = (appData.jigsawEndlessWins[tierObj.id] || 0) + 1;
+      }
       appData.jigsawWins = (appData.jigsawWins || 0) + 1;
       appData.score = (appData.score || 0) + bonusPts;
       if (typeof ensureLeagueWeekSync === 'function') ensureLeagueWeekSync();
@@ -6891,8 +7653,12 @@
       playSuccess();
       spawnConfetti();
       if (jigsawStatus) {
-        const nextLvl = (jigsawCurLevelIdx + 1 < JIGSAW_LEVELS.length) ? (lvlObj.lvl + 1) : 1;
-        jigsawStatus.innerHTML = `🎉 <strong>Seviye ${lvlObj.lvl} Tamamlandı!</strong> <strong>+${bonusPts} Akıl Puanı</strong> kazandın! Şimdi <strong>Seviye ${nextLvl}</strong>'e geçebilirsin.`;
+        if (tierObj.endless) {
+          jigsawStatus.innerHTML = `🎉 <strong>Sonsuz Yapboz #${lvlObj.endlessNum} Tamamlandı!</strong> <strong>+${bonusPts} Akıl Puanı</strong> kazandın! <strong>"♾️ Yeni Sonsuz Yapboz →"</strong> butonuna basarak sıradaki yapboza geç!`;
+        } else {
+          const nextLvl = (jigsawCurLevelIdx + 1 < JIGSAW_LEVELS.length) ? (lvlObj.lvl + 1) : 1;
+          jigsawStatus.innerHTML = `🎉 <strong>Seviye ${lvlObj.lvl} Tamamlandı!</strong> <strong>+${bonusPts} Akıl Puanı</strong> kazandın! Şimdi <strong>Seviye ${nextLvl}</strong>'e geçebilirsin.`;
+        }
       }
     }
 
@@ -6915,9 +7681,11 @@
           if (!moved && Math.hypot(dx, dy) > 6) {
             moved = true;
             floater = document.createElement('div');
-            floater.className = 'jigsaw-floating-drag';
-            floater.style.width = Math.max(52, rect.width) + 'px';
-            floater.style.height = Math.max(52, rect.height) + 'px';
+            floater.className = 'jigsaw-floating-drag' + (tierObj.cutType === 'interlock' ? ' interlock-float' : '');
+            const baseW = Math.max(44, rect.width);
+            const baseH = Math.max(44, rect.height);
+            floater.style.width = (tierObj.cutType === 'interlock' ? Math.round(baseW * 1.32) : baseW) + 'px';
+            floater.style.height = (tierObj.cutType === 'interlock' ? Math.round(baseH * 1.32) : baseH) + 'px';
             floater.appendChild(createPieceCanvas(pieceId, tierObj.rows, tierObj.cols, tierObj.cutType));
             document.body.appendChild(floater);
             pieceEl.style.opacity = '0.35';
@@ -6978,14 +7746,33 @@
       if (!jigsawBoardGrid || !jigsawTray) return;
       updateJigsawScoreBadge();
       const { lvlObj, tierObj } = getActiveJigsawConfig();
+      const isInterlock = tierObj.cutType === 'interlock';
+      const isScissors = tierObj.cutType === 'scissors';
+      const isStrip = tierObj.cutType === 'strip';
+      const isHintFreeTier = tierObj.id >= 3; // Zor (3) ve Uzman (4): İpucusuz + Yanda Yapılmış Görsel
 
+      if (jigsawStage) {
+        jigsawStage.classList.toggle('has-ref-panel', isHintFreeTier);
+      }
+      if (jigsawRefPanel) {
+        jigsawRefPanel.style.display = isHintFreeTier ? 'flex' : 'none';
+      }
+      if (jigsawRefSub && isHintFreeTier) {
+        jigsawRefSub.textContent = `Bakarak Yap · #${lvlObj.endlessNum}`;
+      }
+
+      if (jigsawBoardWrap) {
+        jigsawBoardWrap.classList.toggle('wood-board', isInterlock);
+      }
       if (jigsawGhostCanvas) {
-        jigsawGhostCanvas.classList.toggle('hide-ghost', !jigsawShowGhost);
+        jigsawGhostCanvas.classList.toggle('hide-ghost', isHintFreeTier || !jigsawShowGhost);
       }
       if (btnJigsawGhost) {
+        btnJigsawGhost.style.display = isHintFreeTier ? 'none' : '';
         btnJigsawGhost.textContent = jigsawShowGhost ? '👁️ İpucu: Açık' : '👁️ İpucu: Gizli';
       }
 
+      jigsawBoardGrid.classList.toggle('interlock-grid', isInterlock);
       jigsawBoardGrid.style.gridTemplateColumns = `repeat(${tierObj.cols}, 1fr)`;
       jigsawBoardGrid.style.gridTemplateRows = `repeat(${tierObj.rows}, 1fr)`;
       jigsawBoardGrid.innerHTML = '';
@@ -6997,17 +7784,34 @@
         const slot = document.createElement('div');
         const pId = jigsawBoardState[s];
         const isCorrect = pId === s;
+        const isFilled = (pId !== null && pId !== undefined);
         if (isCorrect) correctCount++;
-        slot.className = 'jigsaw-slot' + (isCorrect ? ' correct-lock' : '');
+
+        let slotCls = 'jigsaw-slot';
+        if (isInterlock) slotCls += ' interlock-slot';
+        if (isScissors) slotCls += ' scissors-slot';
+        if (isFilled) slotCls += ' filled-slot';
+        if (isCorrect) slotCls += ' correct-lock';
+        if (isFilled && jigsawSelectedPiece === pId) slotCls += ' selected-slot';
+        slot.className = slotCls;
         slot.setAttribute('data-slot', String(s));
 
-        if (pId !== null && pId !== undefined) {
+        if (isFilled) {
           const pEl = document.createElement('div');
-          pEl.className = 'jigsaw-piece' + (jigsawSelectedPiece === pId ? ' selected-piece' : '');
+          pEl.className = 'jigsaw-piece' +
+            (isInterlock ? ' interlock-board-piece' : '') +
+            (jigsawSelectedPiece === pId ? ' selected-piece' : '');
           pEl.appendChild(createPieceCanvas(pId, tierObj.rows, tierObj.cols, tierObj.cutType));
-          bindPieceDragAndTap(pEl, pId);
           slot.appendChild(pEl);
+          bindPieceDragAndTap(slot, pId);
         } else {
+          // Başlangıç (0), Kolay (1) ve Orta (2) seviyelerinde boş yuva sıra numarası ipucu baştaki gibi gösterilir; Zor ve Uzman'da gizlenir!
+          if (!isHintFreeTier) {
+            const numHint = document.createElement('span');
+            numHint.style.cssText = 'font-size:0.85rem;font-weight:900;color:rgba(30,58,138,0.45);pointer-events:none;';
+            numHint.textContent = String(s + 1);
+            slot.appendChild(numHint);
+          }
           slot.addEventListener('click', () => {
             if (jigsawSelectedPiece !== null) {
               moveJigsawPiece(jigsawSelectedPiece, s);
@@ -7017,14 +7821,23 @@
         jigsawBoardGrid.appendChild(slot);
       }
 
-      const trayW = Math.max(44, Math.floor(195 / tierObj.cols));
-      const trayH = Math.max(44, Math.floor(195 / tierObj.rows));
+      const boardPx = Math.max(220, (jigsawBoardGrid && jigsawBoardGrid.clientWidth) ? jigsawBoardGrid.clientWidth : 300);
+      const trayW = isStrip
+        ? Math.max(32, Math.floor((boardPx * 0.90) / tierObj.cols))
+        : Math.max(52, Math.floor((boardPx * 0.76) / tierObj.cols));
+      const trayH = isStrip
+        ? Math.max(120, Math.floor(boardPx * 0.48))
+        : Math.max(52, Math.floor((boardPx * 0.76) / tierObj.rows));
+
       jigsawTray.innerHTML = '';
       jigsawTrayState.forEach(pId => {
         const pEl = document.createElement('div');
-        pEl.className = 'jigsaw-piece' + (jigsawSelectedPiece === pId ? ' selected-piece' : '');
-        pEl.style.width = trayW + 'px';
-        pEl.style.height = trayH + 'px';
+        pEl.className = 'jigsaw-piece' +
+          (isInterlock ? ' interlock-tray-piece' : '') +
+          (isScissors ? ' scissors-tray-piece' : '') +
+          (jigsawSelectedPiece === pId ? ' selected-piece' : '');
+        pEl.style.width = (isInterlock ? Math.round(trayW * 1.24) : trayW) + 'px';
+        pEl.style.height = (isInterlock ? Math.round(trayH * 1.24) : trayH) + 'px';
         pEl.appendChild(createPieceCanvas(pId, tierObj.rows, tierObj.cols, tierObj.cutType));
         bindPieceDragAndTap(pEl, pId);
         jigsawTray.appendChild(pEl);
@@ -7032,7 +7845,9 @@
 
       if (!jigsawSolvedLock && jigsawStatus) {
         if (jigsawSelectedPiece !== null) {
-          jigsawStatus.innerHTML = `✨ Parça seçildi! Şimdi tahtada yerleştirmek istediğin <strong>kareye dokun</strong> veya sürükle.`;
+          jigsawStatus.innerHTML = `✨ Parça seçildi! Şimdi tahtada yerleştirmek istediğin <strong>bölgeye dokun</strong> veya sürükle.`;
+        } else if (isHintFreeTier) {
+          jigsawStatus.innerHTML = `🖼️ <strong>Yandaki Yapılmış Görsele Bakarak Birleştir:</strong> ${lvlObj.title} · Doğru: <strong>${correctCount} / ${total}</strong>`;
         } else {
           jigsawStatus.innerHTML = `<strong>${lvlObj.title}</strong> · Doğru Yerleşen: <strong>${correctCount} / ${total}</strong>`;
         }
@@ -7040,30 +7855,56 @@
     }
 
     function openJigsawModal() {
-      // Henüz tamamlanmamış ilk seviyeden başlat
       const doneMap = ensureJigsawProgress();
       const firstUnsolved = JIGSAW_LEVELS.findIndex(l => !doneMap['L' + l.lvl]);
       if (firstUnsolved !== -1) jigsawCurLevelIdx = firstUnsolved;
       jigsawCustomStyle = null;
-      initJigsawGame();
       if (jigsawOverlay) jigsawOverlay.classList.add('show');
       if (jigsawModal) jigsawModal.classList.add('show');
+      initJigsawGame();
+      requestAnimationFrame(() => renderJigsawUI());
     }
     function closeJigsawModal() {
       if (jigsawOverlay) jigsawOverlay.classList.remove('show');
       if (jigsawModal) jigsawModal.classList.remove('show');
     }
 
+    const jigsawBackHomeBtn = document.getElementById('jigsawBackHomeBtn');
+    const btnJigsawFullscreen = document.getElementById('btnJigsawFullscreen');
     if (btnJigsaw) btnJigsaw.addEventListener('click', () => { playClick(); openJigsawModal(); });
     if (jigsawClose) jigsawClose.addEventListener('click', () => { playClick(); closeJigsawModal(); });
+    if (jigsawBackHomeBtn) jigsawBackHomeBtn.addEventListener('click', () => { playClick(); closeJigsawModal(); });
+    if (btnJigsawFullscreen) {
+      btnJigsawFullscreen.addEventListener('click', () => {
+        playClick();
+        if (!document.fullscreenElement) {
+          const el = document.documentElement;
+          if (el.requestFullscreen) el.requestFullscreen().catch(() => {});
+        } else if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        }
+      });
+    }
+    window.addEventListener('resize', () => {
+      if (jigsawModal && jigsawModal.classList.contains('show')) {
+        renderJigsawUI();
+      }
+    });
     if (jigsawOverlay) jigsawOverlay.addEventListener('click', closeJigsawModal);
     if (jigsawShuffleBtn) jigsawShuffleBtn.addEventListener('click', () => { playClick(); initJigsawGame(); });
     if (jigsawNextThemeBtn) {
       jigsawNextThemeBtn.addEventListener('click', () => {
         playClick();
-        jigsawCurLevelIdx = (jigsawCurLevelIdx + 1) % JIGSAW_LEVELS.length;
-        jigsawCustomStyle = null;
-        initJigsawGame();
+        const { tierObj } = getActiveJigsawConfig();
+        if (tierObj.endless) {
+          // Zor ve Uzman kademelerinde sonsuz sayıda yeni yapboz üretir!
+          jigsawEndlessStep[tierObj.id] = (jigsawEndlessStep[tierObj.id] || 0) + 1;
+          initJigsawGame();
+        } else {
+          jigsawCurLevelIdx = (jigsawCurLevelIdx + 1) % JIGSAW_LEVELS.length;
+          jigsawCustomStyle = null;
+          initJigsawGame();
+        }
       });
     }
     if (btnJigsawGhost) {
