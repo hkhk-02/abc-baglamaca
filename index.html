@@ -45,6 +45,10 @@
       --border-color: #3f4fb8;
     }
 
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
       min-height: 100dvh;
@@ -113,6 +117,21 @@
       display: flex;
       gap: 5px;
       flex-shrink: 0;
+    }
+    @media (max-width: 520px) {
+      .hero {
+        flex-wrap: wrap;
+        padding: 8px 10px;
+        gap: 6px;
+      }
+      .hero-brand {
+        flex: 1 1 100%;
+        min-width: 0;
+      }
+      .hero-btns {
+        width: 100%;
+        justify-content: flex-end;
+      }
     }
     .hero-title-row {
       display: flex;
@@ -2403,13 +2422,13 @@
     }
     @media (max-width: 859px) {
       #themeModal {
-        top: auto;
-        bottom: 10px;
+        top: 8px;
+        bottom: auto;
         left: 50%;
-        width: min(96vw, 420px);
-        max-height: 54vh;
-        transform: translate(-50%, 16px);
-        box-shadow: 0 -6px 24px rgba(15, 23, 42, 0.22);
+        width: min(95vw, 420px);
+        max-height: 46vh;
+        transform: translate(-50%, -14px);
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.22);
       }
       #themeModal.show {
         transform: translate(-50%, 0);
@@ -5115,26 +5134,41 @@
       doneHaloByLetter = {};
       textElsByLetter = {};
       const letterGroup = svgEl('g');
+      const eduMode = isEduThemeActive();
+      let maxEduLen = 2;
+      if (eduMode) {
+        letters.forEach(l => {
+          if (activeEduPairs[l]) {
+            maxEduLen = Math.max(maxEduLen, activeEduPairs[l][0].length, activeEduPairs[l][1].length);
+          }
+        });
+      }
+      const eduFactor = maxEduLen <= 2 ? 0.30 : (maxEduLen <= 4 ? 0.23 : (maxEduLen <= 6 ? 0.175 : (maxEduLen <= 7 ? 0.15 : 0.13)));
+      const eduUniformFontSize = Math.max(8, Math.round(cellGap * eduFactor));
+
       letters.forEach(letter => {
         doneHaloByLetter[letter] = [];
         textElsByLetter[letter] = [];
         endpoints[letter].forEach(([r, c], epIdx) => {
           const { x, y } = nodeXY(r, c);
           const symText = getSymbol(letter, false, epIdx);
-          const eduMode = isEduThemeActive();
           const neutralEdu = eduMode && !!appData.eduNeutralColor;
           const badgeStroke = neutralEdu ? '#3949ab' : PATH_COLORS[letter];
 
+          const circleR = cellGap * (eduMode ? 0.43 : 0.35);
+          let eduPillW = 0;
           if (eduMode) {
-            const pillW = Math.min(cellGap * 0.96, Math.max(cellGap * 0.62, symText.length * cellGap * 0.16 + 10));
-            const pillH = cellGap * 0.50;
+            const pillH = cellGap * 0.40;
+            const safeR = Math.max(4, circleR - 2.5);
+            const maxInscribedW = 2 * Math.sqrt(Math.max(1, safeR * safeR - (pillH / 2) * (pillH / 2)));
+            eduPillW = Math.min(maxInscribedW, Math.max(cellGap * 0.52, maxEduLen * cellGap * 0.13 + 8));
             letterGroup.appendChild(svgEl('rect', {
               class: 'edu-pill-rect',
-              x: x - pillW / 2,
+              x: x - eduPillW / 2,
               y: y - pillH / 2,
-              width: pillW,
+              width: eduPillW,
               height: pillH,
-              rx: Math.min(10, pillH * 0.38),
+              rx: Math.min(9, pillH * 0.36),
               stroke: badgeStroke
             }));
           } else if (patternMode || (memoryMode && memoryHidden && memoryColorHint)) {
@@ -5149,27 +5183,25 @@
           const doneHalo = svgEl('circle', {
             class: 'done-halo',
             cx: x, cy: y,
-            r: cellGap * (eduMode ? 0.42 : 0.35),
+            r: circleR,
             stroke: PATH_COLORS[letter]
           });
           doneHaloByLetter[letter].push(doneHalo);
           letterGroup.appendChild(doneHalo);
 
           const halo = svgEl('circle', {
-            class: 'hint-halo', cx: x, cy: y, r: cellGap * (eduMode ? 0.43 : 0.36), opacity: '0'
+            class: 'hint-halo', cx: x, cy: y, r: cellGap * (eduMode ? 0.44 : 0.36), opacity: '0'
           });
           haloEls.push(halo);
           letterGroup.appendChild(halo);
 
-          let symFontSize = fontSize;
-          if (eduMode && symText !== '?') {
-            const len = symText.length;
-            const factor = len <= 2 ? 0.36 : (len <= 4 ? 0.28 : (len <= 6 ? 0.22 : (len <= 7 ? 0.18 : 0.155)));
-            symFontSize = Math.max(8, Math.round(cellGap * factor));
+          const symFontSize = (eduMode && symText !== '?') ? eduUniformFontSize : fontSize;
+          const textAttrs = { class: 'node-letter', x, y, 'font-size': symFontSize };
+          if (eduMode && eduPillW > 0 && symText !== '?' && (symText.length * symFontSize * 0.62) > (eduPillW - 6)) {
+            textAttrs.textLength = Math.max(10, Math.round(eduPillW - 6));
+            textAttrs.lengthAdjust = 'spacingAndGlyphs';
           }
-          const text = svgEl('text', {
-            class: 'node-letter', x, y, 'font-size': symFontSize
-          });
+          const text = svgEl('text', textAttrs);
           text.textContent = symText;
           textElsByLetter[letter].push(text);
           letterGroup.appendChild(text);
@@ -5207,6 +5239,9 @@
     }
 
     function updatePaths() {
+      const prevDone = window._eduDoneLetters || (window._eduDoneLetters = new Set());
+      const curDone = new Set();
+      let newlyDoneLetter = null;
       letters.forEach(letter => {
         const poly = polyByLetter[letter];
         const ePoly = energyPolyByLetter[letter];
@@ -5221,15 +5256,24 @@
         }
         poly.setAttribute('points', pts);
         const done = isPathComplete(letter);
+        if (done) {
+          curDone.add(letter);
+          if (!prevDone.has(letter)) newlyDoneLetter = letter;
+        }
         if (ePoly) {
           ePoly.setAttribute('points', done ? pts : '');
           ePoly.classList.toggle('active', done);
         }
         (doneHaloByLetter[letter] || []).forEach(el => el.classList.toggle('show', done));
       });
+      window._eduDoneLetters = curDone;
       updateSymbolTexts();
       updateHead();
       updateStatus();
+      if (newlyDoneLetter && isEduThemeActive() && noteEl && !puzzleSolved) {
+        noteEl.className = 'note teach';
+        noteEl.textContent = `✅ Doğru eşleşme: ${getSymbol(newlyDoneLetter, true)}`;
+      }
     }
 
     function updateHead() {
@@ -10116,6 +10160,12 @@
     }
 
     async function syncPlayerToCloudLeaderboard(renderAfter = false) {
+      if (location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+        if (cloudSyncStatusNote && renderAfter) {
+          cloudSyncStatusNote.textContent = 'ℹ️ Yerel modda bulut senkronizasyonu devre dışı.';
+        }
+        return;
+      }
       try {
         ensureLeagueWeekSync();
         ensureProfilesInit();
