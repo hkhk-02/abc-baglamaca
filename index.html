@@ -2033,6 +2033,388 @@
       .print-page { break-after: page; page-break-after: always; }
       .print-page:last-child { break-after: auto; page-break-after: auto; }
     }
+
+    /* 📚 Tema & Eğitici Mod Seçici Modal Stilleri */
+    .theme-section-title {
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-text);
+      margin: 8px 0 6px;
+    }
+    .theme-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+      margin-bottom: 8px;
+    }
+    .theme-card {
+      border: 2px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-main);
+      border-radius: 11px;
+      padding: 8px 7px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      text-align: left;
+      transition: 0.15s;
+      touch-action: manipulation;
+    }
+    .theme-card:hover { background: var(--blue-pale); }
+    .theme-card.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+      box-shadow: 0 3px 10px rgba(46, 58, 146, 0.28);
+    }
+    .theme-card .tc-ic {
+      font-size: 1.25rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .theme-card .tc-name {
+      font-size: 0.78rem;
+      font-weight: 900;
+      display: block;
+      line-height: 1.15;
+    }
+    .theme-card .tc-sub {
+      font-size: 0.63rem;
+      opacity: 0.78;
+      display: block;
+      margin-top: 1px;
+    }
+    .edu-pill-rect {
+      fill: var(--card-bg);
+      stroke-width: 2;
+    }
+    body.dark-theme .edu-pill-rect {
+      fill: #1f293d;
+    }
+    .math-grade-box {
+      background: var(--blue-pale);
+      border: 1.5px solid var(--border-color);
+      border-radius: 11px;
+      padding: 8px 9px;
+      margin: 4px 0 10px;
+    }
+    .math-grade-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--blue);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+    .math-grade-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+    }
+    .math-grade-btn {
+      border: 1.5px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-main);
+      border-radius: 8px;
+      padding: 6px 4px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.15s;
+      touch-action: manipulation;
+    }
+    .math-grade-btn:hover { background: #fff; border-color: var(--blue); }
+    .math-grade-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(46, 58, 146, 0.25);
+    }
+    .math-grade-hint {
+      font-size: 0.66rem;
+      color: var(--text-muted);
+      margin-top: 5px;
+      line-height: 1.3;
+    }
+    .math-op-wrap {
+      margin-top: 7px;
+      padding-top: 7px;
+      border-top: 1px dashed var(--border-color);
+    }
+    .math-op-title {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--blue);
+      margin-bottom: 5px;
+    }
+    .math-op-row {
+      display: grid;
+      grid-template-columns: 1.25fr repeat(4, 1fr);
+      gap: 4px;
+    }
+    .math-op-btn {
+      border: 1.5px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-main);
+      border-radius: 8px;
+      padding: 5px 3px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.15s;
+      touch-action: manipulation;
+    }
+    .math-op-btn:hover:not(:disabled) { border-color: var(--blue); }
+    .math-op-btn.active {
+      background: #ef6c00;
+      border-color: #e65100;
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(239, 108, 0, 0.25);
+    }
+    .math-op-btn.disabled,
+    .math-op-btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+      filter: grayscale(1);
+    }
+    .math-table-wrap {
+      display: none;
+      margin-top: 7px;
+      padding-top: 7px;
+      border-top: 1px dashed var(--border-color);
+    }
+    .math-table-wrap.show { display: block; }
+    .math-table-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+    }
+    .math-table-btn {
+      border: 1.5px solid var(--border-color);
+      background: var(--card-bg);
+      color: var(--text-main);
+      border-radius: 7px;
+      padding: 5px 2px;
+      font-size: 0.67rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.14s;
+      touch-action: manipulation;
+    }
+    .math-table-btn:hover:not(:disabled) { border-color: var(--blue); }
+    .math-table-btn.active {
+      background: #00897b;
+      border-color: #00695c;
+      color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 137, 123, 0.25);
+    }
+    .math-table-btn.disabled,
+    .math-table-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      filter: grayscale(1);
+    }
+    .tag.math-grade-tag {
+      background: var(--blue-pale);
+      border: 1.5px solid var(--blue);
+      color: var(--blue);
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* Çocuk Dostu Hızlı Tema & Sınıf Şeridi */
+    .quick-theme-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 8px 9px;
+      margin-bottom: 8px;
+      box-shadow: 0 2px 8px rgba(46, 58, 146, 0.06);
+    }
+    .quick-theme-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      font-weight: 900;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      letter-spacing: 0.2px;
+    }
+    .quick-theme-active-lbl {
+      color: var(--blue);
+      font-size: 0.72rem;
+    }
+    .quick-theme-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .qt-btn {
+      border: 1.5px solid var(--border-color);
+      background: var(--bg-page);
+      color: var(--text-main);
+      border-radius: 11px;
+      padding: 7px 5px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      min-height: 50px;
+      transition: transform 0.12s, box-shadow 0.15s, border-color 0.15s;
+      touch-action: manipulation;
+    }
+    .qt-btn:active { transform: scale(0.96); }
+    .qt-btn .qt-ic { font-size: 1.25rem; line-height: 1.05; }
+    .qt-btn .qt-txt { font-size: 0.69rem; font-weight: 900; line-height: 1.1; text-align: center; }
+
+    .qt-btn.qt-classic { background: #f4f6ff; border-color: #d6def8; }
+    .qt-btn.qt-antonyms { background: #f6f0ff; border-color: #dfc8fb; }
+    .qt-btn.qt-synonyms { background: #eefbf3; border-color: #bfead0; }
+    .qt-btn.qt-math { background: #eef6ff; border-color: #c2ddfb; }
+    .qt-btn.qt-english { background: #fff6ec; border-color: #fad8b2; }
+    .qt-btn.qt-more { background: #f8f9fc; border-color: #dce2f0; }
+
+    body.dark-theme .qt-btn.qt-classic { background: #222b44; border-color: #36446b; }
+    body.dark-theme .qt-btn.qt-antonyms { background: #2c2142; border-color: #4b3872; }
+    body.dark-theme .qt-btn.qt-synonyms { background: #1c3329; border-color: #2c5744; }
+    body.dark-theme .qt-btn.qt-math { background: #1c2d45; border-color: #2f4b73; }
+    body.dark-theme .qt-btn.qt-english { background: #382a1e; border-color: #5e442d; }
+    body.dark-theme .qt-btn.qt-more { background: #252c3d; border-color: #39435c; }
+
+    .qt-btn.active {
+      background: var(--blue) !important;
+      border-color: var(--blue) !important;
+      color: #fff !important;
+      box-shadow: 0 3px 10px rgba(46, 58, 146, 0.28);
+    }
+
+    .quick-grade-bar {
+      display: none;
+      margin-top: 7px;
+      padding-top: 7px;
+      border-top: 1px dashed var(--border-color);
+    }
+    .quick-grade-bar.show { display: block; }
+    .quick-grade-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+    }
+    .qg-btn {
+      border: 1.5px solid var(--border-color);
+      background: var(--blue-pale);
+      color: var(--text-main);
+      border-radius: 9px;
+      padding: 6px 4px;
+      font-size: 0.71rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: 0.14s;
+      touch-action: manipulation;
+    }
+    .qg-btn.active {
+      background: #ff8f00;
+      border-color: #ef6c00;
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(239, 108, 0, 0.28);
+    }
+
+    /* Tema Modalı İri & Pastel Kartlar */
+    .theme-card {
+      min-height: 60px;
+      padding: 9px 9px;
+      border-radius: 13px;
+    }
+    .theme-card .tc-ic { font-size: 1.5rem; }
+    .theme-card.tc-antonyms { background: #f6f0ff; border-color: #dfc8fb; }
+    .theme-card.tc-synonyms { background: #eefbf3; border-color: #bfead0; }
+    .theme-card.tc-math { background: #eef6ff; border-color: #c2ddfb; }
+    .theme-card.tc-english { background: #fff6ec; border-color: #fad8b2; }
+    body.dark-theme .theme-card.tc-antonyms { background: #2c2142; border-color: #4b3872; }
+    body.dark-theme .theme-card.tc-synonyms { background: #1c3329; border-color: #2c5744; }
+    body.dark-theme .theme-card.tc-math { background: #1c2d45; border-color: #2f4b73; }
+    body.dark-theme .theme-card.tc-english { background: #382a1e; border-color: #5e442d; }
+    .theme-card.active {
+      background: var(--blue) !important;
+      border-color: var(--blue) !important;
+      color: #fff !important;
+    }
+    .tc-sample {
+      display: inline-block;
+      margin-top: 3px;
+      padding: 1px 6px;
+      border-radius: 999px;
+      font-size: 0.62rem;
+      font-weight: 800;
+      background: rgba(46, 58, 146, 0.1);
+      color: var(--blue);
+    }
+    .theme-card.active .tc-sample {
+      background: rgba(255, 255, 255, 0.22);
+      color: #fff;
+    }
+    .theme-tabs {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      margin: 8px 0 10px;
+    }
+    .theme-tab-btn {
+      border: 2px solid var(--border-color);
+      background: var(--bg-page);
+      color: var(--text-main);
+      border-radius: 11px;
+      padding: 8px 10px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      cursor: pointer;
+      transition: 0.15s;
+      touch-action: manipulation;
+    }
+    .theme-tab-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+      box-shadow: 0 3px 8px rgba(46, 58, 146, 0.24);
+    }
+    /* Tema penceresi oyun tahtasını kapatmasın */
+    #themeOverlay {
+      background: rgba(15, 23, 42, 0.12);
+    }
+    @media (min-width: 860px) {
+      #themeModal {
+        left: max(16px, calc(50% - 465px));
+        top: 50%;
+        transform: translate(0, -50%) scale(0.94);
+        box-shadow: 0 12px 32px rgba(15, 23, 42, 0.22);
+      }
+      #themeModal.show {
+        transform: translate(0, -50%) scale(1);
+      }
+    }
+    @media (max-width: 859px) {
+      #themeModal {
+        top: auto;
+        bottom: 10px;
+        left: 50%;
+        width: min(96vw, 420px);
+        max-height: 54vh;
+        transform: translate(-50%, 16px);
+        box-shadow: 0 -6px 24px rgba(15, 23, 42, 0.22);
+      }
+      #themeModal.show {
+        transform: translate(-50%, 0);
+      }
+    }
   </style>
 </head>
 <body>
@@ -2114,14 +2496,18 @@
             <span>Bulmaca Tasarla</span>
           </button>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1.45fr;gap:6px;margin-bottom:8px;">
+        <div style="display:grid;grid-template-columns:1fr 0.85fr 1.15fr;gap:6px;margin-bottom:8px;">
           <button type="button" class="pdf-launch" id="btnJigsaw" style="margin:0;background:linear-gradient(135deg,#ef6c00,#f57c00);border-color:#e65100;" title="Resim parçalarını sürükleyip yerleştirerek çocuk yapbozunu tamamla!">
             <span>🧩</span>
             <span>Yapboz</span>
           </button>
           <button type="button" class="pdf-launch" id="btnPdf" style="margin:0;" title="Normal çalışma kağıdı veya Resmi Turnuva Kitapçığı olarak detaylı PDF çıkar">
             <span>📄</span>
-            <span>Detaylı PDF & Turnuva Kitapçığı</span>
+            <span>PDF</span>
+          </button>
+          <button type="button" class="pdf-launch" id="btnOpenThemeModal" style="margin:0;background:linear-gradient(135deg,#5e35b1,#7e57c2);border-color:#4527a0;" title="Klasik veya Eğitici Oyun Teması Seç">
+            <span>🎨</span>
+            <span>Tema Seç</span>
           </button>
         </div>
 
@@ -2200,6 +2586,74 @@
 
     <p class="hint-text">Harfe dokunup sürükle veya dokun-dokun ile ilerle · Çapraz yasak · Tüm noktaları doldur</p>
     <p class="footer">MiniBilge · ABC Bağlamaca Etkinliği</p>
+  </div>
+
+  <!-- 🎨 Tema & Eğitici Eşleştirme Seçici Modalı -->
+  <div class="modal-overlay" id="themeOverlay"></div>
+  <div class="modal" id="themeModal" style="max-width:420px;">
+    <h3>🎨 Oyun Teması Seç</h3>
+    <div class="theme-tabs">
+      <button type="button" class="theme-tab-btn active" id="themeTabClassic">✨ Klasik</button>
+      <button type="button" class="theme-tab-btn" id="themeTabEdu">📚 Eğitici</button>
+    </div>
+    <div id="classicThemePane">
+      <p class="modal-note" style="margin-bottom:8px;">
+        Klasik ABC ve sevimli sembol temalarından birini seç:
+      </p>
+      <div class="theme-grid" id="classicThemeGrid"></div>
+    </div>
+    <div id="eduThemePane" style="display:none;">
+      <p class="modal-note" style="margin-bottom:8px;">
+        İlkokullar için hazırlanan <strong>eğitici kelime &amp; işlem temaları</strong> (en fazla 6×6):
+      </p>
+      <div class="theme-grid" id="eduThemeGrid"></div>
+      <div class="math-grade-box" id="mathGradeBox">
+        <div class="math-grade-title">
+          <span>🏫 Sınıf Seviyesi (1.–4. Sınıf)</span>
+          <span style="font-size:0.65rem;opacity:0.85;">Tüm Eğitici Temalar</span>
+        </div>
+        <div class="math-grade-row" id="mathGradeRow">
+          <button type="button" class="math-grade-btn" data-mgrade="1">1. Sınıf</button>
+          <button type="button" class="math-grade-btn" data-mgrade="2">2. Sınıf</button>
+          <button type="button" class="math-grade-btn" data-mgrade="3">3. Sınıf</button>
+          <button type="button" class="math-grade-btn" data-mgrade="4">4. Sınıf</button>
+        </div>
+        <div class="math-op-wrap" id="mathOpWrap">
+          <div class="math-op-title">🧮 Matematik İşlem Seçimi</div>
+          <div class="math-op-row" id="mathOpRow">
+            <button type="button" class="math-op-btn" data-mop="all">Tümü</button>
+            <button type="button" class="math-op-btn" data-mop="add" title="Toplama (+)">➕</button>
+            <button type="button" class="math-op-btn" data-mop="sub" title="Çıkarma (-)">➖</button>
+            <button type="button" class="math-op-btn" data-mop="mul" title="Çarpma (×)">✖️</button>
+            <button type="button" class="math-op-btn" data-mop="div" title="Bölme (÷)">➗</button>
+          </div>
+          <div class="math-table-wrap" id="mathTableWrap">
+            <div class="math-op-title">✖️ Çarpım Tablosu Seçimi</div>
+            <div class="math-table-row" id="mathTableRow">
+              <button type="button" class="math-table-btn" data-mtable="all">Karışık</button>
+              <button type="button" class="math-table-btn" data-mtable="2">2'ler</button>
+              <button type="button" class="math-table-btn" data-mtable="3">3'ler</button>
+              <button type="button" class="math-table-btn" data-mtable="4">4'ler</button>
+              <button type="button" class="math-table-btn" data-mtable="5">5'ler</button>
+              <button type="button" class="math-table-btn" data-mtable="6">6'lar</button>
+              <button type="button" class="math-table-btn" data-mtable="7">7'ler</button>
+              <button type="button" class="math-table-btn" data-mtable="8">8'ler</button>
+              <button type="button" class="math-table-btn" data-mtable="9">9'lar</button>
+              <button type="button" class="math-table-btn" data-mtable="10">10'lar</button>
+            </div>
+          </div>
+        </div>
+        <div class="math-grade-hint" id="mathGradeHint"></div>
+      </div>
+      <label class="check" id="eduNeutralColorWrap" style="margin-top:6px;">
+        <input type="checkbox" id="chkEduNeutralColor">
+        <span>🧠 Eğitici temada renk ipucunu gizle (okuyarak eşleştir)</span>
+      </label>
+    </div>
+    <div class="modal-actions" style="margin-top:10px;">
+      <button type="button" class="btn btn-new" id="btnEduPlay" style="display:none;background:linear-gradient(135deg,#2e7d32,#43a047);color:#fff;">▶ Oyna</button>
+      <button type="button" class="btn btn-check" id="themeClose">Kapat</button>
+    </div>
   </div>
 
   <!-- Soru Kodu Modalı -->
@@ -2640,11 +3094,138 @@
       E: '6,5', F: '14,5,3,5,3,5', G: '4,4', H: '9,4,2,4', I: '15,4,2,4,2,4'
     };
     const SYMBOL_THEMES = [
-      { id: 'letters', name: 'Harf', icon: '🔤', map: { A:'A', B:'B', C:'C', D:'D', E:'E', F:'F', G:'G', H:'H', I:'I' } },
-      { id: 'animals', name: 'Hayvan', icon: '🐾', map: { A:'🐶', B:'🐱', C:'🐰', D:'🦊', E:'🐼', F:'🐸', G:'🦁', H:'🐨', I:'🐯' } },
-      { id: 'fruits',  name: 'Meyve',  icon: '🍎', map: { A:'🍎', B:'🍌', C:'🍓', D:'🍇', E:'🍉', F:'🍒', G:'🍍', H:'🥝', I:'🍑' } },
-      { id: 'space',   name: 'Uzay',   icon: '🚀', map: { A:'🚀', B:'🪐', C:'⭐', D:'🛸', E:'🌍', F:'☄️', G:'🌙', H:'🛰️', I:'🔭' } },
-      { id: 'numbers', name: 'Sayı',   icon: '🔢', map: { A:'1', B:'2', C:'3', D:'4', E:'5', F:'6', G:'7', H:'8', I:'9' } }
+      { id: 'letters', name: 'Harf', icon: '🔤', desc: 'Klasik A-B-C', map: { A:'A', B:'B', C:'C', D:'D', E:'E', F:'F', G:'G', H:'H', I:'I' } },
+      { id: 'animals', name: 'Hayvan', icon: '🐾', desc: 'Sevimli Dostlar', map: { A:'🐶', B:'🐱', C:'🐰', D:'🦊', E:'🐼', F:'🐸', G:'🦁', H:'🐨', I:'🐯' } },
+      { id: 'fruits',  name: 'Meyve',  icon: '🍎', desc: 'Taze Meyveler', map: { A:'🍎', B:'🍌', C:'🍓', D:'🍇', E:'🍉', F:'🍒', G:'🍍', H:'🥝', I:'🍑' } },
+      { id: 'space',   name: 'Uzay',   icon: '🚀', desc: 'Gezegen Keşfi', map: { A:'🚀', B:'🪐', C:'⭐', D:'🛸', E:'🌍', F:'☄️', G:'🌙', H:'🛰️', I:'🔭' } },
+      { id: 'numbers', name: 'Sayı',   icon: '🔢', desc: '1-2-3 Rakamlar', map: { A:'1', B:'2', C:'3', D:'4', E:'5', F:'6', G:'7', H:'8', I:'9' } },
+      {
+        id: 'antonyms',
+        name: 'Zıt Anlam',
+        icon: '🔄',
+        desc: 'Türkçe (1.–4. Sınıf)',
+        sample: 'Az ↔ Çok',
+        isEdu: true,
+        usesGrade: true,
+        map: { A:'A', B:'B', C:'C', D:'D', E:'E', F:'F', G:'G', H:'H', I:'I' },
+        pairsByGrade: {
+          1: [
+            ['Az', 'Çok'], ['Aç', 'Tok'], ['Var', 'Yok'], ['Gel', 'Git'],
+            ['İyi', 'Kötü'], ['Büyük', 'Küçük'], ['Uzun', 'Kısa'], ['Sıcak', 'Soğuk'],
+            ['Gece', 'Gündüz'], ['Alt', 'Üst'], ['Ön', 'Arka'], ['İç', 'Dış'],
+            ['Dolu', 'Boş'], ['Yeni', 'Eski'], ['Açık', 'Kapalı'], ['Hızlı', 'Yavaş'],
+            ['Temiz', 'Kirli'], ['Tatlı', 'Acı']
+          ],
+          2: [
+            ['Ak', 'Kara'], ['Dar', 'Geniş'], ['Yaz', 'Kış'], ['Ağır', 'Hafif'],
+            ['Sert', 'Yumuşak'], ['Yaşlı', 'Genç'], ['İnce', 'Kalın'], ['Uzak', 'Yakın'],
+            ['Güzel', 'Çirkin'], ['Doğru', 'Yanlış'], ['İlk', 'Son'], ['Sağ', 'Sol'],
+            ['Aşağı', 'Yukarı'], ['Erken', 'Geç'], ['Kolay', 'Zor'], ['Mutlu', 'Üzgün'],
+            ['Kuru', 'Islak'], ['Şişman', 'Zayıf']
+          ],
+          3: [
+            ['Zengin', 'Fakir'], ['Cömert', 'Cimri'], ['Cesur', 'Korkak'], ['Taze', 'Bayat'],
+            ['Çalışkan', 'Tembel'], ['Savaş', 'Barış'], ['Dost', 'Düşman'], ['Kâr', 'Zarar'],
+            ['Ucuz', 'Pahalı'], ['Aydınlık', 'Karanlık'], ['Gürültü', 'Sessiz'], ['Sık', 'Seyrek'],
+            ['Düz', 'Eğri'], ['İleri', 'Geri'], ['Tavan', 'Taban'], ['Sor', 'Cevapla'],
+            ['Ağla', 'Gül'], ['Al', 'Ver']
+          ],
+          4: [
+            ['Ödül', 'Ceza'], ['Neden', 'Sonuç'], ['Gerçek', 'Hayal'], ['Somut', 'Soyut'],
+            ['Tekil', 'Çoğul'], ['Üretici', 'Tüketici'], ['İthalat', 'İhracat'], ['Yapay', 'Doğal'],
+            ['Birey', 'Toplum'], ['Yerli', 'Yabancı'], ['Yüksek', 'Alçak'], ['Derin', 'Sığ'],
+            ['Saydam', 'Opak'], ['Bolluk', 'Kıtlık'], ['Geçmiş', 'Gelecek'], ['Başla', 'Bitir'],
+            ['Artı', 'Eksi'], ['Galip', 'Mağlup']
+          ]
+        }
+      },
+      {
+        id: 'synonyms',
+        name: 'Eş Anlam',
+        icon: '🟰',
+        desc: 'Türkçe (1.–4. Sınıf)',
+        sample: 'Al ↔ Kırmızı',
+        isEdu: true,
+        usesGrade: true,
+        map: { A:'A', B:'B', C:'C', D:'D', E:'E', F:'F', G:'G', H:'H', I:'I' },
+        pairsByGrade: {
+          1: [
+            ['Al', 'Kırmızı'], ['Ak', 'Beyaz'], ['Kara', 'Siyah'], ['Ad', 'İsim'],
+            ['Ev', 'Konut'], ['Okul', 'Mektep'], ['Sene', 'Yıl'], ['Ses', 'Seda'],
+            ['Düş', 'Rüya'], ['Yaşlı', 'İhtiyar'], ['Hekim', 'Doktor'], ['Yurt', 'Vatan'],
+            ['Kafa', 'Baş'], ['Yüz', 'Surat'], ['Elbise', 'Giysi'], ['Pabuç', 'Ayakkabı']
+          ],
+          2: [
+            ['Yanıt', 'Cevap'], ['Soru', 'Sual'], ['Sözcük', 'Kelime'], ['Öykü', 'Hikaye'],
+            ['Konuk', 'Misafir'], ['Armağan', 'Hediye'], ['Uzak', 'Irak'], ['Hızlı', 'Çabuk'],
+            ['Güç', 'Kuvvet'], ['Kıyı', 'Sahil'], ['Doğa', 'Tabiat'], ['Anı', 'Hatıra'],
+            ['Büyük', 'İri'], ['Küçük', 'Ufak'], ['Öğrenci', 'Talebe'], ['Öğretmen', 'Muallim']
+          ],
+          3: [
+            ['Sınav', 'İmtihan'], ['Duygu', 'His'], ['Kalp', 'Yürek'], ['Akıl', 'Us'],
+            ['Zaman', 'Vakit'], ['Güz', 'Sonbahar'], ['Özlem', 'Hasret'], ['Öneri', 'Teklif'],
+            ['Görev', 'Vazife'], ['Yarar', 'Fayda'], ['Zarar', 'Ziyan'], ['Fakir', 'Yoksul'],
+            ['Zengin', 'Varlıklı'], ['Cesur', 'Yiğit'], ['Şehir', 'Kent'], ['Dünya', 'Cihan']
+          ],
+          4: [
+            ['Neden', 'Sebep'], ['Sonuç', 'Netice'], ['Önemli', 'Mühim'], ['Olay', 'Hadise'],
+            ['Kanıt', 'Delil'], ['Özgür', 'Hür'], ['Millet', 'Ulus'], ['Bayrak', 'Sancak'],
+            ['Barış', 'Sulh'], ['Savaş', 'Harp'], ['Eser', 'Yapıt'], ['İlave', 'Ek'],
+            ['Uyarı', 'İkaz'], ['Tedbir', 'Önlem'], ['Birey', 'Fert'], ['Toplum', 'Cemiyet'],
+            ['Doğu', 'Şark'], ['Batı', 'Garp']
+          ]
+        }
+      },
+      {
+        id: 'math',
+        name: 'İşlem-Sonuç',
+        icon: '➕',
+        desc: 'Dört İşlem (1.–4. Sınıf)',
+        sample: '3+4 ↔ 7',
+        isEdu: true,
+        isMath: true,
+        map: { A:'A', B:'B', C:'C', D:'D', E:'E', F:'F', G:'G', H:'H', I:'I' }
+      },
+      {
+        id: 'english',
+        name: 'İngilizce',
+        icon: '🇬🇧',
+        desc: 'Kelime (1.–4. Sınıf)',
+        sample: 'Cat ↔ Kedi',
+        isEdu: true,
+        usesGrade: true,
+        map: { A:'A', B:'B', C:'C', D:'D', E:'E', F:'F', G:'G', H:'H', I:'I' },
+        pairsByGrade: {
+          1: [
+            ['Cat', 'Kedi'], ['Dog', 'Köpek'], ['Red', 'Kırmızı'], ['Blue', 'Mavi'],
+            ['One', 'Bir'], ['Two', 'İki'], ['Three', 'Üç'], ['Four', 'Dört'],
+            ['Five', 'Beş'], ['Sun', 'Güneş'], ['Moon', 'Ay'], ['Star', 'Yıldız'],
+            ['Ball', 'Top'], ['Car', 'Araba'], ['Book', 'Kitap'], ['Pen', 'Kalem'],
+            ['Apple', 'Elma'], ['Milk', 'Süt'], ['Boy', 'Erkek'], ['Girl', 'Kız']
+          ],
+          2: [
+            ['Green', 'Yeşil'], ['Pink', 'Pembe'], ['Black', 'Siyah'], ['White', 'Beyaz'],
+            ['Desk', 'Sıra'], ['Bag', 'Çanta'], ['Ruler', 'Cetvel'], ['Door', 'Kapı'],
+            ['Bird', 'Kuş'], ['Fish', 'Balık'], ['Duck', 'Ördek'], ['Frog', 'Kurbağa'],
+            ['Eye', 'Göz'], ['Ear', 'Kulak'], ['Nose', 'Burun'], ['Hand', 'El'],
+            ['Banana', 'Muz'], ['Grape', 'Üzüm'], ['Eight', 'Sekiz'], ['Ten', 'On']
+          ],
+          3: [
+            ['Mother', 'Anne'], ['Father', 'Baba'], ['Uncle', 'Amca'], ['Aunt', 'Teyze'],
+            ['Happy', 'Mutlu'], ['Sad', 'Üzgün'], ['Angry', 'Kızgın'], ['Tired', 'Yorgun'],
+            ['Hungry', 'Aç'], ['Sunny', 'Güneşli'], ['Rainy', 'Yağmurlu'], ['Windy', 'Rüzgarlı'],
+            ['Snowy', 'Karlı'], ['Kitchen', 'Mutfak'], ['Garden', 'Bahçe'], ['Room', 'Oda'],
+            ['Table', 'Masa'], ['Chair', 'Sandalye'], ['Train', 'Tren'], ['Plane', 'Uçak']
+          ],
+          4: [
+            ['Doctor', 'Doktor'], ['Nurse', 'Hemşire'], ['Teacher', 'Öğretmen'], ['Pilot', 'Pilot'],
+            ['Chef', 'Aşçı'], ['Farmer', 'Çiftçi'], ['Monday', 'Pazartesi'], ['Sunday', 'Pazar'],
+            ['Morning', 'Sabah'], ['Night', 'Gece'], ['Read', 'Okumak'], ['Write', 'Yazmak'],
+            ['Swim', 'Yüzmek'], ['Run', 'Koşmak'], ['Jump', 'Zıplamak'], ['Sleep', 'Uyumak'],
+            ['Math', 'Matematik'], ['Music', 'Müzik'], ['Art', 'Resim'], ['Clock', 'Saat']
+          ]
+        }
+      }
     ];
     const ACHIEVEMENTS = [
       { id: 'first_win',  icon: '🌱', title: 'İlk Kıvılcım',    desc: 'İlk bulmacanı başarıyla çöz.' },
@@ -3163,14 +3744,83 @@
     function saveAppData() {
       try { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); } catch (_) {}
     }
+    const EDU_MAX_UNLOCKED_IDX = 12; // Eğitici temalar en fazla 6x6 (Orta · Seviye 3 = index 12)
+
+    function getEduThemeProgress(themeId) {
+      if (!appData.eduProgress) appData.eduProgress = {};
+      if (!appData.eduProgress[themeId]) {
+        appData.eduProgress[themeId] = {
+          progress: {},
+          tourProgress: {},
+          unlockedIdx: 0,
+          gradeIdx: 0,
+          levelIdx: 0
+        };
+      }
+      return appData.eduProgress[themeId];
+    }
+
+    function getActiveProgressStore() {
+      const theme = getActiveSymbolTheme();
+      if (theme && theme.isEdu) {
+        return getEduThemeProgress(theme.id);
+      }
+      return appData;
+    }
+
+    function saveCurrentThemePosition() {
+      const theme = getActiveSymbolTheme();
+      if (theme && theme.isEdu) {
+        const store = getEduThemeProgress(theme.id);
+        store.gradeIdx = gradeIdx;
+        store.levelIdx = levelIdx;
+      } else {
+        appData.classicGradeIdx = gradeIdx;
+        appData.classicLevelIdx = levelIdx;
+      }
+    }
+
+    function loadCurrentThemePosition() {
+      const theme = getActiveSymbolTheme();
+      if (theme && theme.isEdu) {
+        const store = getEduThemeProgress(theme.id);
+        gradeIdx = Math.max(0, Math.min(2, store.gradeIdx || 0));
+        levelIdx = Math.max(0, Math.min(4, store.levelIdx || 0));
+        if (gradeIdx * 5 + levelIdx > EDU_MAX_UNLOCKED_IDX) {
+          gradeIdx = 2;
+          levelIdx = 2;
+        }
+      } else {
+        const maxU = Math.min(29, appData.unlockedIdx || 0);
+        const defGi = Math.floor(maxU / 5);
+        const defLi = maxU % 5;
+        gradeIdx = (typeof appData.classicGradeIdx === 'number') ? Math.max(0, Math.min(5, appData.classicGradeIdx)) : defGi;
+        levelIdx = (typeof appData.classicLevelIdx === 'number') ? Math.max(0, Math.min(4, appData.classicLevelIdx)) : defLi;
+        if (!isLevelUnlocked(gradeIdx, levelIdx)) {
+          gradeIdx = defGi;
+          levelIdx = defLi;
+        }
+      }
+    }
+
     function levelKey(gi, li) { return `g${GRADES[gi].grade}-l${GRADES[gi].levels[li].level}`; }
-    function solvedCount(gi, li) { return (appData.progress[levelKey(gi, li)] || 0); }
+    function solvedCount(gi, li) {
+      const store = getActiveProgressStore();
+      return ((store.progress && store.progress[levelKey(gi, li)]) || 0);
+    }
     function requiredForLevel(gi) { return gi <= 2 ? 2 : 3; }
     function tourSolvedCount(gi, li) {
-      if (!appData.tourProgress) appData.tourProgress = {};
-      return (appData.tourProgress[levelKey(gi, li)] || 0);
+      const store = getActiveProgressStore();
+      if (!store.tourProgress) store.tourProgress = {};
+      return (store.tourProgress[levelKey(gi, li)] || 0);
     }
     function isLevelUnlocked(gi, li) {
+      if (isEduThemeActive()) {
+        const gIdx = gi * 5 + li;
+        if (gIdx > EDU_MAX_UNLOCKED_IDX) return false;
+        const store = getActiveProgressStore();
+        return gIdx <= (store.unlockedIdx || 0);
+      }
       if ((appData.goldTour || 0) > 0) return true;
       return (gi * 5 + li) <= (appData.unlockedIdx || 0);
     }
@@ -3178,6 +3828,7 @@
       return isLevelUnlocked(gi, 0);
     }
     function hasGoldCrown(gi, li) {
+      if (isEduThemeActive()) return false;
       return !!(appData.goldCrowns && appData.goldCrowns[levelKey(gi, li)]);
     }
     function countGoldCrowns() {
@@ -3213,9 +3864,14 @@
 
     function addSolved(gi, li) {
       const k = levelKey(gi, li);
-      appData.progress[k] = (appData.progress[k] || 0) + 1;
-      if (!appData.tourProgress) appData.tourProgress = {};
-      appData.tourProgress[k] = (appData.tourProgress[k] || 0) + 1;
+      const store = getActiveProgressStore();
+      if (!store.progress) store.progress = {};
+      store.progress[k] = (store.progress[k] || 0) + 1;
+      if (!store.tourProgress) store.tourProgress = {};
+      store.tourProgress[k] = (store.tourProgress[k] || 0) + 1;
+      if (isEduThemeActive()) {
+        appData.eduTotalSolved = (appData.eduTotalSolved || 0) + 1;
+      }
       streakCount++;
       const streakBonus = Math.min(50, streakCount * 10);
       const gainedPts = (gradeIdx + 1) * 20 + (levelIdx + 1) * 10 + (obstacleMode ? 15 : 0) + (memoryMode ? 20 : 0) + streakBonus;
@@ -3234,8 +3890,8 @@
     }
 
     function updateStatsUI() {
-      let total = 0;
-      Object.values(appData.progress).forEach(v => total += v);
+      let total = appData.eduTotalSolved || 0;
+      Object.values(appData.progress || {}).forEach(v => total += v);
       statTotalSolved.textContent = total;
       statScore.textContent = appData.score;
       statStreak.textContent = `🔥 ${streakCount}`;
@@ -3282,9 +3938,270 @@
       };
     }
 
+    let activeEduPairs = {};
+
+    function getActiveSymbolTheme() {
+      return SYMBOL_THEMES[symbolThemeIdx] || SYMBOL_THEMES[0];
+    }
+
+    function isEduThemeActive() {
+      const theme = getActiveSymbolTheme();
+      return !!(theme && theme.isEdu);
+    }
+
+    const MATH_GRADE_META = {
+      1: {
+        label: '1. Sınıf',
+        desc: '1. Sınıf: 20\'ye kadar Toplama (+) ve Çıkarma (-)',
+        engDesc: '1. Sınıf İngilizce: Temel renkler, 1–5 sayılar, ilk kelimeler',
+        antDesc: '1. Sınıf Zıt Anlam: Temel günlük zıt sözcükler (Az–Çok, Aç–Tok, Gece–Gündüz)',
+        synDesc: '1. Sınıf Eş Anlam: İlköğretim temel eş anlamlılar (Al–Kırmızı, Ak–Beyaz, Ad–İsim)'
+      },
+      2: {
+        label: '2. Sınıf',
+        desc: '2. Sınıf: Toplama, Çıkarma, Kolay Çarpma (×) ve Kalansız Bölme (÷)',
+        engDesc: '2. Sınıf İngilizce: Sınıf eşyaları, hayvanlar, vücut ve meyveler',
+        antDesc: '2. Sınıf Zıt Anlam: Sıfatlar, yönler ve durumlar (Dar–Geniş, Kolay–Zor, Erken–Geç)',
+        synDesc: '2. Sınıf Eş Anlam: Okuma-anlama sözcükleri (Yanıt–Cevap, Öykü–Hikaye, Konuk–Misafir)'
+      },
+      3: {
+        label: '3. Sınıf',
+        desc: '3. Sınıf: 100\'e kadar Dört İşlem (+, -, ×, ÷)',
+        engDesc: '3. Sınıf İngilizce: Aile, duygular, hava durumu, ev ve ulaşım',
+        antDesc: '3. Sınıf Zıt Anlam: Kavramlar ve davranışlar (Cömert–Cimri, Cesur–Korkak, Taze–Bayat)',
+        synDesc: '3. Sınıf Eş Anlam: Orta düzey sözcükler (Duygu–His, Görev–Vazife, Özlem–Hasret)'
+      },
+      4: {
+        label: '4. Sınıf',
+        desc: '4. Sınıf: İleri Dört İşlem (+, -, ×, ÷)',
+        engDesc: '4. Sınıf İngilizce: Meslekler, günler, fiiller ve dersler',
+        antDesc: '4. Sınıf Zıt Anlam: İleri ilkokul kavramları (Somut–Soyut, Tekil–Çoğul, Üretici–Tüketici)',
+        synDesc: '4. Sınıf Eş Anlam: Zengin söz varlığı (Neden–Sebep, Kanıt–Delil, Tedbir–Önlem)'
+      }
+    };
+
+    function getMathGrade() {
+      const g = parseInt(appData.mathGrade, 10);
+      return (g >= 1 && g <= 4) ? g : 2;
+    }
+
+    const MATH_OP_LABELS = {
+      all: 'Dört İşlem',
+      add: 'Toplama (+)',
+      sub: 'Çıkarma (-)',
+      mul: 'Çarpma (×)',
+      div: 'Bölme (÷)'
+    };
+
+    function getMathOp() {
+      const mg = getMathGrade();
+      const raw = appData.mathOp || 'all';
+      if (mg === 1 && (raw === 'mul' || raw === 'div')) return 'all';
+      return ['all', 'add', 'sub', 'mul', 'div'].includes(raw) ? raw : 'all';
+    }
+
+    function getMathTable() {
+      const mg = getMathGrade();
+      const raw = appData.mathTable || 'all';
+      if (raw === 'all') return 'all';
+      const n = parseInt(raw, 10);
+      if (!(n >= 2 && n <= 10)) return 'all';
+      if (mg === 2 && n > 5) return 'all';
+      return String(n);
+    }
+
+    function getMathOpBadgeLabel() {
+      const mg = getMathGrade();
+      const op = getMathOp();
+      if (op === 'all') return mg === 1 ? 'Toplama & Çıkarma' : 'Dört İşlem';
+      if (op === 'mul') {
+        const tbl = getMathTable();
+        if (tbl !== 'all') return `${tbl}'ler Çarpım`;
+      }
+      return MATH_OP_LABELS[op] || 'Dört İşlem';
+    }
+
+    function generateMathEduPairs(count) {
+      const mg = getMathGrade();
+      const opSel = getMathOp();
+      const usedResults = new Set();
+      const pairs = [];
+
+      // Tahtada seçili işlemlerin dengeli dağılması için ilk tura geçerli işlemleri karıştırarak koy
+      const allowedOps = opSel !== 'all'
+        ? [opSel]
+        : (mg === 1 ? ['add', 'sub'] : ['add', 'sub', 'mul', 'div']);
+      const opsQueue = [];
+      while (opsQueue.length < count + 12) {
+        const batch = allowedOps.slice();
+        for (let i = batch.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [batch[i], batch[j]] = [batch[j], batch[i]];
+        }
+        opsQueue.push(...batch);
+      }
+
+      let tries = 0;
+      let opIdx = 0;
+      const mulTable = getMathTable();
+      while (pairs.length < count && tries < 400) {
+        tries++;
+        const mode = opsQueue[opIdx % opsQueue.length];
+        opIdx++;
+        let expr = '';
+        let res = 0;
+
+        if (mode === 'mul' && mulTable !== 'all' && mg >= 2) {
+          // Seçilen çarpım tablosuna göre üret (ör. 6'lar: 6×2..6×10)
+          const t = parseInt(mulTable, 10);
+          const b = 1 + Math.floor(Math.random() * 10);
+          res = t * b;
+          expr = Math.random() < 0.7 ? `${t}×${b}` : `${b}×${t}`;
+          if (!usedResults.has(res)) {
+            usedResults.add(res);
+            pairs.push([expr, String(res)]);
+          }
+          continue;
+        }
+
+        if (mg === 1) {
+          // 1. Sınıf: 20'ye kadar toplama ve çıkarma
+          if (mode === 'add') {
+            const a = 1 + Math.floor(Math.random() * 10);
+            const maxB = Math.max(1, 20 - a);
+            const b = 1 + Math.floor(Math.random() * Math.min(10, maxB));
+            res = a + b;
+            expr = `${a}+${b}`;
+          } else {
+            const b = 1 + Math.floor(Math.random() * 9);
+            const r = 1 + Math.floor(Math.random() * (19 - b));
+            const a = b + r;
+            res = r;
+            expr = `${a}-${b}`;
+          }
+        } else if (mg === 2) {
+          // 2. Sınıf: 60'a kadar toplama/çıkarma, 2-5 çarpım tablosu ve basit kalansız bölme
+          if (mode === 'add') {
+            const a = 5 + Math.floor(Math.random() * 31);
+            const b = 3 + Math.floor(Math.random() * 23);
+            res = a + b;
+            expr = `${a}+${b}`;
+          } else if (mode === 'sub') {
+            const b = 3 + Math.floor(Math.random() * 18);
+            const r = 4 + Math.floor(Math.random() * 27);
+            const a = b + r;
+            res = r;
+            expr = `${a}-${b}`;
+          } else if (mode === 'mul') {
+            const a = 2 + Math.floor(Math.random() * 4);
+            const b = 2 + Math.floor(Math.random() * 8);
+            res = a * b;
+            expr = `${a}×${b}`;
+          } else {
+            const b = 2 + Math.floor(Math.random() * 4);
+            const q = 2 + Math.floor(Math.random() * 8);
+            const a = b * q;
+            res = q;
+            expr = `${a}÷${b}`;
+          }
+        } else if (mg === 3) {
+          // 3. Sınıf: 100'e kadar dört işlem (3-9 çarpım tablosu & kalansız bölme)
+          if (mode === 'add') {
+            const a = 12 + Math.floor(Math.random() * 44);
+            const b = 11 + Math.floor(Math.random() * 35);
+            res = a + b;
+            expr = `${a}+${b}`;
+          } else if (mode === 'sub') {
+            const b = 11 + Math.floor(Math.random() * 30);
+            const r = 10 + Math.floor(Math.random() * 46);
+            const a = b + r;
+            res = r;
+            expr = `${a}-${b}`;
+          } else if (mode === 'mul') {
+            const a = 3 + Math.floor(Math.random() * 7);
+            const b = 3 + Math.floor(Math.random() * 7);
+            res = a * b;
+            expr = `${a}×${b}`;
+          } else {
+            const b = 2 + Math.floor(Math.random() * 8);
+            const q = 2 + Math.floor(Math.random() * 8);
+            const a = b * q;
+            res = q;
+            expr = `${a}÷${b}`;
+          }
+        } else {
+          // 4. Sınıf: İleri dört işlem (2 basamaklı zihinden işlemler, 2 basamak×1 basamak, kalansız bölme)
+          if (mode === 'add') {
+            const a = 25 + Math.floor(Math.random() * 96);
+            const b = 15 + Math.floor(Math.random() * 66);
+            res = a + b;
+            expr = `${a}+${b}`;
+          } else if (mode === 'sub') {
+            const b = 15 + Math.floor(Math.random() * 51);
+            const r = 15 + Math.floor(Math.random() * 81);
+            const a = b + r;
+            res = r;
+            expr = `${a}-${b}`;
+          } else if (mode === 'mul') {
+            const a = 11 + Math.floor(Math.random() * 9);
+            const b = 2 + Math.floor(Math.random() * 8);
+            res = a * b;
+            expr = `${a}×${b}`;
+          } else {
+            const b = 3 + Math.floor(Math.random() * 7);
+            const q = 4 + Math.floor(Math.random() * 12);
+            const a = b * q;
+            res = q;
+            expr = `${a}÷${b}`;
+          }
+        }
+
+        if (!usedResults.has(res)) {
+          usedResults.add(res);
+          pairs.push([expr, String(res)]);
+        }
+      }
+      return pairs;
+    }
+
+    function prepareEduPairsForPuzzle(letterList) {
+      activeEduPairs = {};
+      const theme = getActiveSymbolTheme();
+      if (!theme || !theme.isEdu || !Array.isArray(letterList)) return;
+
+      if (theme.isMath) {
+        const mathPairs = generateMathEduPairs(letterList.length);
+        letterList.forEach((l, idx) => {
+          const p = mathPairs[idx] || [`${idx + 1}+1`, String(idx + 2)];
+          activeEduPairs[l] = Math.random() < 0.5 ? [p[0], p[1]] : [p[1], p[0]];
+        });
+        return;
+      }
+
+      const sourcePool = (theme.pairsByGrade && theme.pairsByGrade[getMathGrade()])
+        ? theme.pairsByGrade[getMathGrade()]
+        : (theme.pairsPool || []);
+      const pool = sourcePool.slice();
+      for (let i = pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+      }
+      letterList.forEach((l, idx) => {
+        const p = pool[idx % Math.max(1, pool.length)] || [l, l];
+        activeEduPairs[l] = Math.random() < 0.5 ? [p[0], p[1]] : [p[1], p[0]];
+      });
+    }
+
     function getSymbol(letter, forPlayerPaths, epIdx) {
-      const theme = SYMBOL_THEMES[symbolThemeIdx] || SYMBOL_THEMES[0];
-      const sym = theme.map[letter] || letter;
+      const theme = getActiveSymbolTheme();
+      let sym = theme.map[letter] || letter;
+      if (theme.isEdu && activeEduPairs[letter]) {
+        if (forPlayerPaths) {
+          sym = `${activeEduPairs[letter][0]}↔${activeEduPairs[letter][1]}`;
+        } else {
+          sym = epIdx === 1 ? activeEduPairs[letter][1] : activeEduPairs[letter][0];
+        }
+      }
       if (!forPlayerPaths && memoryMode && memoryHidden) {
         const memCfg = getMemoryGradeConfig(gradeIdx);
         // Çok Kolay (Yarı-Hafıza) kademesinde her harfin ilk ucu (epIdx === 0) açık kalır, sadece eşi (epIdx === 1) '?' olur!
@@ -3298,23 +4215,330 @@
       return sym;
     }
 
+    const btnOpenThemeModal = document.getElementById('btnOpenThemeModal');
+
     function updateSymbolThemeUI() {
-      const theme = SYMBOL_THEMES[symbolThemeIdx] || SYMBOL_THEMES[0];
-      if (btnSymbolTheme) btnSymbolTheme.textContent = theme.icon;
+      const theme = getActiveSymbolTheme();
+      const mg = getMathGrade();
+      if (btnSymbolTheme) {
+        const displayTheme = (theme && !theme.isEdu) ? theme : SYMBOL_THEMES[0];
+        btnSymbolTheme.textContent = displayTheme.icon;
+        btnSymbolTheme.title = `Klasik Sembol Değiştir (Şu an: ${theme.name})`;
+      }
+      if (btnOpenThemeModal) {
+        const label = theme.isEdu ? `${theme.name} (${mg}.S)` : `Tema Seç`;
+        btnOpenThemeModal.innerHTML = `<span>${theme.isEdu ? theme.icon : '🎨'}</span><span>${label}</span>`;
+      }
     }
 
-    function cycleSymbolTheme() {
-      symbolThemeIdx = (symbolThemeIdx + 1) % SYMBOL_THEMES.length;
+    const themeOverlay = document.getElementById('themeOverlay');
+    const themeModal = document.getElementById('themeModal');
+    const themeTabClassic = document.getElementById('themeTabClassic');
+    const themeTabEdu = document.getElementById('themeTabEdu');
+    const classicThemePane = document.getElementById('classicThemePane');
+    const eduThemePane = document.getElementById('eduThemePane');
+    const eduThemeGrid = document.getElementById('eduThemeGrid');
+    const classicThemeGrid = document.getElementById('classicThemeGrid');
+    const mathGradeRow = document.getElementById('mathGradeRow');
+    const mathOpRow = document.getElementById('mathOpRow');
+    const mathOpWrap = document.getElementById('mathOpWrap');
+    const mathTableWrap = document.getElementById('mathTableWrap');
+    const mathTableRow = document.getElementById('mathTableRow');
+    const mathGradeHint = document.getElementById('mathGradeHint');
+    const chkEduNeutralColor = document.getElementById('chkEduNeutralColor');
+    const btnEduPlay = document.getElementById('btnEduPlay');
+    const themeClose = document.getElementById('themeClose');
+    let pendingEduThemeIdx = null;
+
+    function getDefaultEduThemeIdx() {
+      const cur = getActiveSymbolTheme();
+      if (cur && cur.isEdu) return symbolThemeIdx;
+      const firstEdu = SYMBOL_THEMES.findIndex(t => t.isEdu);
+      return firstEdu >= 0 ? firstEdu : 0;
+    }
+
+    function setThemeModalTab(tab) {
+      const isEduTab = tab === 'edu';
+      if (themeTabClassic) themeTabClassic.classList.toggle('active', !isEduTab);
+      if (themeTabEdu) themeTabEdu.classList.toggle('active', isEduTab);
+      if (classicThemePane) classicThemePane.style.display = isEduTab ? 'none' : 'block';
+      if (eduThemePane) eduThemePane.style.display = isEduTab ? 'block' : 'none';
+      if (btnEduPlay) btnEduPlay.style.display = isEduTab ? '' : 'none';
+      if (themeClose) themeClose.style.gridColumn = isEduTab ? '' : '1 / -1';
+      if (isEduTab && pendingEduThemeIdx === null) {
+        pendingEduThemeIdx = getDefaultEduThemeIdx();
+        renderThemeModal();
+      }
+    }
+
+    if (themeTabClassic) themeTabClassic.addEventListener('click', () => { playClick(); setThemeModalTab('classic'); });
+    if (themeTabEdu) themeTabEdu.addEventListener('click', () => { playClick(); setThemeModalTab('edu'); });
+
+    function updateMathGradeModalUI() {
+      const mg = getMathGrade();
+      const opSel = getMathOp();
+      const tblSel = getMathTable();
+      const modalOpen = !!(themeModal && themeModal.classList.contains('show'));
+      const previewTheme = (modalOpen && pendingEduThemeIdx !== null && SYMBOL_THEMES[pendingEduThemeIdx])
+        ? SYMBOL_THEMES[pendingEduThemeIdx]
+        : getActiveSymbolTheme();
+      if (mathGradeRow) {
+        mathGradeRow.querySelectorAll('.math-grade-btn[data-mgrade]').forEach(btn => {
+          const g = parseInt(btn.getAttribute('data-mgrade'), 10);
+          btn.classList.toggle('active', g === mg);
+        });
+      }
+      if (mathOpWrap) {
+        mathOpWrap.style.opacity = (previewTheme && previewTheme.isMath) ? '1' : '0.68';
+      }
+      if (mathOpRow) {
+        mathOpRow.querySelectorAll('.math-op-btn[data-mop]').forEach(btn => {
+          const op = btn.getAttribute('data-mop');
+          const locked = mg === 1 && (op === 'mul' || op === 'div');
+          btn.disabled = locked;
+          btn.classList.toggle('disabled', locked);
+          btn.classList.toggle('active', !locked && op === opSel);
+        });
+      }
+      if (mathTableWrap) {
+        mathTableWrap.classList.toggle('show', opSel === 'mul' && mg >= 2);
+      }
+      if (mathTableRow) {
+        mathTableRow.querySelectorAll('.math-table-btn[data-mtable]').forEach(btn => {
+          const val = btn.getAttribute('data-mtable');
+          const num = parseInt(val, 10);
+          const locked = (val !== 'all') && (mg === 2 && num > 5);
+          btn.disabled = locked;
+          btn.classList.toggle('disabled', locked);
+          btn.classList.toggle('active', !locked && val === tblSel);
+        });
+      }
+      if (mathGradeHint) {
+        const meta = MATH_GRADE_META[mg] || MATH_GRADE_META[2];
+        if (previewTheme && previewTheme.id === 'english') mathGradeHint.textContent = meta.engDesc;
+        else if (previewTheme && previewTheme.id === 'antonyms') mathGradeHint.textContent = meta.antDesc;
+        else if (previewTheme && previewTheme.id === 'synonyms') mathGradeHint.textContent = meta.synDesc;
+        else mathGradeHint.textContent = `${meta.desc} · Seçili işlem: ${getMathOpBadgeLabel()}`;
+      }
+    }
+
+    function setMathGrade(g) {
+      const next = Math.max(1, Math.min(4, parseInt(g, 10) || 2));
+      appData.mathGrade = next;
+      if (next === 1 && (appData.mathOp === 'mul' || appData.mathOp === 'div')) {
+        appData.mathOp = 'all';
+      }
+      if (next === 2 && parseInt(appData.mathTable, 10) > 5) {
+        appData.mathTable = 'all';
+      }
+      playClick();
+      saveAppData();
+      updateMathGradeModalUI();
+      updateSymbolThemeUI();
+      const modalOpen = !!(themeModal && themeModal.classList.contains('show'));
+      const theme = getActiveSymbolTheme();
+      if (!modalOpen && theme && (theme.isMath || theme.usesGrade)) {
+        newPuzzle();
+      }
+    }
+
+    function setMathOp(op) {
+      const mg = getMathGrade();
+      if (mg === 1 && (op === 'mul' || op === 'div')) return;
+      appData.mathOp = ['all', 'add', 'sub', 'mul', 'div'].includes(op) ? op : 'all';
+      playClick();
+      saveAppData();
+      updateMathGradeModalUI();
+      updateSymbolThemeUI();
+      const modalOpen = !!(themeModal && themeModal.classList.contains('show'));
+      const theme = getActiveSymbolTheme();
+      if (!modalOpen && theme && theme.isMath) {
+        newPuzzle();
+      }
+    }
+
+    function setMathTable(val) {
+      const mg = getMathGrade();
+      if (mg < 2) return;
+      if (val !== 'all') {
+        const n = parseInt(val, 10);
+        if (!(n >= 2 && n <= 10) || (mg === 2 && n > 5)) return;
+        appData.mathTable = String(n);
+      } else {
+        appData.mathTable = 'all';
+      }
+      playClick();
+      saveAppData();
+      updateMathGradeModalUI();
+      updateSymbolThemeUI();
+      const modalOpen = !!(themeModal && themeModal.classList.contains('show'));
+      const theme = getActiveSymbolTheme();
+      if (!modalOpen && theme && theme.isMath) {
+        newPuzzle();
+      }
+    }
+
+    if (mathGradeRow) {
+      mathGradeRow.querySelectorAll('.math-grade-btn[data-mgrade]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const g = parseInt(btn.getAttribute('data-mgrade'), 10);
+          setMathGrade(g);
+        });
+      });
+    }
+    if (mathOpRow) {
+      mathOpRow.querySelectorAll('.math-op-btn[data-mop]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const op = btn.getAttribute('data-mop');
+          setMathOp(op);
+        });
+      });
+    }
+    if (mathTableRow) {
+      mathTableRow.querySelectorAll('.math-table-btn[data-mtable]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const val = btn.getAttribute('data-mtable');
+          setMathTable(val);
+        });
+      });
+    }
+
+    function renderThemeModal() {
+      if (chkEduNeutralColor) {
+        chkEduNeutralColor.checked = !!appData.eduNeutralColor;
+      }
+      if (pendingEduThemeIdx === null) {
+        pendingEduThemeIdx = getDefaultEduThemeIdx();
+      }
+      updateMathGradeModalUI();
+      const makeCards = (items, forEdu) => items.map(t => {
+        const idx = SYMBOL_THEMES.indexOf(t);
+        const isAct = forEdu ? (idx === pendingEduThemeIdx) : (idx === symbolThemeIdx);
+        let subText = t.desc || '';
+        if (t.isEdu) {
+          const ep = appData.eduProgress && appData.eduProgress[t.id];
+          const epSolved = ep ? Object.values(ep.progress || {}).reduce((a, b) => a + b, 0) : 0;
+          const epLvl = ep ? Math.min(13, (ep.unlockedIdx || 0) + 1) : 1;
+          subText = `Seviye ${epLvl}/13 · ${epSolved} çözüm`;
+        }
+        const sampleHtml = t.sample ? `<span class="tc-sample">${t.sample}</span>` : '';
+        const toneCls = t.isEdu ? `tc-${t.id}` : '';
+        return `<button type="button" class="theme-card ${toneCls} ${isAct ? 'active' : ''}" data-tidx="${idx}" data-isedu="${forEdu ? '1' : '0'}">
+          <span class="tc-ic">${t.icon}</span>
+          <span>
+            <span class="tc-name">${t.name}</span>
+            <span class="tc-sub">${subText}</span>
+            ${sampleHtml}
+          </span>
+        </button>`;
+      }).join('');
+
+      if (eduThemeGrid) eduThemeGrid.innerHTML = makeCards(SYMBOL_THEMES.filter(t => t.isEdu), true);
+      if (classicThemeGrid) classicThemeGrid.innerHTML = makeCards(SYMBOL_THEMES.filter(t => !t.isEdu), false);
+
+      if (themeModal) {
+        themeModal.querySelectorAll('.theme-card[data-tidx]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = parseInt(btn.getAttribute('data-tidx'), 10) || 0;
+            const isEduCard = btn.getAttribute('data-isedu') === '1';
+            if (isEduCard) {
+              // Eğitici kısımda sadece seçimi işaretle; Oyna butonuna basınca oyuna gir
+              playClick();
+              pendingEduThemeIdx = idx;
+              renderThemeModal();
+            } else {
+              selectSymbolTheme(idx);
+            }
+          });
+        });
+      }
+    }
+
+    function openThemeModal() {
+      pendingEduThemeIdx = getDefaultEduThemeIdx();
+      renderThemeModal();
+      setThemeModalTab(isEduThemeActive() ? 'edu' : 'classic');
+      if (themeOverlay) themeOverlay.classList.add('show');
+      if (themeModal) themeModal.classList.add('show');
+    }
+
+    function closeThemeModal() {
+      if (themeOverlay) themeOverlay.classList.remove('show');
+      if (themeModal) themeModal.classList.remove('show');
+    }
+
+    function selectSymbolTheme(idx, forceNew) {
+      const prevIdx = symbolThemeIdx;
+      const wasEdu = isEduThemeActive();
+      saveCurrentThemePosition();
+      symbolThemeIdx = Math.max(0, Math.min(SYMBOL_THEMES.length - 1, idx));
       appData.symbolTheme = symbolThemeIdx;
+      loadCurrentThemePosition();
       playClick();
       saveAppData();
       updateSymbolThemeUI();
-      render();
+      closeThemeModal();
+      const nowEdu = isEduThemeActive();
+      if (nowEdu && dailyMode) {
+        dailyMode = false;
+        if (btnDaily) btnDaily.classList.remove('active');
+      }
+      if (typeof buildGradeButtons === 'function') buildGradeButtons();
+      if (typeof buildLevelButtons === 'function') buildLevelButtons();
+      if (forceNew || wasEdu || nowEdu) {
+        if (forceNew || prevIdx !== symbolThemeIdx || (nowEdu && size > 6)) {
+          newPuzzle();
+        } else {
+          if (nowEdu) prepareEduPairsForPuzzle(letters);
+          render();
+          updateStatus();
+        }
+      } else {
+        render();
+        updateStatus();
+      }
     }
 
-    symbolThemeIdx = (appData.symbolTheme || 0) % SYMBOL_THEMES.length;
+    if (chkEduNeutralColor) {
+      chkEduNeutralColor.addEventListener('change', () => {
+        appData.eduNeutralColor = chkEduNeutralColor.checked;
+        saveAppData();
+        render();
+      });
+    }
+    if (btnEduPlay) {
+      btnEduPlay.addEventListener('click', () => {
+        const targetIdx = (pendingEduThemeIdx !== null && SYMBOL_THEMES[pendingEduThemeIdx] && SYMBOL_THEMES[pendingEduThemeIdx].isEdu)
+          ? pendingEduThemeIdx
+          : getDefaultEduThemeIdx();
+        dailyMode = false;
+        if (btnDaily) btnDaily.classList.remove('active');
+        selectSymbolTheme(targetIdx, true);
+      });
+    }
+    if (themeClose) themeClose.addEventListener('click', () => { playClick(); closeThemeModal(); });
+    if (themeOverlay) themeOverlay.addEventListener('click', closeThemeModal);
+
+    // Oyun her zaman Klasik ABC (Harf) ile başlar
+    symbolThemeIdx = 0;
+    loadCurrentThemePosition();
     updateSymbolThemeUI();
-    if (btnSymbolTheme) btnSymbolTheme.addEventListener('click', cycleSymbolTheme);
+    if (btnOpenThemeModal) {
+      btnOpenThemeModal.addEventListener('click', () => {
+        playClick();
+        openThemeModal();
+      });
+    }
+    if (btnSymbolTheme) {
+      btnSymbolTheme.addEventListener('click', () => {
+        const classicList = SYMBOL_THEMES.filter(t => !t.isEdu);
+        const curTheme = getActiveSymbolTheme();
+        const curClassicPos = classicList.indexOf(curTheme);
+        const nextClassic = classicList[(curClassicPos + 1) % classicList.length] || SYMBOL_THEMES[0];
+        const nextIdx = SYMBOL_THEMES.indexOf(nextClassic);
+        selectSymbolTheme(nextIdx >= 0 ? nextIdx : 0);
+      });
+    }
 
     // Tema ve Renk Körlüğü Desen Ayarı
     if (appData.dark) {
@@ -3492,6 +4716,8 @@
             if (isLevelUnlocked(i, li)) highestOpen = li;
           }
           levelIdx = highestOpen;
+          saveCurrentThemePosition();
+          saveAppData();
           dailyMode = false;
           if (btnDaily) btnDaily.classList.remove('active');
           buildGradeButtons();
@@ -3530,6 +4756,8 @@
           if (i === levelIdx) return;
           playClick();
           levelIdx = i;
+          saveCurrentThemePosition();
+          saveAppData();
           dailyMode = false;
           if (btnDaily) btnDaily.classList.remove('active');
           buildLevelButtons();
@@ -3647,6 +4875,7 @@
         solution[letter] = coords;
         endpoints[letter] = [coords[0], coords[coords.length - 1]];
       });
+      prepareEduPairsForPuzzle(letters);
 
       paths = {};
       hintStageByLetter = {};
@@ -3687,9 +4916,12 @@
       if (tournamentMode && typeof stopTournamentMode === 'function') stopTournamentMode();
       const solved = solvedCount(gradeIdx, levelIdx);
       const v = variantFor(gradeIdx, levelIdx, solved);
+      const eduActive = isEduThemeActive();
+      const useSize = eduActive ? Math.min(v.size, 6) : v.size;
+      const usePairs = eduActive ? Math.min(v.pairs, 6) : v.pairs;
       const p = percentileFor(gradeIdx, levelIdx, solved);
       const seedCode = customSeedCode || (dailyMode ? dailySeedCode() : null);
-      const puzzle = generatePuzzle(v.size, v.pairs, p, seedCode ? null : pendingFloor, 90, {
+      const puzzle = generatePuzzle(useSize, usePairs, p, seedCode ? null : pendingFloor, 90, {
         seedCode,
         gi: gradeIdx,
         li: levelIdx,
@@ -3749,13 +4981,27 @@
       const goldTourActive = (appData.goldTour || 0) > 0;
       const targetSec = goldTargetSec(gradeIdx, levelIdx);
 
+      const activeTheme = getActiveSymbolTheme();
+      const mathTag = (activeTheme && (activeTheme.isMath || activeTheme.usesGrade))
+        ? `<button type="button" class="tag math-grade-tag" id="btnStatusMathGrade" title="Sınıf seviyesini değiştir">🏫 ${getMathGrade()}. Sınıf (${activeTheme.isMath ? getMathOpBadgeLabel() : activeTheme.name})</button>`
+        : '';
+
       statusEl.innerHTML =
         `<span class="tag"><strong>${GRADES[gradeIdx].label}</strong> · Seviye ${cfg.level}</span>` +
         `<span class="tag">${size}×${size} · Nokta: <strong>${filled}/${total}</strong></span>` +
         `<span class="tag solved">Seviye Hedefi: <strong>${curProg}/${req}</strong></span>` +
+        mathTag +
         (goldTourActive
           ? `<span class="tag diff">👑 Hedef Süre: <strong>≤${targetSec}sn</strong></span>`
           : `<span class="tag diff">Zorluk ${bar}</span>`);
+
+      const btnStatusMathGrade = document.getElementById('btnStatusMathGrade');
+      if (btnStatusMathGrade) {
+        btnStatusMathGrade.addEventListener('click', () => {
+          playClick();
+          openThemeModal();
+        });
+      }
 
       if (gradeIdx === 0 && levelIdx === 0 && solved === 0 && hintsUsed === 0) {
         noteEl.className = 'note teach';
@@ -3874,7 +5120,24 @@
         textElsByLetter[letter] = [];
         endpoints[letter].forEach(([r, c], epIdx) => {
           const { x, y } = nodeXY(r, c);
-          if (patternMode || (memoryMode && memoryHidden && memoryColorHint)) {
+          const symText = getSymbol(letter, false, epIdx);
+          const eduMode = isEduThemeActive();
+          const neutralEdu = eduMode && !!appData.eduNeutralColor;
+          const badgeStroke = neutralEdu ? '#3949ab' : PATH_COLORS[letter];
+
+          if (eduMode) {
+            const pillW = Math.min(cellGap * 0.96, Math.max(cellGap * 0.62, symText.length * cellGap * 0.16 + 10));
+            const pillH = cellGap * 0.50;
+            letterGroup.appendChild(svgEl('rect', {
+              class: 'edu-pill-rect',
+              x: x - pillW / 2,
+              y: y - pillH / 2,
+              width: pillW,
+              height: pillH,
+              rx: Math.min(10, pillH * 0.38),
+              stroke: badgeStroke
+            }));
+          } else if (patternMode || (memoryMode && memoryHidden && memoryColorHint)) {
             letterGroup.appendChild(svgEl('circle', {
               class: 'letter-badge',
               cx: x, cy: y,
@@ -3886,22 +5149,28 @@
           const doneHalo = svgEl('circle', {
             class: 'done-halo',
             cx: x, cy: y,
-            r: cellGap * 0.35,
+            r: cellGap * (eduMode ? 0.42 : 0.35),
             stroke: PATH_COLORS[letter]
           });
           doneHaloByLetter[letter].push(doneHalo);
           letterGroup.appendChild(doneHalo);
 
           const halo = svgEl('circle', {
-            class: 'hint-halo', cx: x, cy: y, r: cellGap * 0.36, opacity: '0'
+            class: 'hint-halo', cx: x, cy: y, r: cellGap * (eduMode ? 0.43 : 0.36), opacity: '0'
           });
           haloEls.push(halo);
           letterGroup.appendChild(halo);
 
+          let symFontSize = fontSize;
+          if (eduMode && symText !== '?') {
+            const len = symText.length;
+            const factor = len <= 2 ? 0.36 : (len <= 4 ? 0.28 : (len <= 6 ? 0.22 : (len <= 7 ? 0.18 : 0.155)));
+            symFontSize = Math.max(8, Math.round(cellGap * factor));
+          }
           const text = svgEl('text', {
-            class: 'node-letter', x, y, 'font-size': fontSize
+            class: 'node-letter', x, y, 'font-size': symFontSize
           });
-          text.textContent = getSymbol(letter, false, epIdx);
+          text.textContent = symText;
           textElsByLetter[letter].push(text);
           letterGroup.appendChild(text);
         });
@@ -4651,20 +5920,65 @@
           const goldTourActive = (appData.goldTour || 0) > 0;
           const targetSec = goldTargetSec(prevGrade, prevLevel);
 
-          if (goldTourActive && curProg >= req && elapsedSec <= targetSec && hintsUsed === 0) {
+          if (goldTourActive && !isEduThemeActive() && curProg >= req && elapsedSec <= targetSec && hintsUsed === 0) {
             if (!appData.goldCrowns) appData.goldCrowns = {};
             appData.goldCrowns[levelKey(prevGrade, prevLevel)] = appData.goldTour;
           }
 
           if (curProg >= req) {
             // Bu seviyenin hedefi tamamlandı! Otomatik bir üst seviyeye/zorluğa geç!
-            if (prevGrade === 5 && prevLevel === 4) {
+            if (isEduThemeActive()) {
+              const eduStore = getActiveProgressStore();
+              const activeEduTheme = getActiveSymbolTheme();
+              if (prevGrade === 2 && prevLevel === 2) {
+                eduStore.unlockedIdx = EDU_MAX_UNLOCKED_IDX;
+                eduStore.tourProgress = {};
+                gradeIdx = 0;
+                levelIdx = 0;
+                saveCurrentThemePosition();
+                pendingFloor = null;
+                toastIconChar = '🎓';
+                title = `🎉 ${activeEduTheme.name} Tamamlandı!`;
+                levelUpMsg = `Harika! "${activeEduTheme.name}" temasındaki tüm 13 seviyeyi (3×3'ten 6×6'ya) başarıyla bitirdin! Şimdi yeni tur için 1. seviyeden tekrar başlayabilir veya dilediğin seviyeyi seçebilirsin.`;
+                toastNext.textContent = '🔄 Yeni Tura Başla →';
+              } else {
+                let nextGi = prevGrade;
+                let nextLi = prevLevel + 1;
+                let gradeChanged = false;
+                if (nextLi >= 5) {
+                  nextGi = prevGrade + 1;
+                  nextLi = 0;
+                  gradeChanged = true;
+                }
+                const nextGlobal = Math.min(EDU_MAX_UNLOCKED_IDX, nextGi * 5 + nextLi);
+                if (nextGlobal > (eduStore.unlockedIdx || 0)) {
+                  eduStore.unlockedIdx = nextGlobal;
+                }
+                gradeIdx = nextGi;
+                levelIdx = nextLi;
+                saveCurrentThemePosition();
+                pendingFloor = null;
+
+                if (gradeChanged) {
+                  toastIconChar = '🚀';
+                  title = `${activeEduTheme.name} · ${GRADES[nextGi].label}!`;
+                  levelUpMsg = `"${activeEduTheme.name}" temasında ${prevGradeLabel} kademesini bitirdin ve "${GRADES[nextGi].label} · Seviye 1" açıldı!`;
+                  toastNext.textContent = `${GRADES[nextGi].label} Kademesine Başla →`;
+                } else {
+                  toastIconChar = '⬆️';
+                  title = `Seviye ${GRADES[nextGi].levels[nextLi].level} Açıldı!`;
+                  levelUpMsg = `"${activeEduTheme.name}" temasında ${req}/${req} hedefini tamamladın ve Seviye ${GRADES[nextGi].levels[nextLi].level}'e geçtin!`;
+                  toastNext.textContent = `Seviye ${GRADES[nextGi].levels[nextLi].level}'e Geç →`;
+                }
+              }
+            } else if (prevGrade === 5 && prevLevel === 4) {
               // 30. Seviye (Uzman - Seviye 5) bitti! 🌟 Altın Yıldız Turu başlasın!
               appData.goldTour = (appData.goldTour || 0) + 1;
               appData.unlockedIdx = 29;
               appData.tourProgress = {};
               gradeIdx = 0;
               levelIdx = 0;
+              saveCurrentThemePosition();
               pendingFloor = null;
               toastIconChar = '👑';
               title = '🌟 ALTIN YILDIZ TURU AÇILDI!';
@@ -4685,6 +5999,7 @@
               }
               gradeIdx = nextGi;
               levelIdx = nextLi;
+              saveCurrentThemePosition();
               pendingFloor = null;
 
               if (gradeChanged) {
