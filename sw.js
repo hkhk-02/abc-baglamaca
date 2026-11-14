@@ -1,10 +1,11 @@
-﻿const CACHE_NAME = 'abc-baglamaca-v21';
+﻿const CACHE_NAME = 'abc-baglamaca-v23';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './gizlilik-politikasi.html'
 ];
 
 self.addEventListener('install', (event) => {
