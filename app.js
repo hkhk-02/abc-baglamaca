@@ -1991,8 +1991,10 @@
         pad = Math.round(cellGap * 0.32);
         return;
       }
-      const singleCap = vw >= 1100 ? Math.min(490, Math.floor(vh * 0.56)) : (vw >= 768 ? 450 : 420);
-      const maxW = Math.min(vw - 44, singleCap);
+      const singleCap = vw >= 1100
+        ? Math.min(490, Math.floor(vh * 0.56))
+        : (vw >= 768 ? Math.min(450, Math.floor(vh * 0.50)) : Math.max(185, Math.min(420, Math.floor(vh * 0.36))));
+      const maxW = Math.min(vw - 36, singleCap);
       cellGap = Math.floor(maxW / (size - 1 + 0.5));
       if (size >= 10) cellGap = Math.max(24, Math.min(cellGap, 44));
       else if (size >= 9) cellGap = Math.max(26, Math.min(cellGap, 46));

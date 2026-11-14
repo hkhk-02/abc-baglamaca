@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = 'abc-baglamaca-v26';
+﻿const CACHE_NAME = 'abc-baglamaca-v28';
 const ASSETS = [
   './',
   './index.html',

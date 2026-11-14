@@ -2477,3 +2477,27 @@
       transform-origin: center;
       animation: tutPulse 1.35s ease-in-out infinite;
     }
+    @media (max-width: 600px) {
+      body { padding: 0 6px 8px; }
+      .main-grid, .left-col, .right-col { gap: 4px; }
+      .hero { padding: 5px 8px; gap: 3px; margin-bottom: 4px; border-radius: 0 0 14px 14px; }
+      .hero-sub { display: none; }
+      .hero-logo { width: 32px; height: 32px; }
+      .hero-title { font-size: 0.98rem; }
+      .hero-btns .pill, .hero-btns .btn-fs { padding: 3px 7px; font-size: 0.66rem; }
+      .kid-primary-bar { gap: 4px; margin-bottom: 3px; }
+      .kid-primary-bar .pdf-launch { padding: 5px 4px; font-size: 0.7rem; border-radius: 9px; }
+      .stats-card { padding: 2px 5px !important; }
+      .stat-val { font-size: 0.82rem; }
+      .stat-lbl { font-size: 0.56rem; }
+      .pickers-wrap { padding: 4px 5px; gap: 3px; }
+      .chip { padding: 2px 1px; font-size: 0.64rem; }
+      .chip .sub { font-size: 0.5rem; margin-top: 0; }
+      #singleBoardSection { padding: 5px 6px 6px; }
+      .board-frame { padding: 4px; }
+      .status { gap: 3px; margin: 3px 0; font-size: 0.64rem; }
+      .note { font-size: 0.67rem; line-height: 1.18; margin-bottom: 4px; }
+      .actions { gap: 4px; margin-bottom: 2px; }
+      .actions .btn { padding: 6px 2px; font-size: 0.66rem; border-radius: 8px; white-space: nowrap; }
+      .hint-text { font-size: 0.6rem; line-height: 1.2; margin-bottom: 2px; }
+    }
