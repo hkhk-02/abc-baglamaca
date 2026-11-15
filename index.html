@@ -2470,6 +2470,108 @@
       .actions { gap: 4px; margin-bottom: 2px; }
       .actions .btn { padding: 6px 2px; font-size: 0.66rem; border-radius: 8px; white-space: nowrap; }
     }
+
+    /* Üst 3'lü Hızlı Bar (Yapboz, Tema Seç, Kupa) - Zorluk ve Seviyelerin Üstünde */
+    .top-quick-bar {
+      order: 2;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .top-quick-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 7px 6px;
+      border-radius: 10px;
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: #fff;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
+      transition: transform 0.12s, filter 0.15s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .top-quick-btn:active { transform: scale(0.97); }
+    .top-quick-btn.jigsaw-btn {
+      background: linear-gradient(135deg, #ef6c00, #f57c00);
+      border-color: #e65100;
+    }
+    .top-quick-btn.theme-btn {
+      background: linear-gradient(135deg, #5e35b1, #7e57c2);
+      border-color: #4527a0;
+    }
+    .top-quick-btn.cup-btn {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      border-color: #b45309;
+      color: #fff;
+    }
+    .top-quick-btn.cup-btn.tourney-live {
+      background: linear-gradient(135deg, #dc2626, #ef4444);
+      border-color: #991b1b;
+      animation: pulseTourney 1.4s infinite;
+    }
+
+    /* Tekli "Menü" Butonu ve Açılır Mod Paneli */
+    .mode-menu-wrap {
+      order: 5;
+      position: relative;
+      display: flex;
+      gap: 6px;
+      align-items: stretch;
+    }
+    .mode-menu-trigger {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 9px 14px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2e3a92, #3949ab);
+      color: #fff;
+      border: 1.5px solid #1e293b;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(46, 58, 146, 0.22);
+      transition: all 0.15s ease;
+    }
+    .mode-menu-trigger:hover { filter: brightness(1.06); }
+    .mode-menu-trigger .menu-arrow {
+      font-size: 0.72rem;
+      transition: transform 0.2s ease;
+    }
+    .mode-menu-trigger.open .menu-arrow {
+      transform: rotate(180deg);
+    }
+    .mode-menu-dropdown {
+      order: 5;
+      display: none;
+      background: #ffffff;
+      border: 2px solid #c5cae9;
+      border-radius: 14px;
+      padding: 8px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
+    }
+    .mode-menu-dropdown.open {
+      display: block;
+    }
+    .mode-menu-dropdown .mode-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin: 0;
+    }
+    @media (max-width: 600px) {
+      .top-quick-bar { gap: 4px; }
+      .top-quick-btn { padding: 5px 4px; font-size: 0.66rem; border-radius: 8px; gap: 3px; }
+      .mode-menu-trigger { padding: 7px 10px; font-size: 0.75rem; border-radius: 10px; }
+    }
   </style>
 </head>
 <body>
@@ -2512,6 +2614,22 @@
           <span id="goldTourCount">👑 0 / 30 Taç</span>
         </div>
 
+        <!-- Yapboz, Tema Seç ve Kupa (Zorluk ve Seviyelerin Üstünde Yan Yana) -->
+        <div class="top-quick-bar">
+          <button type="button" class="top-quick-btn jigsaw-btn" id="btnJigsaw" title="Resim parçalarını sürükleyip yerleştirerek çocuk yapbozunu tamamla!">
+            <span>🧩</span>
+            <span>Yapboz</span>
+          </button>
+          <button type="button" class="top-quick-btn theme-btn" id="btnOpenThemeModal" title="Klasik veya Eğitici Oyun Teması Seç">
+            <span>🎨</span>
+            <span>Tema Seç</span>
+          </button>
+          <button type="button" class="top-quick-btn cup-btn" id="btnTournament" title="Her gün saat 20:00'de başlayan Büyük Akşam Turnuvası! 5 etabı tamamla, şampiyon ol!">
+            <span>🏆</span>
+            <span id="tourneyBtnLabel">Turnuva (20:00)</span>
+          </button>
+        </div>
+
         <!-- Zorluk & Seviye Seçiciler -->
         <div class="pickers-wrap">
           <div class="picker">
@@ -2524,46 +2642,41 @@
           </div>
         </div>
 
-        <!-- Özel Modlar ve Araçlar (6'lı Simetrik 3x2 Izgara) -->
-        <div class="mode-bar">
-          <button class="mode-btn" id="btnObstacle" title="Tahtaya üzerinden geçilemeyen engel blokları ekler">
-            <span class="m-ic">🧱</span>
-            <span>Engelli Mod</span>
+        <!-- Tekli "Menü" Butonu (Engelli Mod, 60sn Fırtına, Hafıza Modu, Macera Haritası, Bulmaca Tasarla) -->
+        <div class="mode-menu-wrap">
+          <button type="button" class="mode-menu-trigger" id="btnModeMenuToggle" aria-expanded="false">
+            <span>☰</span>
+            <span id="modeMenuBtnText">Menü (Modlar & Araçlar)</span>
+            <span class="menu-arrow">▼</span>
           </button>
-          <button class="mode-btn" id="btnRush" title="60 saniyede en çok bulmacayı çöz! Her çözüm +10 sn kazandırır">
-            <span class="m-ic">⏱️</span>
-            <span>60sn Fırtına</span>
-          </button>
-          <button class="mode-btn" id="btnMemory" title="Semboller 4 saniye sonra gizlenir, hafızanla eşleştir!">
-            <span class="m-ic">🧠</span>
-            <span>Hafıza Modu</span>
-          </button>
-          <button class="mode-btn" id="btnTournament" title="Her gün saat 20:00'de başlayan Büyük Akşam Turnuvası! 5 etabı tamamla, şampiyon ol!">
-            <span class="m-ic">🏆</span>
-            <span id="tourneyBtnLabel">Turnuva (20:00)</span>
-          </button>
-          <button class="mode-btn" id="btnAdventure" title="Haftalık Macera Haritası ve Avatar Ödülleri">
-            <span class="m-ic">🗺️</span>
-            <span>Macera Haritası</span>
-          </button>
-          <button class="mode-btn" id="btnCreator" title="Kendi bulmacanı tasarla, oyna veya arkadaşına gönder!">
-            <span class="m-ic">✏️</span>
-            <span>Bulmaca Tasarla</span>
-          </button>
-        </div>
-        <div class="quick-launch-row" style="display:grid;grid-template-columns:1fr 0.85fr 1.15fr;gap:6px;margin-bottom:8px;">
-          <button type="button" class="pdf-launch" id="btnJigsaw" style="margin:0;background:linear-gradient(135deg,#ef6c00,#f57c00);border-color:#e65100;" title="Resim parçalarını sürükleyip yerleştirerek çocuk yapbozunu tamamla!">
-            <span>🧩</span>
-            <span>Yapboz</span>
-          </button>
-          <button type="button" class="pdf-launch" id="btnPdf" style="margin:0;" title="Normal çalışma kağıdı veya Resmi Turnuva Kitapçığı olarak detaylı PDF çıkar">
+          <button type="button" class="pdf-launch" id="btnPdf" style="margin:0;padding:7px 12px;width:auto;" title="Normal çalışma kağıdı veya Resmi Turnuva Kitapçığı olarak detaylı PDF çıkar">
             <span>📄</span>
             <span>PDF</span>
           </button>
-          <button type="button" class="pdf-launch" id="btnOpenThemeModal" style="margin:0;background:linear-gradient(135deg,#5e35b1,#7e57c2);border-color:#4527a0;" title="Klasik veya Eğitici Oyun Teması Seç">
-            <span>🎨</span>
-            <span>Tema Seç</span>
-          </button>
+        </div>
+        <div class="mode-menu-dropdown" id="modeMenuDropdown">
+          <div class="mode-bar">
+            <button class="mode-btn" id="btnObstacle" title="Tahtaya üzerinden geçilemeyen engel blokları ekler">
+              <span class="m-ic">🧱</span>
+              <span>Engelli Mod</span>
+            </button>
+            <button class="mode-btn" id="btnRush" title="60 saniyede en çok bulmacayı çöz! Her çözüm +10 sn kazandırır">
+              <span class="m-ic">⏱️</span>
+              <span>60sn Fırtına</span>
+            </button>
+            <button class="mode-btn" id="btnMemory" title="Semboller 4 saniye sonra gizlenir, hafızanla eşleştir!">
+              <span class="m-ic">🧠</span>
+              <span>Hafıza Modu</span>
+            </button>
+            <button class="mode-btn" id="btnAdventure" title="Haftalık Macera Haritası ve Avatar Ödülleri">
+              <span class="m-ic">🗺️</span>
+              <span>Macera Haritası</span>
+            </button>
+            <button class="mode-btn" id="btnCreator" title="Kendi bulmacanı tasarla, oyna veya arkadaşına gönder!">
+              <span class="m-ic">✏️</span>
+              <span>Bulmaca Tasarla</span>
+            </button>
+          </div>
         </div>
 
         <details class="card rules">
@@ -10821,6 +10934,17 @@
         }
       }
     } catch (_) {}
+    const btnModeMenuToggle = document.getElementById('btnModeMenuToggle');
+    const modeMenuDropdown = document.getElementById('modeMenuDropdown');
+    if (btnModeMenuToggle && modeMenuDropdown) {
+      btnModeMenuToggle.addEventListener('click', () => {
+        playClick();
+        const isOpen = modeMenuDropdown.classList.toggle('open');
+        btnModeMenuToggle.classList.toggle('open', isOpen);
+        btnModeMenuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+    }
+
     if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
       navigator.serviceWorker.register('./sw.js').catch(() => {});
     }
