@@ -1,9 +1,7 @@
-﻿const CACHE_NAME = 'abc-baglamaca-v30';
+﻿const CACHE_NAME = 'abc-baglamaca-v31';
 const ASSETS = [
   './',
   './index.html',
-  './styles.css',
-  './app.js',
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
