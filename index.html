@@ -283,6 +283,7 @@
       box-shadow: 0 6px 20px rgba(46,58,146,0.07);
     }
     .mode-bar { order: 5; margin-bottom: 0 !important; }
+    .quick-launch-row { order: 5; margin-bottom: 0 !important; }
     .rules { order: 6; margin-bottom: 0 !important; }
 
     /* Zorluk ve Seviye Seçicileri Kompakt Görünüm */
@@ -2434,6 +2435,41 @@
         transform: translate(-50%, 0);
       }
     }
+    @media (max-width: 600px) {
+      body { padding: 0 6px 10px; }
+      .main-stage { gap: 4px; }
+      .hero { padding: 5px 8px; gap: 4px; margin: 0 -6px 4px; border-radius: 0 0 12px 12px; }
+      .hero-brand { gap: 6px; }
+      .hero-brand .kids { font-size: 1.05rem; padding: 3px 5px; border-radius: 8px; }
+      .hero h1 { font-size: 0.92rem; }
+      .hero .sub { display: none; }
+      .icon-btn { width: 24px; height: 24px; font-size: 0.74rem; }
+      .main-fs-toggle-btn, .low-reach-toggle-pill { padding: 3px 7px; font-size: 0.66rem; }
+      .stats-card { padding: 3px 6px !important; }
+      .stat-item { font-size: 0.58rem; }
+      .stat-item span { font-size: 0.76rem; }
+      .gold-tour-banner { padding: 4px 8px; font-size: 0.64rem; }
+      .pickers-wrap { padding: 4px 6px; gap: 3px; }
+      .chip { padding: 2px 1px; font-size: 0.64rem; }
+      .chip .sub { font-size: 0.48rem; margin-top: 0; }
+      #singleBoardSection { padding: 5px 6px 6px; }
+      .board-wrap {
+        max-height: clamp(185px, 34dvh, 260px);
+        overflow-y: auto;
+        overflow-x: hidden;
+        align-items: flex-start;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+        padding: 0 8px;
+        margin-bottom: 4px;
+        scrollbar-width: thin;
+      }
+      .board-frame { padding: 4px; margin: auto 0; }
+      .status { gap: 3px; margin: 3px 0; font-size: 0.64rem; }
+      .note { font-size: 0.66rem; line-height: 1.18; margin-bottom: 4px; }
+      .actions { gap: 4px; margin-bottom: 2px; }
+      .actions .btn { padding: 6px 2px; font-size: 0.66rem; border-radius: 8px; white-space: nowrap; }
+    }
   </style>
 </head>
 <body>
@@ -2515,7 +2551,7 @@
             <span>Bulmaca Tasarla</span>
           </button>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 0.85fr 1.15fr;gap:6px;margin-bottom:8px;">
+        <div class="quick-launch-row" style="display:grid;grid-template-columns:1fr 0.85fr 1.15fr;gap:6px;margin-bottom:8px;">
           <button type="button" class="pdf-launch" id="btnJigsaw" style="margin:0;background:linear-gradient(135deg,#ef6c00,#f57c00);border-color:#e65100;" title="Resim parçalarını sürükleyip yerleştirerek çocuk yapbozunu tamamla!">
             <span>🧩</span>
             <span>Yapboz</span>
@@ -3446,22 +3482,25 @@
 
       try {
         const isSmallScreen = typeof window !== 'undefined' && window.innerWidth <= 768;
-        const defaultPool = isSmallScreen ? 32 : 60;
-        const want = poolSize ? (isSmallScreen ? Math.min(poolSize, 36) : poolSize) : defaultPool;
+        const defaultPool = isSmallScreen ? 16 : 60;
+        const want = poolSize ? (isSmallScreen ? Math.min(poolSize, 20) : poolSize) : defaultPool;
         const iterations = 220 + size * 70;
         const obsCount = (opts.withObstacles && size >= 3 && (size * size - 1 >= pairs * MIN_PATH_CELLS))
           ? (size >= 7 ? 2 : 1)
           : 0;
         const candidates = [];
         let guard = 0;
-        const maxGuard = want * 18;
+        const maxGuard = want * 14;
         const startTs = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
 
         while (candidates.length < want && guard < maxGuard) {
           guard++;
-          if (candidates.length >= 6 && (guard & 7) === 0) {
+          if ((guard & 3) === 0) {
             const nowTs = (typeof performance !== 'undefined' && performance.now) ? performance.now() : Date.now();
-            if (nowTs - startTs > 140) break;
+            const elapsed = nowTs - startTs;
+            if (candidates.length >= 2 && elapsed > (isSmallScreen ? 45 : 90)) break;
+            if (candidates.length >= 1 && elapsed > (isSmallScreen ? 75 : 130)) break;
+            if (elapsed > 220) break;
           }
           const ham = randomHamiltonian(size, iterations);
           const obsCells = obsCount > 0 ? ham.slice(0, obsCount) : [];
@@ -4974,8 +5013,8 @@
         pad = Math.round(cellGap * 0.32);
         return;
       }
-      const singleCap = vw >= 1100 ? Math.min(490, Math.floor(vh * 0.56)) : (vw >= 768 ? 450 : 420);
-      const maxW = Math.min(vw - 44, singleCap);
+      const singleCap = vw >= 1100 ? Math.min(490, Math.floor(vh * 0.56)) : (vw >= 768 ? 450 : Math.max(185, Math.min(380, Math.floor(vh * 0.34))));
+      const maxW = Math.min(vw - (vw < 768 ? 36 : 44), singleCap);
       cellGap = Math.floor(maxW / (size - 1 + 0.5));
       if (size >= 10) cellGap = Math.max(24, Math.min(cellGap, 44));
       else if (size >= 9) cellGap = Math.max(26, Math.min(cellGap, 46));
