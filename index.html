@@ -1407,9 +1407,12 @@
     .hint-halo {
       fill: none;
       stroke: var(--hint);
-      stroke-width: 2;
-      opacity: 0.9;
+      stroke-width: 2.2;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
     }
+    .hint-halo.show { opacity: 0.9; }
     .done-halo {
       fill: none;
       stroke-width: 2.2;
@@ -2448,25 +2451,21 @@
       .stats-card { padding: 3px 6px !important; }
       .stat-item { font-size: 0.58rem; }
       .stat-item span { font-size: 0.76rem; }
-      .gold-tour-banner { padding: 4px 8px; font-size: 0.64rem; }
+      .gold-tour-banner { padding: 3px 8px; font-size: 0.62rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
       .pickers-wrap { padding: 4px 6px; gap: 3px; }
       .chip { padding: 2px 1px; font-size: 0.64rem; }
       .chip .sub { font-size: 0.48rem; margin-top: 0; }
       #singleBoardSection { padding: 5px 6px 6px; }
       .board-wrap {
-        max-height: clamp(185px, 34dvh, 260px);
-        overflow-y: auto;
-        overflow-x: hidden;
-        align-items: flex-start;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
-        padding: 0 8px;
-        margin-bottom: 4px;
-        scrollbar-width: thin;
+        overflow: visible;
+        align-items: center;
+        justify-content: center;
+        padding: 0 4px;
+        margin-bottom: 3px;
       }
-      .board-frame { padding: 4px; margin: auto 0; }
-      .status { gap: 3px; margin: 3px 0; font-size: 0.64rem; }
-      .note { font-size: 0.66rem; line-height: 1.18; margin-bottom: 4px; }
+      .board-frame { padding: 4px; margin: 0 auto; }
+      .status { gap: 3px; margin: 2px 0; font-size: 0.63rem; }
+      .note { font-size: 0.64rem; line-height: 1.15; margin-bottom: 3px; }
       .actions { gap: 4px; margin-bottom: 2px; }
       .actions .btn { padding: 6px 2px; font-size: 0.66rem; border-radius: 8px; white-space: nowrap; }
     }
@@ -2609,11 +2608,6 @@
           <div class="stat-item" id="statBadgeWrap" style="cursor:pointer;" title="Küresel Haftalık Lig Sıralamasını Aç">Haftalık Lig<span id="statBadge">🏆 Altın Lig</span></div>
         </div>
 
-        <div class="gold-tour-banner" id="goldTourBanner">
-          <span id="goldTourTitle">🌟 ALTIN YILDIZ TURU · Hedef Sürede Bitir, Taçları Topla!</span>
-          <span id="goldTourCount">👑 0 / 30 Taç</span>
-        </div>
-
         <!-- Yapboz, Tema Seç ve Kupa (Zorluk ve Seviyelerin Üstünde Yan Yana) -->
         <div class="top-quick-bar">
           <button type="button" class="top-quick-btn jigsaw-btn" id="btnJigsaw" title="Resim parçalarını sürükleyip yerleştirerek çocuk yapbozunu tamamla!">
@@ -2655,6 +2649,10 @@
           </button>
         </div>
         <div class="mode-menu-dropdown" id="modeMenuDropdown">
+          <div class="gold-tour-banner" id="goldTourBanner" style="margin-bottom:6px;">
+            <span id="goldTourTitle">🌟 ALTIN YILDIZ TURU · Sürede & İpucusuz Çöz!</span>
+            <span id="goldTourCount">👑 0 / 30 Taç</span>
+          </div>
           <div class="mode-bar">
             <button class="mode-btn" id="btnObstacle" title="Tahtaya üzerinden geçilemeyen engel blokları ekler">
               <span class="m-ic">🧱</span>
@@ -2699,13 +2697,6 @@
 
       <!-- Sağ / Merkez Oyun Sahnesi (İlk Açılışta Doğrudan Karşıda Görünür!) -->
       <div id="singleBoardSection">
-        <!-- ADIM 1: Sokratik Maskot ve Akıllı Rehber (Bir bulmacada 2 dk geçince aktif olur) -->
-        <div class="mascot-bar" id="mascotBar">
-          <div class="mascot-avatar" id="mascotAvatar" title="Bilge Baykuş İpucu">🦉</div>
-          <div class="mascot-bubble" id="mascotBubble"></div>
-          <button class="mascot-ask-btn" id="btnMascotAsk">💡 İpucu</button>
-          <button class="mascot-ask-btn" id="btnMascotClose" title="Rehberi Gizle" style="background:#546e7a;padding:4px 7px;">✕</button>
-        </div>
 
         <div class="tourney-banner" id="tourneyBanner">
           <span id="tourneyBannerTitle">🏆 20:00 Turnuvası · Etap 1 / 5</span>
@@ -4018,7 +4009,7 @@
       if (tour > 0) {
         banner.classList.add('show');
         const tourName = tour === 1 ? '🌟 ALTIN YILDIZ TURU' : (tour === 2 ? '💎 ELMAS YILDIZ TURU' : `🔥 ${tour}. EFSANE TURU`);
-        if (titleEl) titleEl.textContent = `${tourName} · Hedef Sürede ve İpucusuz Çöz, Taçları Topla!`;
+        if (titleEl) titleEl.textContent = `${tourName} · Sürede & İpucusuz Çöz!`;
         if (countEl) countEl.textContent = `👑 ${countGoldCrowns()} / 30 Taç`;
       } else {
         banner.classList.remove('show');
@@ -5126,10 +5117,14 @@
         pad = Math.round(cellGap * 0.32);
         return;
       }
-      const singleCap = vw >= 1100 ? Math.min(490, Math.floor(vh * 0.56)) : (vw >= 768 ? 450 : Math.max(185, Math.min(380, Math.floor(vh * 0.34))));
+      const singleCap = vw >= 1100
+        ? Math.min(490, Math.floor(vh * 0.56))
+        : (vw >= 768 ? 450 : Math.max(200, Math.min(350, Math.floor(vh * 0.36))));
       const maxW = Math.min(vw - (vw < 768 ? 36 : 44), singleCap);
-      cellGap = Math.floor(maxW / (size - 1 + 0.5));
-      if (size >= 10) cellGap = Math.max(24, Math.min(cellGap, 44));
+      cellGap = Math.floor(maxW / (size - 1 + 0.64));
+      if (vw < 600) {
+        cellGap = Math.max(20, Math.min(cellGap, 66));
+      } else if (size >= 10) cellGap = Math.max(24, Math.min(cellGap, 44));
       else if (size >= 9) cellGap = Math.max(26, Math.min(cellGap, 46));
       else if (size >= 8) cellGap = Math.max(28, Math.min(cellGap, 48));
       else if (size >= 7) cellGap = Math.max(30, Math.min(cellGap, 52));
@@ -5137,6 +5132,14 @@
       else if (size >= 5) cellGap = Math.max(38, Math.min(cellGap, 64));
       else cellGap = Math.max(42, Math.min(cellGap, 72));
       pad = Math.round(cellGap * 0.32);
+    }
+
+    function formatGoldTimerHtml(targetSec) {
+      const elapsedSec = puzzleSolved
+        ? Math.max(1, Math.round(((window._lastSolvedAt || Date.now()) - puzzleStartTime) / 1000))
+        : Math.max(0, Math.floor((Date.now() - puzzleStartTime) / 1000));
+      const over = elapsedSec > targetSec;
+      return `👑 Süre: <strong style="${over ? 'color:#c62828;' : ''}">${elapsedSec}sn / ≤${targetSec}sn</strong>`;
     }
 
     function updateStatus() {
@@ -5163,7 +5166,7 @@
         `<span class="tag solved">Seviye Hedefi: <strong>${curProg}/${req}</strong></span>` +
         mathTag +
         (goldTourActive
-          ? `<span class="tag diff">👑 Hedef Süre: <strong>≤${targetSec}sn</strong></span>`
+          ? `<span class="tag diff" id="goldTimerTag">${formatGoldTimerHtml(targetSec)}</span>`
           : `<span class="tag diff">Zorluk ${bar}</span>`);
 
       const btnStatusMathGrade = document.getElementById('btnStatusMathGrade');
@@ -5182,7 +5185,7 @@
         noteEl.textContent = dailyMode
           ? `📅 Günün Sorusu (#${currentSeedCode}) · 2 kademeli ipucu hakkın var.`
           : (goldTourActive
-              ? `🌟 Altın Yıldız Turu: Bu seviyeyi ≤${targetSec} saniyede ve ipucu kullanmadan ${req} kez çözerek 👑 Altın Taç kazan!`
+              ? `🌟 Altın Taç Hedefi: ≤${targetSec}sn · İpucusuz ${req} çözüm (${curProg}/${req})`
               : `Bu seviyeyi geçmek için ${req} bulmaca çözmelisin (İlerleme: ${curProg}/${req}).`);
       }
     }
@@ -5327,9 +5330,12 @@
             letterGroup.appendChild(svgEl('circle', {
               class: 'letter-badge',
               cx: x, cy: y,
-              r: cellGap * 0.33,
+              r: cellGap * 0.34,
               fill: PATH_COLORS[letter],
-              opacity: (memoryMode && memoryHidden && memoryColorHint) ? '0.28' : '0.22'
+              'fill-opacity': (memoryMode && memoryHidden && memoryColorHint) ? '0.28' : '0.20',
+              stroke: PATH_COLORS[letter],
+              'stroke-width': '2.2',
+              'stroke-opacity': '0.9'
             }));
           }
           const doneHalo = svgEl('circle', {
@@ -5446,7 +5452,10 @@
     }
 
     function updateHalos() {
-      haloEls.forEach(el => el.setAttribute('opacity', hintArmed ? '1' : '0'));
+      haloEls.forEach(el => {
+        el.classList.toggle('show', !!hintArmed);
+        el.setAttribute('opacity', hintArmed ? '0.9' : '0');
+      });
     }
 
     function updateHintUI() {
@@ -8146,22 +8155,10 @@
       return `<strong>Rehber:</strong> Harika gidiyorsun! Bütün noktalar doldu! 🎉`;
     }
 
-    function showMascotMessage(htmlMsg, makeVisible = true) {
-      if (!mascotBubble) return;
-      mascotBubble.innerHTML = htmlMsg;
-      if (mascotBar && makeVisible) {
-        mascotBar.classList.add('show');
-      }
-    }
+    function showMascotMessage() {}
 
     function startTwoMinMascotTimer() {
       clearTimeout(mascotTwoMinTimer);
-      if (mascotBar) mascotBar.classList.remove('show');
-      mascotTwoMinTimer = setTimeout(() => {
-        if (puzzleSolved) return;
-        showMascotMessage(generateSocraticQuestion(), true);
-        playTone(523.25, 0, 0.1, 'sine', 0.05);
-      }, 120000); // Bir bulmacada 2 dakika (120.000 ms) geçerse aktif görünür ve yol gösterir
     }
 
     function onPedagogicalPuzzleStart() {
@@ -10944,6 +10941,15 @@
         btnModeMenuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       });
     }
+
+    setInterval(() => {
+      if ((appData.goldTour || 0) > 0 && !puzzleSolved) {
+        const tagEl = document.getElementById('goldTimerTag');
+        if (tagEl) {
+          tagEl.innerHTML = formatGoldTimerHtml(goldTargetSec(gradeIdx, levelIdx));
+        }
+      }
+    }, 1000);
 
     if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
       navigator.serviceWorker.register('./sw.js').catch(() => {});
