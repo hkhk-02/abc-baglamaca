@@ -48,11 +48,6 @@
     html, body {
       max-width: 100%;
       overflow-x: hidden;
-      -webkit-tap-highlight-color: transparent;
-      overscroll-behavior-y: contain;
-    }
-    button, .chip, .mode-btn, .pdf-launch {
-      -webkit-tap-highlight-color: transparent;
     }
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
@@ -1343,27 +1338,6 @@
       white-space: nowrap;
     }
     .mem-mini-btn:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-1px); }
-    @media (max-width: 600px) {
-      .memory-banner {
-        padding: 6px 8px;
-        gap: 4px;
-        margin-bottom: 6px;
-        scroll-margin-top: 6px;
-      }
-      .memory-top-row {
-        gap: 4px;
-        font-size: 0.7rem;
-        line-height: 1.25;
-      }
-      .memory-actions-row {
-        gap: 4px;
-        width: 100%;
-      }
-      .mem-mini-btn {
-        font-size: 0.63rem;
-        padding: 3px 7px;
-      }
-    }
     .mem-mini-btn:disabled { opacity: 0.45; cursor: not-allowed; }
     .mem-mini-btn.peek {
       background: #fff8e1;
@@ -2460,82 +2434,6 @@
         transform: translate(-50%, 0);
       }
     }
-    .kid-primary-bar {
-      display: grid;
-      grid-template-columns: 1.15fr 1fr 1fr;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-    .extra-tools-drawer {
-      display: none;
-      margin-bottom: 8px;
-    }
-    .extra-tools-drawer.open {
-      display: block;
-    }
-    .extra-tools-pdf-row {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-    .drawer-sec-label {
-      font-size: 0.7rem;
-      font-weight: 800;
-      color: var(--muted-text);
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin: 2px 2px 6px;
-      text-align: left;
-    }
-    @keyframes tutPulse {
-      0%, 100% { transform: scale(0.95); opacity: 0.78; }
-      50%      { transform: scale(1.18); opacity: 0.25; }
-    }
-    .tut-pulse-ring {
-      transform-box: fill-box;
-      transform-origin: center;
-      animation: tutPulse 1.35s ease-in-out infinite;
-    }
-    @media (max-width: 600px) {
-      body { padding: 0 6px 6px; }
-      .main-stage, .control-column { gap: 4px; }
-      .hero { flex-wrap: nowrap; padding: 5px 8px; gap: 6px; margin: 0 -6px 4px; border-radius: 0 0 12px 12px; }
-      .hero-brand { flex: 1 1 auto; min-width: 0; gap: 6px; }
-      .hero-brand .kids { font-size: 1rem; padding: 3px 5px; border-radius: 7px; }
-      .hero h1 { font-size: 0.88rem; letter-spacing: 0.02em; white-space: nowrap; }
-      .hero-title-row { gap: 5px; flex-wrap: nowrap; }
-      .hero-btns { width: auto; flex-shrink: 0; }
-      .hero .sub, #btnMainFullscreen, #btnSymbolTheme, #btnPattern, #btnProfile, .hint-text { display: none; }
-      .icon-btn { width: 25px; height: 25px; font-size: 0.75rem; }
-      #btnInstallPwa { padding: 4px 8px; font-size: 0.68rem; border-radius: 999px; background: #ffca28; color: #1a237e; border: none; font-weight: 900; cursor: pointer; white-space: nowrap; }
-      .kid-primary-bar { gap: 4px; margin-bottom: 3px; }
-      .kid-primary-bar .pdf-launch { padding: 6px 4px; font-size: 0.72rem; border-radius: 9px; }
-      .stats-card { padding: 2px 5px !important; }
-      .stat-item { font-size: 0.58rem; }
-      .stat-item span { font-size: 0.76rem; }
-      .pickers-wrap { padding: 4px 5px; gap: 3px; }
-      .chip { padding: 3px 1px; font-size: 0.64rem; }
-      .chip .sub { font-size: 0.5rem; margin-top: 0; }
-      #singleBoardSection { padding: 5px 6px 6px; box-shadow: 0 2px 8px rgba(46,58,146,0.06); }
-      .board-wrap {
-        max-height: clamp(200px, 38dvh, 290px);
-        overflow-y: auto;
-        overflow-x: hidden;
-        align-items: flex-start;
-        -webkit-overflow-scrolling: touch;
-        touch-action: pan-y;
-        padding: 0 10px;
-        margin-bottom: 4px;
-        scrollbar-width: thin;
-      }
-      .board-frame { padding: 4px; margin: auto 0; box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
-      .status { gap: 3px; margin: 3px 0; font-size: 0.64rem; }
-      .note { font-size: 0.67rem; line-height: 1.18; margin-bottom: 4px; }
-      .actions { gap: 4px; margin-bottom: 2px; }
-      .actions .btn { min-height: 36px; padding: 6px 2px; font-size: 0.68rem; border-radius: 8px; white-space: nowrap; }
-    }
-
   </style>
 </head>
 <body>
@@ -2557,7 +2455,6 @@
         </div>
       </div>
       <div class="hero-btns">
-        <button type="button" class="main-fs-toggle-btn" id="btnInstallPwa" style="background:#ffca28;color:#1a237e;border-color:#ffb300;font-weight:900;" title="Oyunu Telefonuna Uygulama Olarak İndir / Kur">📲 İndir</button>
         <button type="button" class="main-fs-toggle-btn" id="btnMainFullscreen" title="ABC Bağlamaca Ana Sayfasında Tam Ekran Modunu Aç / Kapat">⛶ Tam Ekran</button>
         <button class="low-reach-toggle-pill" id="btnProfile" title="Küresel Haftalık Lig Sıralamasını (Leaderboard) ve Kaşif Profilini Aç">🏆 Zeki Kaşif</button>
       </div>
@@ -2591,80 +2488,64 @@
           </div>
         </div>
 
-        <!-- Çocuk Dostu Ana Eylem Çubuğu -->
-        <div class="kid-primary-bar">
-          <button type="button" class="pdf-launch" id="btnOpenThemeModal" style="margin:0;background:linear-gradient(135deg,#5e35b1,#7e57c2);border-color:#4527a0;" title="Klasik veya Eğitici Oyun Teması Seç">
-            <span>🎨</span>
-            <span>Tema Seç</span>
+        <!-- Özel Modlar ve Araçlar (6'lı Simetrik 3x2 Izgara) -->
+        <div class="mode-bar">
+          <button class="mode-btn" id="btnObstacle" title="Tahtaya üzerinden geçilemeyen engel blokları ekler">
+            <span class="m-ic">🧱</span>
+            <span>Engelli Mod</span>
           </button>
+          <button class="mode-btn" id="btnRush" title="60 saniyede en çok bulmacayı çöz! Her çözüm +10 sn kazandırır">
+            <span class="m-ic">⏱️</span>
+            <span>60sn Fırtına</span>
+          </button>
+          <button class="mode-btn" id="btnMemory" title="Semboller 4 saniye sonra gizlenir, hafızanla eşleştir!">
+            <span class="m-ic">🧠</span>
+            <span>Hafıza Modu</span>
+          </button>
+          <button class="mode-btn" id="btnTournament" title="Her gün saat 20:00'de başlayan Büyük Akşam Turnuvası! 5 etabı tamamla, şampiyon ol!">
+            <span class="m-ic">🏆</span>
+            <span id="tourneyBtnLabel">Turnuva (20:00)</span>
+          </button>
+          <button class="mode-btn" id="btnAdventure" title="Haftalık Macera Haritası ve Avatar Ödülleri">
+            <span class="m-ic">🗺️</span>
+            <span>Macera Haritası</span>
+          </button>
+          <button class="mode-btn" id="btnCreator" title="Kendi bulmacanı tasarla, oyna veya arkadaşına gönder!">
+            <span class="m-ic">✏️</span>
+            <span>Bulmaca Tasarla</span>
+          </button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 0.85fr 1.15fr;gap:6px;margin-bottom:8px;">
           <button type="button" class="pdf-launch" id="btnJigsaw" style="margin:0;background:linear-gradient(135deg,#ef6c00,#f57c00);border-color:#e65100;" title="Resim parçalarını sürükleyip yerleştirerek çocuk yapbozunu tamamla!">
             <span>🧩</span>
             <span>Yapboz</span>
           </button>
-          <button type="button" class="pdf-launch" id="btnToggleExtraTools" style="margin:0;background:linear-gradient(135deg,#455a64,#607d8b);border-color:#37474f;" title="Özel oyun modları, PDF ve öğretmen araçlarını aç/kapat">
-            <span>⚙️</span>
-            <span>Modlar ▾</span>
+          <button type="button" class="pdf-launch" id="btnPdf" style="margin:0;" title="Normal çalışma kağıdı veya Resmi Turnuva Kitapçığı olarak detaylı PDF çıkar">
+            <span>📄</span>
+            <span>PDF</span>
+          </button>
+          <button type="button" class="pdf-launch" id="btnOpenThemeModal" style="margin:0;background:linear-gradient(135deg,#5e35b1,#7e57c2);border-color:#4527a0;" title="Klasik veya Eğitici Oyun Teması Seç">
+            <span>🎨</span>
+            <span>Tema Seç</span>
           </button>
         </div>
 
-        <!-- İleri Modlar, PDF ve Kurallar (Varsayılan Gizli Çekmece) -->
-        <div class="extra-tools-drawer" id="extraToolsDrawer">
-          <div class="drawer-sec-label">🎮 Oyun Modları</div>
-          <div class="mode-bar">
-            <button class="mode-btn" id="btnObstacle" title="Tahtaya üzerinden geçilemeyen engel blokları ekler">
-              <span class="m-ic">🧱</span>
-              <span>Engelli Mod</span>
-            </button>
-            <button class="mode-btn" id="btnRush" title="60 saniyede en çok bulmacayı çöz! Her çözüm +10 sn kazandırır">
-              <span class="m-ic">⏱️</span>
-              <span>60sn Fırtına</span>
-            </button>
-            <button class="mode-btn" id="btnMemory" title="Semboller 4 saniye sonra gizlenir, hafızanla eşleştir!">
-              <span class="m-ic">🧠</span>
-              <span>Hafıza Modu</span>
-            </button>
-            <button class="mode-btn" id="btnTournament" title="Her gün saat 20:00'de başlayan Büyük Akşam Turnuvası! 5 etabı tamamla, şampiyon ol!">
-              <span class="m-ic">🏆</span>
-              <span id="tourneyBtnLabel">Turnuva (20:00)</span>
-            </button>
-            <button class="mode-btn" id="btnAdventure" title="Haftalık Macera Haritası ve Avatar Ödülleri">
-              <span class="m-ic">🗺️</span>
-              <span>Macera Haritası</span>
-            </button>
-            <button class="mode-btn" id="btnCreator" title="Kendi bulmacanı tasarla, oyna veya arkadaşına gönder!">
-              <span class="m-ic">✏️</span>
-              <span>Bulmaca Tasarla</span>
-            </button>
-          </div>
-          <div class="drawer-sec-label" style="margin-top:8px;">👨‍👩‍👧 Veli &amp; Öğretmen Araçları</div>
-          <div class="extra-tools-pdf-row" style="grid-template-columns:1.35fr 1fr;">
-            <button type="button" class="pdf-launch" id="btnPdf" style="margin:0;" title="Normal çalışma kağıdı veya Resmi Turnuva Kitapçığı olarak detaylı PDF çıkar">
-              <span>📄</span>
-              <span>Veli / Öğretmen PDF</span>
-            </button>
-            <button type="button" class="pdf-launch" id="btnPrivacyInfo" style="margin:0;background:linear-gradient(135deg,#00695c,#00897b);border-color:#004d40;" title="Çocuk Güvenliği ve Gizlilik Politikası">
-              <span>🛡️</span>
-              <span>Gizlilik</span>
-            </button>
-          </div>
-
-          <details class="card rules">
-            <summary>Nasıl oynanır?</summary>
-            <p style="margin-top:6px">
-              Temel amaç <strong>tüm noktaları kullanarak</strong> aynı harfleri birbirine bağlamaktır.
-            </p>
-            <ul>
-              <li>Yalnızca <strong>yatay</strong> ve <strong>dikey</strong> çizgiler kullanılır (çapraz yasak).</li>
-              <li>Çizgiler birbirini <strong>kesmemelidir</strong>.</li>
-              <li>Çizgi başka bir <strong>harfin</strong> veya <strong>engelin (⬛)</strong> üzerinden geçemez.</li>
-              <li>Bitişte <strong>tek bir nokta bile açıkta kalmamalıdır</strong>.</li>
-              <li>Harfler aynı düz çizgide bağlanamayacak konumlarda yer alır; tüm noktaları doldurarak doğal <strong>dönüşlerle (virajlarla)</strong> birleştirilir.</li>
-              <li>Kendi yolunun üzerine geri gidersen çizgi <strong>kısalır</strong>.</li>
-              <li>Her seviyede hedef bulmaca sayısını tamamladığında <strong>otomatik olarak bir üst seviyeye ve zorluğa</strong> geçersin!</li>
-              <li>Dokunmatik ekranda harfe <strong>dokunup sürükle</strong> ya da <strong>dokun-dokun</strong> ile ilerle.</li>
-            </ul>
-          </details>
-        </div>
+        <details class="card rules">
+          <summary>Nasıl oynanır?</summary>
+          <p style="margin-top:6px">
+            Temel amaç <strong>tüm noktaları kullanarak</strong> aynı harfleri birbirine bağlamaktır.
+          </p>
+          <ul>
+            <li>Yalnızca <strong>yatay</strong> ve <strong>dikey</strong> çizgiler kullanılır (çapraz yasak).</li>
+            <li>Çizgiler birbirini <strong>kesmemelidir</strong>.</li>
+            <li>Çizgi başka bir <strong>harfin</strong> veya <strong>engelin (⬛)</strong> üzerinden geçemez.</li>
+            <li>Bitişte <strong>tek bir nokta bile açıkta kalmamalıdır</strong>.</li>
+            <li>Harfler aynı düz çizgide bağlanamayacak konumlarda yer alır; tüm noktaları doldurarak doğal <strong>dönüşlerle (virajlarla)</strong> birleştirilir.</li>
+            <li>Kendi yolunun üzerine geri gidersen çizgi <strong>kısalır</strong>.</li>
+            <li>Her seviyede hedef bulmaca sayısını tamamladığında <strong>otomatik olarak bir üst seviyeye ve zorluğa</strong> geçersin!</li>
+            <li>Dokunmatik ekranda harfe <strong>dokunup sürükle</strong> ya da <strong>dokun-dokun</strong> ile ilerle.</li>
+          </ul>
+        </details>
       </div>
 
       <!-- Sağ / Merkez Oyun Sahnesi (İlk Açılışta Doğrudan Karşıda Görünür!) -->
@@ -2791,43 +2672,6 @@
     <div class="modal-actions" style="margin-top:10px;">
       <button type="button" class="btn btn-new" id="btnEduPlay" style="display:none;background:linear-gradient(135deg,#2e7d32,#43a047);color:#fff;">▶ Oyna</button>
       <button type="button" class="btn btn-check" id="themeClose">Kapat</button>
-    </div>
-  </div>
-
-  <!-- 🛡️ Ebeveyn / Öğretmen Kapısı (Parental Gate) -->
-  <div class="modal-overlay" id="parentGateOverlay" style="z-index:220;"></div>
-  <div class="modal" id="parentGateModal" style="max-width:360px;z-index:221;">
-    <h3>🛡️ Ebeveyn / Öğretmen Doğrulaması</h3>
-    <p class="modal-note">
-      Bu bölüm yetişkinler içindir. Devam etmek için lütfen aşağıdaki çarpma işleminin sonucunu yazın:
-    </p>
-    <div class="modal-summary" id="parentGateQuestion" style="font-size:1.15rem;font-weight:900;text-align:center;">7 × 8 = ?</div>
-    <label class="field" style="margin-top:8px;">
-      <span>Cevap</span>
-      <input type="number" id="parentGateInput" inputmode="numeric" placeholder="Sonucu yazın..." style="max-width:160px;">
-    </label>
-    <div id="parentGateError" style="display:none;color:#c62828;font-size:0.75rem;font-weight:800;margin-top:4px;"></div>
-    <div class="modal-actions" style="margin-top:10px;">
-      <button type="button" class="btn btn-check" id="parentGateCancel">İptal</button>
-      <button type="button" class="btn btn-new" id="parentGateConfirm" style="background:linear-gradient(135deg,#2e7d32,#43a047);color:#fff;">Devam Et</button>
-    </div>
-  </div>
-
-  <!-- 🛡️ Çocuk Güvenliği ve Gizlilik Politikası Modalı -->
-  <div class="modal-overlay" id="privacyOverlay" style="z-index:220;"></div>
-  <div class="modal" id="privacyModal" style="max-width:420px;z-index:221;">
-    <h3>🛡️ Çocuk Güvenliği ve Gizlilik Politikası</h3>
-    <p class="modal-note" style="margin-bottom:8px;">
-      <strong>ABC Bağlamaca - MiniBilge</strong>, ilkokul çocukları için güvenli eğitim ortamı sunar:
-    </p>
-    <ul style="font-size:0.78rem;line-height:1.5;padding-left:18px;margin-bottom:10px;color:var(--text-main);">
-      <li><strong>Reklamsız:</strong> Uygulama içinde üçüncü parti reklam veya satın alma yoktur.</li>
-      <li><strong>Cihaz İçi Kayıt:</strong> Oyun ilerlemesi ve puanlar varsayılan olarak yalnızca bu cihazda (<code>localStorage</code>) saklanır.</li>
-      <li><strong>İsteğe Bağlı Bulut Sıralaması:</strong> Çevrimiçi haftalık lig senkronizasyonu varsayılan olarak kapalıdır; yalnızca Ebeveyn Doğrulaması geçildikten sonra açılır.</li>
-      <li><strong>Ebeveyn Kapısı:</strong> PDF çıktısı ve dış paylaşım araçları yetişkin doğrulaması ile korunur.</li>
-    </ul>
-    <div class="modal-actions">
-      <button type="button" class="btn btn-check" id="privacyClose" style="grid-column:1 / -1;">Anladım</button>
     </div>
   </div>
 
@@ -4047,7 +3891,6 @@
       if (isEduThemeActive()) {
         appData.eduTotalSolved = (appData.eduTotalSolved || 0) + 1;
       }
-      appData.tutorialSeen = true;
       streakCount++;
       const streakBonus = Math.min(50, streakCount * 10);
       const gainedPts = (gradeIdx + 1) * 20 + (levelIdx + 1) * 10 + (obstacleMode ? 15 : 0) + (memoryMode ? 20 : 0) + streakBonus;
@@ -4197,50 +4040,6 @@
       return MATH_OP_LABELS[op] || 'Dört İşlem';
     }
 
-    const CONCRETE_EDU_POOLS = {
-      english: {
-        low: [
-          ['Cat', '🐱'], ['Dog', '🐶'], ['Sun', '☀️'], ['Moon', '🌙'],
-          ['Star', '⭐'], ['Apple', '🍎'], ['Banana', '🍌'], ['Car', '🚗'],
-          ['Fish', '🐟'], ['Bird', '🐦'], ['Frog', '🐸'], ['Ball', '⚽'],
-          ['Book', '📖'], ['Tree', '🌳']
-        ],
-        high: [
-          ['Train', '🚂'], ['Plane', '✈️'], ['Doctor', '🩺'], ['Chef', '👨‍🍳'],
-          ['Rainy', '🌧️'], ['Sunny', '☀️'], ['Snowy', '❄️'], ['Happy', '😄'],
-          ['Sad', '😢'], ['Clock', '🕒'], ['Music', '🎵'], ['Flower', '🌸']
-        ]
-      },
-      antonyms: {
-        low: [
-          ['☀️ Gündüz', '🌙 Gece'], ['🔥 Sıcak', '❄️ Soğuk'],
-          ['😄 Mutlu', '😢 Üzgün'], ['🐢 Yavaş', '🐇 Hızlı'],
-          ['🐘 Büyük', '🐜 Küçük'], ['⬆️ Üst', '⬇️ Alt'],
-          ['🌞 Yaz', '⛄ Kış'], ['🍎 Tatlı', '🌶️ Acı']
-        ],
-        high: [
-          ['💡 Aydınlık', '🌑 Karanlık'], ['🕊️ Barış', '⚔️ Savaş'],
-          ['🦁 Cesur', '🐭 Korkak'], ['🌿 Doğal', '🤖 Yapay'],
-          ['➕ Artı', '➖ Eksi'], ['😄 Mutlu', '😢 Üzgün'],
-          ['🐢 Yavaş', '🐇 Hızlı'], ['🔥 Sıcak', '❄️ Soğuk']
-        ]
-      },
-      synonyms: {
-        low: [
-          ['🏠 Ev', '🏠 Konut'], ['🎁 Armağan', '🎁 Hediye'],
-          ['🩺 Hekim', '🩺 Doktor'], ['🏫 Okul', '🏫 Mektep'],
-          ['🎒 Öğrenci', '🎒 Talebe'], ['🏖️ Kıyı', '🏖️ Sahil'],
-          ['🌿 Doğa', '🌿 Tabiat'], ['💭 Düş', '💭 Rüya']
-        ],
-        high: [
-          ['❤️ Kalp', '❤️ Yürek'], ['🍂 Güz', '🍂 Sonbahar'],
-          ['🏙️ Şehir', '🏙️ Kent'], ['🌍 Dünya', '🌍 Cihan'],
-          ['🚩 Bayrak', '🚩 Sancak'], ['🕊️ Barış', '🕊️ Sulh'],
-          ['⚔️ Savaş', '⚔️ Harp'], ['🔍 Kanıt', '🔍 Delil']
-        ]
-      }
-    };
-
     function generateMathEduPairs(count) {
       const mg = getMathGrade();
       const opSel = getMathOp();
@@ -4285,21 +4084,8 @@
         }
 
         if (mg === 1) {
-          // 1. Sınıf: Çok Kolay (gradeIdx===0) kademesinde somut nesne sayma & görsel toplama
-          if (mode === 'add' && gradeIdx === 0) {
-            const icons = ['🍎', '⭐', '🐶', '🎈', '🍓', '🚗'];
-            const ic = icons[Math.floor(Math.random() * icons.length)];
-            if (Math.random() < 0.55) {
-              const n = 1 + Math.floor(Math.random() * 4); // 1..4 nesne
-              res = n;
-              expr = ic.repeat(n);
-            } else {
-              const a = 1 + Math.floor(Math.random() * 2); // 1..2
-              const b = 1 + Math.floor(Math.random() * 2); // 1..2
-              res = a + b;
-              expr = `${ic.repeat(a)}+${ic.repeat(b)}`;
-            }
-          } else if (mode === 'add') {
+          // 1. Sınıf: 20'ye kadar toplama ve çıkarma
+          if (mode === 'add') {
             const a = 1 + Math.floor(Math.random() * 10);
             const maxB = Math.max(1, 20 - a);
             const b = 1 + Math.floor(Math.random() * Math.min(10, maxB));
@@ -4411,15 +4197,9 @@
         return;
       }
 
-      const mg = getMathGrade();
-      const concreteGrp = (gradeIdx === 0 && CONCRETE_EDU_POOLS[theme.id])
-        ? CONCRETE_EDU_POOLS[theme.id][mg <= 2 ? 'low' : 'high']
-        : null;
-      const sourcePool = concreteGrp
-        ? concreteGrp
-        : ((theme.pairsByGrade && theme.pairsByGrade[mg])
-            ? theme.pairsByGrade[mg]
-            : (theme.pairsPool || []));
+      const sourcePool = (theme.pairsByGrade && theme.pairsByGrade[getMathGrade()])
+        ? theme.pairsByGrade[getMathGrade()]
+        : (theme.pairsPool || []);
       const pool = sourcePool.slice();
       for (let i = pool.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -4455,15 +4235,6 @@
     }
 
     const btnOpenThemeModal = document.getElementById('btnOpenThemeModal');
-    const btnToggleExtraTools = document.getElementById('btnToggleExtraTools');
-    const extraToolsDrawer = document.getElementById('extraToolsDrawer');
-    if (btnToggleExtraTools && extraToolsDrawer) {
-      btnToggleExtraTools.addEventListener('click', () => {
-        playClick();
-        const isOpen = extraToolsDrawer.classList.toggle('open');
-        btnToggleExtraTools.innerHTML = isOpen ? '<span>⚙️</span><span>Gizle ▴</span>' : '<span>⚙️</span><span>Modlar ▾</span>';
-      });
-    }
 
     function updateSymbolThemeUI() {
       const theme = getActiveSymbolTheme();
@@ -5203,10 +4974,8 @@
         pad = Math.round(cellGap * 0.32);
         return;
       }
-      const singleCap = vw >= 1100
-        ? Math.min(490, Math.floor(vh * 0.56))
-        : (vw >= 768 ? Math.min(450, Math.floor(vh * 0.50)) : Math.max(200, Math.min(420, Math.floor(vh * 0.40))));
-      const maxW = Math.min(vw - 36, singleCap);
+      const singleCap = vw >= 1100 ? Math.min(490, Math.floor(vh * 0.56)) : (vw >= 768 ? 450 : 420);
+      const maxW = Math.min(vw - 44, singleCap);
       cellGap = Math.floor(maxW / (size - 1 + 0.5));
       if (size >= 10) cellGap = Math.max(24, Math.min(cellGap, 44));
       else if (size >= 9) cellGap = Math.max(26, Math.min(cellGap, 46));
@@ -5442,97 +5211,6 @@
 
       updatePaths();
       updateHalos();
-      maybeStartHandTutorial(strokeW);
-    }
-
-    let _handTutRaf = null;
-    function stopHandTutorial() {
-      if (_handTutRaf) {
-        cancelAnimationFrame(_handTutRaf);
-        _handTutRaf = null;
-      }
-      const old = document.getElementById('tutGuideLayer');
-      if (old && old.parentNode) old.parentNode.removeChild(old);
-    }
-
-    function maybeStartHandTutorial(strokeW) {
-      stopHandTutorial();
-      if (appData.tutorialSeen) return;
-      if (gradeIdx !== 0 || levelIdx !== 0 || solvedCount(0, 0) > 0) return;
-      if (memoryMode || rushMode || dailyMode) return;
-      if (!solution || !Array.isArray(solution['A']) || solution['A'].length < 2) return;
-      if (Object.values(paths || {}).some(p => p && p.length >= 2)) return;
-
-      const ptsArr = solution['A'].map(([r, c]) => nodeXY(r, c));
-      const ptsStr = ptsArr.map(p => `${p.x},${p.y}`).join(' ');
-      const g = svgEl('g', { id: 'tutGuideLayer', style: 'pointer-events:none;' });
-      const guideLine = svgEl('polyline', {
-        points: ptsStr,
-        fill: 'none',
-        stroke: PATH_COLORS['A'] || '#e65100',
-        'stroke-width': Math.max(4, (strokeW || 12) * 0.44),
-        'stroke-dasharray': '7,7',
-        'stroke-linecap': 'round',
-        'stroke-linejoin': 'round',
-        opacity: '0.42'
-      });
-      const startPulse = svgEl('circle', {
-        cx: ptsArr[0].x,
-        cy: ptsArr[0].y,
-        r: Math.max(16, Math.round(cellGap * 0.34)),
-        fill: 'none',
-        stroke: PATH_COLORS['A'] || '#e65100',
-        'stroke-width': 3,
-        class: 'tut-pulse-ring'
-      });
-      const handEl = svgEl('text', {
-        x: ptsArr[0].x,
-        y: ptsArr[0].y + cellGap * 0.12,
-        'font-size': Math.max(18, Math.round(cellGap * 0.34)),
-        'text-anchor': 'middle',
-        'dominant-baseline': 'central'
-      });
-      handEl.textContent = '👆';
-      g.appendChild(guideLine);
-      g.appendChild(startPulse);
-      g.appendChild(handEl);
-      boardSvg.appendChild(g);
-
-      const segs = [];
-      let totalLen = 0;
-      for (let i = 0; i < ptsArr.length - 1; i++) {
-        const dx = ptsArr[i + 1].x - ptsArr[i].x;
-        const dy = ptsArr[i + 1].y - ptsArr[i].y;
-        const d = Math.hypot(dx, dy);
-        segs.push({ from: ptsArr[i], to: ptsArr[i + 1], len: d });
-        totalLen += d;
-      }
-      if (totalLen <= 0) return;
-
-      const tStart = performance.now();
-      const loopMs = 2400;
-      function tick(now) {
-        if (!document.getElementById('tutGuideLayer')) return;
-        const phase = ((now - tStart) % loopMs) / loopMs; // 0..1
-        // 0..0.15 başlangıçta bekle, 0.15..0.85 çizgi boyunca kay, 0.85..1.0 bitişte bekle
-        const prog = phase < 0.15 ? 0 : (phase > 0.85 ? 1 : (phase - 0.15) / 0.70);
-        let dist = prog * totalLen;
-        let cx = ptsArr[0].x, cy = ptsArr[0].y;
-        for (let i = 0; i < segs.length; i++) {
-          if (dist <= segs[i].len || i === segs.length - 1) {
-            const ratio = segs[i].len > 0 ? Math.min(1, Math.max(0, dist / segs[i].len)) : 0;
-            cx = segs[i].from.x + (segs[i].to.x - segs[i].from.x) * ratio;
-            cy = segs[i].from.y + (segs[i].to.y - segs[i].from.y) * ratio;
-            break;
-          }
-          dist -= segs[i].len;
-        }
-        handEl.setAttribute('x', cx.toFixed(1));
-        handEl.setAttribute('y', (cy + cellGap * 0.12).toFixed(1));
-        handEl.setAttribute('opacity', phase > 0.90 ? '0.55' : '0.95');
-        _handTutRaf = requestAnimationFrame(tick);
-      }
-      _handTutRaf = requestAnimationFrame(tick);
     }
 
     function highlightEmptyCells() {
@@ -5589,9 +5267,6 @@
         (doneHaloByLetter[letter] || []).forEach(el => el.classList.toggle('show', done));
       });
       window._eduDoneLetters = curDone;
-      if (Object.values(paths || {}).some(p => p && p.length >= 2)) {
-        stopHandTutorial();
-      }
       updateSymbolTexts();
       updateHead();
       updateStatus();
@@ -6589,15 +6264,7 @@
       memoryMode = !memoryMode;
       btnMemory.classList.toggle('active', memoryMode);
       if (memoryMode) {
-        if (extraToolsDrawer && extraToolsDrawer.classList.contains('open')) {
-          extraToolsDrawer.classList.remove('open');
-          if (btnToggleExtraTools) btnToggleExtraTools.innerHTML = '<span>⚙️</span><span>Modlar ▾</span>';
-        }
         startMemoryCountdown();
-        requestAnimationFrame(() => {
-          const b = document.getElementById('memoryBanner');
-          if (b && window.innerWidth <= 768) b.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
       } else {
         clearInterval(memoryTimer);
         clearTimeout(memoryPeekTimeout);
@@ -8217,7 +7884,7 @@
       }, 40);
     }
 
-    if (btnPdf) btnPdf.addEventListener('click', () => { playClick(); requireParentGate(() => openPdfModal()); });
+    if (btnPdf) btnPdf.addEventListener('click', () => { playClick(); openPdfModal(); });
     pdfCancel.addEventListener('click', () => { playClick(); closePdfModal(); });
     pdfOverlay.addEventListener('click', closePdfModal);
     pdfCreate.addEventListener('click', createPdf);
@@ -10493,12 +10160,6 @@
     }
 
     async function syncPlayerToCloudLeaderboard(renderAfter = false) {
-      if (!appData.parentCloudConsent) {
-        if (cloudSyncStatusNote) {
-          cloudSyncStatusNote.textContent = '🔒 Çocuk güvenliği için bulut sıralaması kapalı (Yalnızca cihaz içi kayıt).';
-        }
-        return;
-      }
       if (location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
         if (cloudSyncStatusNote && renderAfter) {
           cloudSyncStatusNote.textContent = 'ℹ️ Yerel modda bulut senkronizasyonu devre dışı.';
@@ -11063,96 +10724,8 @@
       profileOverlay.classList.remove('show');
       profileModal.classList.remove('show');
     }
-    const parentGateOverlay = document.getElementById('parentGateOverlay');
-    const parentGateModal = document.getElementById('parentGateModal');
-    const parentGateQuestion = document.getElementById('parentGateQuestion');
-    const parentGateInput = document.getElementById('parentGateInput');
-    const parentGateError = document.getElementById('parentGateError');
-    const parentGateCancel = document.getElementById('parentGateCancel');
-    const parentGateConfirm = document.getElementById('parentGateConfirm');
-    let parentGateAnswer = 0;
-    let parentGateCallback = null;
-    let parentGateUnlockedUntil = 0;
-
-    function closeParentGate() {
-      if (parentGateOverlay) parentGateOverlay.classList.remove('show');
-      if (parentGateModal) parentGateModal.classList.remove('show');
-      parentGateCallback = null;
-    }
-
-    function requireParentGate(onSuccess) {
-      if (Date.now() < parentGateUnlockedUntil) {
-        if (typeof onSuccess === 'function') onSuccess();
-        return;
-      }
-      const a = 6 + Math.floor(Math.random() * 4); // 6..9
-      const b = 7 + Math.floor(Math.random() * 3); // 7..9
-      parentGateAnswer = a * b;
-      parentGateCallback = onSuccess;
-      if (parentGateQuestion) parentGateQuestion.textContent = `${a} × ${b} = ?`;
-      if (parentGateInput) parentGateInput.value = '';
-      if (parentGateError) {
-        parentGateError.style.display = 'none';
-        parentGateError.textContent = '';
-      }
-      if (parentGateOverlay) parentGateOverlay.classList.add('show');
-      if (parentGateModal) parentGateModal.classList.add('show');
-      setTimeout(() => { if (parentGateInput) parentGateInput.focus(); }, 60);
-    }
-
-    function submitParentGate() {
-      const val = parseInt((parentGateInput ? parentGateInput.value : '').trim(), 10);
-      if (val === parentGateAnswer) {
-        playClick();
-        parentGateUnlockedUntil = Date.now() + 5 * 60 * 1000;
-        const cb = parentGateCallback;
-        closeParentGate();
-        if (typeof cb === 'function') cb();
-      } else {
-        playError();
-        if (parentGateError) {
-          parentGateError.textContent = 'Yanlış cevap, lütfen tekrar deneyin.';
-          parentGateError.style.display = 'block';
-        }
-      }
-    }
-
-    if (parentGateConfirm) parentGateConfirm.addEventListener('click', submitParentGate);
-    if (parentGateCancel) parentGateCancel.addEventListener('click', () => { playClick(); closeParentGate(); });
-    if (parentGateOverlay) parentGateOverlay.addEventListener('click', closeParentGate);
-    if (parentGateInput) {
-      parentGateInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') { e.preventDefault(); submitParentGate(); }
-      });
-    }
-
-    const btnPrivacyInfo = document.getElementById('btnPrivacyInfo');
-    const privacyOverlay = document.getElementById('privacyOverlay');
-    const privacyModal = document.getElementById('privacyModal');
-    const privacyClose = document.getElementById('privacyClose');
-    function openPrivacyModal() {
-      if (privacyOverlay) privacyOverlay.classList.add('show');
-      if (privacyModal) privacyModal.classList.add('show');
-    }
-    function closePrivacyModal() {
-      if (privacyOverlay) privacyOverlay.classList.remove('show');
-      if (privacyModal) privacyModal.classList.remove('show');
-    }
-    if (btnPrivacyInfo) btnPrivacyInfo.addEventListener('click', () => { playClick(); openPrivacyModal(); });
-    if (privacyClose) privacyClose.addEventListener('click', () => { playClick(); closePrivacyModal(); });
-    if (privacyOverlay) privacyOverlay.addEventListener('click', closePrivacyModal);
-
     if (btnProfile) btnProfile.addEventListener('click', () => { playClick(); openProfileModal(); });
-    if (btnRefreshCloudLb) {
-      btnRefreshCloudLb.addEventListener('click', () => {
-        playClick();
-        requireParentGate(() => {
-          appData.parentCloudConsent = true;
-          saveAppData();
-          syncPlayerToCloudLeaderboard(true);
-        });
-      });
-    }
+    if (btnRefreshCloudLb) btnRefreshCloudLb.addEventListener('click', () => { playClick(); syncPlayerToCloudLeaderboard(true); });
     if (profileClose) profileClose.addEventListener('click', () => { playClick(); closeProfileModal(); });
     if (profileOverlay) profileOverlay.addEventListener('click', closeProfileModal);
     if (profileSave) {
@@ -11209,38 +10782,10 @@
         }
       }
     } catch (_) {}
-    let _deferredPwaPrompt = null;
-    const btnInstallPwa = document.getElementById('btnInstallPwa');
-    if (btnInstallPwa) {
-      const isStandalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
-      if (isStandalone) btnInstallPwa.style.display = 'none';
-      window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        _deferredPwaPrompt = e;
-        btnInstallPwa.style.display = '';
-      });
-      window.addEventListener('appinstalled', () => {
-        _deferredPwaPrompt = null;
-        btnInstallPwa.style.display = 'none';
-      });
-      btnInstallPwa.addEventListener('click', async () => {
-        playClick();
-        if (_deferredPwaPrompt) {
-          _deferredPwaPrompt.prompt();
-          try { await _deferredPwaPrompt.userChoice; } catch (_) {}
-          _deferredPwaPrompt = null;
-        } else {
-          alert('📲 Telefona İndirmek İçin:\n\n• Android (Chrome): Sağ üstteki ⋮ menüsünden "Uygulamayı yükle" veya "Ana ekrana ekle" seçeneğine dokunun.\n• iPhone/iPad (Safari): Alt ortadaki Paylaş butonundan "Ana Ekrana Ekle" seçeneğine dokunun.');
-        }
-      });
-    }
     if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
-      navigator.serviceWorker.register('./sw.js').then((reg) => {
-        try { reg.update(); } catch (_) {}
-      }).catch(() => {});
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
     }
   })();
-
   </script>
 </body>
 </html>
