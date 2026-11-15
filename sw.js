@@ -1,11 +1,10 @@
-﻿const CACHE_NAME = 'abc-baglamaca-v31';
+const CACHE_NAME = 'abc-baglamaca-v13';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icon-192.png',
-  './icon-512.png',
-  './gizlilik-politikasi.html'
+  './icon-512.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -25,25 +24,18 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  const req = event.request;
-  if (req.method !== 'GET') return;
-  let url;
-  try {
-    url = new URL(req.url);
-  } catch (_) {
-    return;
-  }
-  if (url.origin !== self.location.origin) return;
-
   event.respondWith(
-    fetch(req)
+    fetch(event.request)
       .then((res) => {
-        if (res && res.ok) {
-          const copy = res.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(req, copy)).catch(() => {});
-        }
+        const copy = res.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
         return res;
       })
-      .catch(() => caches.match(req))
+      .catch(() => caches.match(event.request))
   );
 });
+
+
+
+
+
