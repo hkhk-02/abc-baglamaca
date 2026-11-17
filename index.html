@@ -8063,7 +8063,7 @@
       if (tourneyModal && tourneyModal.classList.contains('show')) renderTourneyModal();
     }
 
-    // Sıralama tablosu: gerçek bulut oyuncuları + (azsa) açıkça etiketli antrenman botları
+    // Sıralama tablosu: yalnızca gerçek oyuncular (bot hesap yok)
     function buildTourneyBoard(tState) {
       const myId = (typeof getCurrentPlayerCloudId === 'function') ? getCurrentPlayerCloudId() : 'me';
       const prof = (appData.profiles && appData.profiles[appData.activeProfileIdx || 0]) || { icon: '🦊', name: 'Oyuncu' };
@@ -8078,20 +8078,10 @@
         };
         if (mine) Object.assign(mine, local); else list.push(local);
       }
-      const realCount = list.filter(e => !e.bot).length;
-      if (realCount < 3) {
-        let seed = 0;
-        for (let i = 0; i < tState.date.length; i++) seed = (seed * 31 + tState.date.charCodeAt(i)) % 100000;
-        ['Çevik', 'Bilge', 'Atom'].forEach((nm, i) => {
-          list.push({
-            id: 'bot' + i, name: `🤖 ${nm} Bot`, icon: '', bot: true, isMe: false, done: true, stages: 5,
-            score: 900 + ((seed + i * 137) % 400), sec: 170 + ((seed + i * 89) % 130)
-          });
-        });
-      }
+      const realCount = list.length;
       list.sort((a, b) => (b.score - a.score) || (a.sec - b.sec));
       const myRank = list.findIndex(e => e.isMe) + 1;
-      return { list, online, realCount, myRank, realRank: list.filter(e => !e.bot).findIndex(e => e.isMe) + 1 };
+      return { list, online, realCount, myRank, realRank: myRank };
     }
 
     function renderTourneyStatusNote() {
@@ -8178,15 +8168,18 @@
         const statusLine = board.online
           ? `🟢 Canlı bulut sıralaması · ${board.realCount} gerçek oyuncu${board.realRank ? ` · Senin sıran: ${board.realRank}.` : ''}`
           : (tourneyCloud.status === 'loading' ? '🔄 Bulut sıralaması yükleniyor...' : '🌐 Çevrimdışı: yalnızca senin sonucun gösteriliyor.');
+        const rowsHtml = board.list.length > 0
+          ? board.list.map((r, i) => `<div style="display:flex;justify-content:space-between;padding:4px 6px;border-radius:6px;margin-bottom:3px;background:${r.isMe ? '#fef3c7' : 'rgba(255,255,255,0.85)'};color:#263238;border:${r.isMe ? '1.5px solid #f59e0b' : '1px solid rgba(0,0,0,0.05)'};font-weight:${r.isMe ? '900' : '700'};">
+            <span>${i + 1}. ${escapeHtmlTourney(r.icon)} ${escapeHtmlTourney(r.name)}${!r.done ? ` <small>(${r.stages}/5)</small>` : ''}</span>
+            <span>${r.score}p · ${r.sec}sn</span>
+          </div>`).join('')
+          : `<div style="padding:8px 6px;text-align:center;opacity:0.8;font-size:0.74rem;">🏁 Bugünkü turnuvada henüz skor kaydeden gerçek oyuncu yok. İlk etabı çözerek liderliği al!</div>`;
         tourneyLeaderboardBox.innerHTML = `<div style="font-weight:900;margin-bottom:6px;display:flex;justify-content:space-between;">
             <span>🏅 Günün Sıralaması (${tState.date})</span>
             <span>Puan / Süre</span>
           </div>` +
-          board.list.map((r, i) => `<div style="display:flex;justify-content:space-between;padding:4px 6px;border-radius:6px;margin-bottom:3px;background:${r.isMe ? '#fef3c7' : (r.bot ? 'rgba(236,239,241,0.85)' : 'rgba(255,255,255,0.85)')};color:#263238;border:${r.isMe ? '1.5px solid #f59e0b' : '1px solid rgba(0,0,0,0.05)'};font-weight:${r.isMe ? '900' : '700'};${r.bot ? 'font-style:italic;opacity:0.8;' : ''}">
-            <span>${i + 1}. ${escapeHtmlTourney(r.icon)} ${escapeHtmlTourney(r.name)}${!r.done && !r.bot ? ` <small>(${r.stages}/5)</small>` : ''}</span>
-            <span>${r.score}p · ${r.sec}sn</span>
-          </div>`).join('') +
-          `<div style="font-size:0.66rem;opacity:0.75;margin-top:4px;">${statusLine}${board.realCount < 3 ? ' · 🤖 Botlar yalnızca antrenman referansıdır.' : ''}</div>`;
+          rowsHtml +
+          `<div style="font-size:0.66rem;opacity:0.75;margin-top:4px;">${statusLine}</div>`;
       }
 
       if (tourneyCardBtn) tourneyCardBtn.style.display = tState.completed ? 'block' : 'none';
@@ -11606,30 +11599,7 @@
         isRealFriend: true
       });
 
-      // 3. Toplam 55 kişilik 4 lig basamağını tamamlamak için kalan boşlukları sistem kaşifleriyle doldur
-      const wkSeedStr = appData.leagueWeek || '2026-W45';
-      let hash = 2166136261;
-      for (let i = 0; i < wkSeedStr.length; i++) {
-        hash ^= wkSeedStr.charCodeAt(i);
-        hash = Math.imul(hash, 16777619);
-      }
-      const rng = mulberry32(hash >>> 0);
-      const flags = ['🇹🇷', '🇯🇵', '🇩🇪', '🇰🇷', '🇬🇧', '🇫🇷', '🇨🇦', '🇧🇷', '🇳🇱', '🇪🇸', '🇮🇹', '🇦🇿'];
-      const neededBots = Math.max(10, 56 - peers.length);
-      for (let i = 0; i < neededBots; i++) {
-        const adj = COOL_NICK_ADJECTIVES[Math.floor(rng() * COOL_NICK_ADJECTIVES.length)];
-        const noun = COOL_NICK_NOUNS[Math.floor(rng() * COOL_NICK_NOUNS.length)];
-        const num = 10 + Math.floor(rng() * 89);
-        const flag = flags[Math.floor(rng() * flags.length)];
-        const baseScore = Math.round(45 + Math.pow(rng(), 1.65) * 1280);
-        peers.push({
-          name: `${flag} ${adj} ${noun} #${num}`,
-          score: baseScore,
-          isMe: false,
-          isRealFriend: false
-        });
-      }
-
+      // 3. Yalnızca gerçek oyuncular listelenir (bot hesap eklenmez)
       peers.sort((a, b) => b.score - a.score || (a.isMe ? -1 : 1));
       peers.forEach((p, idx) => { p.rank = idx + 1; });
       return peers;
@@ -11910,16 +11880,21 @@
 
       if (leagueGentleBannerEl) {
         let gentleMsg = '';
-        if (me.rank <= 10) {
+        if (entries.length <= 1) {
+          gentleMsg = `🌟 Haftalık sıralamada şu an yalnızca gerçek oyuncular yer alıyor (<strong>#${me.rank}. sıra</strong>). Bulmaca çözdükçe puanın yükselir; oyunu arkadaşlarınla paylaştıkça canlı sıralama büyür!`;
+        } else if (me.rank <= 10) {
           gentleMsg = `🌟 Harikasın! Haftalık sıralamada <strong>#${me.rank}.</strong> sıradaki <strong>🏆 Altın Lig (Elit Çözücüler)</strong> zirvesindesin!`;
         } else if (me.rank <= 25) {
-          const needPts = Math.max(10, entries[9].score - me.score + 5);
+          const target9 = entries[9];
+          const needPts = target9 ? Math.max(10, target9.score - me.score + 5) : 10;
           gentleMsg = `🥈 <strong>Gümüş Lig (#${me.rank}. Sıra):</strong> Çok iyi gidiyorsun! Altın Lig zirvesine yükselmek için sadece <strong>+${needPts} puan</strong> kaldı!`;
         } else if (me.rank <= 50) {
-          const needPts = Math.max(10, entries[24].score - me.score + 5);
+          const target24 = entries[24];
+          const needPts = target24 ? Math.max(10, target24.score - me.score + 5) : 10;
           gentleMsg = `🥉 <strong>Bronz Lig (#${me.rank}. Sıra):</strong> Beyin kasların güçleniyor! Gümüş Lig'e adım atmak için <strong>+${needPts} puan</strong> yeterli!`;
         } else {
-          const needPts = Math.max(10, entries[49].score - me.score + 5);
+          const target49 = entries[49];
+          const needPts = target49 ? Math.max(10, target49.score - me.score + 5) : 10;
           gentleMsg = `🛡️ <strong>Bakır / Çırak Lig (#${me.rank}. Sıra):</strong> Hadi bu hafta üst lige tırmanmak için harika bir şans! Bronz Lig için <strong>+${needPts} puan</strong> topla!`;
         }
         if (appData.lastWeekLeagueNote) {
