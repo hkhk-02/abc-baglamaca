@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = 'abc-baglamaca-v38';
+﻿const CACHE_NAME = 'abc-baglamaca-v45';
 const APP_SHELL = [
   './',
   './index.html',
@@ -40,7 +40,7 @@ self.addEventListener('fetch', event => {
           }
           return res;
         })
-        .catch(() => cached || caches.match('./index.html'));
+        .catch(() => cached || (req.mode === 'navigate' ? caches.match('./index.html') : Response.error()));
 
       return cached || networkFetch;
     })

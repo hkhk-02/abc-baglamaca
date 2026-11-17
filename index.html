@@ -601,15 +601,15 @@
       top: 0 !important;
       left: 0 !important;
       transform: scale(0.97) !important;
-      width: 100vw !important;
-      max-width: 100vw !important;
+      width: 100% !important;
+      max-width: 100% !important;
       height: 100vh !important;
       height: 100dvh !important;
       max-height: 100dvh !important;
       border-radius: 0 !important;
       border: none !important;
       padding: clamp(5px, 1vmin, 14px) clamp(8px, 1.8vw, 24px);
-      display: flex;
+      display: none;
       flex-direction: column;
       justify-content: space-between;
       overflow-y: auto;
@@ -618,6 +618,7 @@
       z-index: 250;
     }
     #jigsawModal.jigsaw-fullscreen.show {
+      display: flex !important;
       transform: scale(1) !important;
     }
     .jigsaw-top-header {
@@ -1799,13 +1800,14 @@
     .modal {
       position: fixed; top: 50%; left: 50%;
       transform: translate(-50%, -50%) scale(0.94);
-      width: min(92vw, 380px); max-height: 88vh; overflow-y: auto;
+      width: min(92vw, 380px); max-width: calc(100vw - 16px); max-height: 88vh; overflow-y: auto;
       background: var(--card-bg); border: 3px solid var(--teal);
       border-radius: 16px; padding: 18px; z-index: 201; color: var(--text-main);
-      opacity: 0; pointer-events: none;
+      opacity: 0; visibility: hidden; pointer-events: none;
+      box-sizing: border-box;
       transition: all 0.22s cubic-bezier(0.34, 1.4, 0.64, 1);
     }
-    .modal.show { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+    .modal.show { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
     .modal h3 { font-size: 1.05rem; color: var(--teal); margin-bottom: 6px; }
     .modal-note { font-size: 0.76rem; color: var(--muted-text); line-height: 1.45; margin-bottom: 12px; }
     .field {
@@ -2429,8 +2431,9 @@
         top: 8px;
         bottom: auto;
         left: 50%;
-        width: min(95vw, 420px);
-        max-height: 46vh;
+        width: min(94vw, 400px);
+        max-width: calc(100vw - 16px);
+        max-height: 82dvh;
         transform: translate(-50%, -14px);
         box-shadow: 0 8px 24px rgba(15, 23, 42, 0.22);
       }
@@ -2439,35 +2442,48 @@
       }
     }
     @media (max-width: 600px) {
-      body { padding: 0 6px 10px; }
-      .main-stage { gap: 4px; }
-      .hero { padding: 5px 8px; gap: 4px; margin: 0 -6px 4px; border-radius: 0 0 12px 12px; }
-      .hero-brand { gap: 6px; }
-      .hero-brand .kids { font-size: 1.05rem; padding: 3px 5px; border-radius: 8px; }
-      .hero h1 { font-size: 0.92rem; }
+      body { padding: 0 6px 6px; }
+      .main-stage { gap: 3px; }
+      .hero { padding: 4px 8px; gap: 4px; margin: 0 -6px 3px; border-radius: 0 0 12px 12px; }
+      .hero-brand { gap: 5px; }
+      .hero-brand .kids { font-size: 0.96rem; padding: 2px 4px; border-radius: 8px; }
+      .hero h1 { font-size: 0.82rem; white-space: nowrap; }
       .hero .sub { display: none; }
-      .icon-btn { width: 24px; height: 24px; font-size: 0.74rem; }
-      .main-fs-toggle-btn, .low-reach-toggle-pill { padding: 3px 7px; font-size: 0.66rem; }
-      .stats-card { padding: 3px 6px !important; }
-      .stat-item { font-size: 0.58rem; }
-      .stat-item span { font-size: 0.76rem; }
+      .hero-mini-icons { gap: 3px; }
+      .icon-btn { width: 22px; height: 22px; font-size: 0.68rem; }
+      .main-fs-toggle-btn, .low-reach-toggle-pill { padding: 3px 6px; font-size: 0.64rem; }
+      .stats-card { padding: 2px 6px !important; }
+      .stat-item { font-size: 0.56rem; }
+      .stat-item span { font-size: 0.74rem; }
       .gold-tour-banner { padding: 3px 8px; font-size: 0.62rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-      .pickers-wrap { padding: 4px 6px; gap: 3px; }
-      .chip { padding: 2px 1px; font-size: 0.64rem; }
-      .chip .sub { font-size: 0.48rem; margin-top: 0; }
-      #singleBoardSection { padding: 5px 6px 6px; }
+      .pickers-wrap { padding: 3px 5px; gap: 2px; }
+      .picker-label { display: none; }
+      .chip { padding: 2px 1px; font-size: 0.62rem; }
+      .chip .sub { font-size: 0.46rem; margin-top: 0; }
+      #singleBoardSection { padding: 4px 6px 5px; }
+      .rush-banner { padding: 4px 8px; margin-bottom: 4px; font-size: 0.68rem; }
+      .memory-banner { padding: 4px 8px; margin-bottom: 4px; gap: 3px; }
+      .memory-top-row { font-size: 0.66rem; gap: 4px; }
+      .mem-mini-btn { padding: 2px 6px; font-size: 0.58rem; }
+      .memory-progress-track { height: 5px; }
       .board-wrap {
         overflow: visible;
         align-items: center;
         justify-content: center;
         padding: 0 4px;
-        margin-bottom: 3px;
+        margin-bottom: 2px;
       }
       .board-frame { padding: 4px; margin: 0 auto; }
-      .status { gap: 3px; margin: 2px 0; font-size: 0.63rem; }
-      .note { font-size: 0.64rem; line-height: 1.15; margin-bottom: 3px; }
-      .actions { gap: 4px; margin-bottom: 2px; }
-      .actions .btn { padding: 6px 2px; font-size: 0.66rem; border-radius: 8px; white-space: nowrap; }
+      .status { gap: 3px; margin: 2px 0; font-size: 0.62rem; }
+      .note { font-size: 0.62rem; line-height: 1.12; margin-bottom: 3px; }
+      .actions { gap: 4px; margin-bottom: 1px; }
+      .actions .btn { padding: 5px 2px; font-size: 0.65rem; border-radius: 8px; white-space: nowrap; }
+      .modal:not(.jigsaw-fullscreen) {
+        width: calc(100vw - 16px) !important;
+        max-width: calc(100vw - 16px) !important;
+        padding: 12px !important;
+        max-height: 86dvh !important;
+      }
     }
 
     /* Üst 3'lü Hızlı Bar (Yapboz, Tema Seç, Kupa) - Zorluk ve Seviyelerin Üstünde */
@@ -2548,14 +2564,20 @@
     .mode-menu-trigger.open .menu-arrow {
       transform: rotate(180deg);
     }
+    .mode-menu-trigger.has-active-mode {
+      background: linear-gradient(135deg, #1b5e20, #2e7d32);
+      border-color: #a5d6a7;
+      box-shadow: 0 3px 12px rgba(46, 125, 50, 0.35);
+    }
     .mode-menu-dropdown {
       order: 5;
       display: none;
-      background: #ffffff;
-      border: 2px solid #c5cae9;
+      background: var(--card-bg);
+      border: 2px solid var(--border-color);
+      color: var(--text-main);
       border-radius: 14px;
       padding: 8px;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.22);
     }
     .mode-menu-dropdown.open {
       display: block;
@@ -2566,10 +2588,125 @@
       gap: 6px;
       margin: 0;
     }
+    .mode-menu-dropdown .mode-bar .mode-btn:last-child {
+      grid-column: span 2;
+    }
     @media (max-width: 600px) {
       .top-quick-bar { gap: 4px; }
-      .top-quick-btn { padding: 5px 4px; font-size: 0.66rem; border-radius: 8px; gap: 3px; }
-      .mode-menu-trigger { padding: 7px 10px; font-size: 0.75rem; border-radius: 10px; }
+      .top-quick-btn { padding: 4px 4px; font-size: 0.65rem; border-radius: 8px; gap: 3px; }
+      .mode-menu-trigger { padding: 6px 10px; font-size: 0.72rem; border-radius: 10px; }
+    }
+
+    /* 🎵 Fon Müziği Seçim Paneli (Üst Bar Altında Kompakt Açılır Kutu) */
+    .music-popover {
+      position: fixed;
+      top: 64px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-8px);
+      width: min(94vw, 352px);
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 2px solid var(--blue);
+      border-radius: 14px;
+      padding: 10px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.26);
+      z-index: 320;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: all 0.16s ease;
+    }
+    .music-popover.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .music-pop-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .music-pop-title {
+      font-size: 0.78rem;
+      font-weight: 900;
+      color: var(--accent-text);
+    }
+    .music-toggle-pill {
+      border: 1.5px solid var(--blue);
+      background: var(--blue);
+      color: #fff;
+      border-radius: 99px;
+      padding: 3px 10px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .music-toggle-pill.off {
+      background: transparent;
+      color: var(--muted-text);
+      border-color: var(--border-color);
+    }
+    .music-track-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+    .music-track-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-color);
+      background: var(--page);
+      color: var(--text-main);
+      cursor: pointer;
+      text-align: left;
+      transition: 0.12s;
+    }
+    .music-track-btn:hover { border-color: var(--blue-soft); }
+    .music-track-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(46, 58, 146, 0.25);
+    }
+    .music-track-btn .mt-tag {
+      font-size: 0.6rem;
+      font-weight: 800;
+      opacity: 0.85;
+    }
+    .music-track-btn .mt-name {
+      font-size: 0.71rem;
+      font-weight: 900;
+      line-height: 1.15;
+    }
+    .music-auto-btn {
+      margin-top: 6px;
+      width: 100%;
+      padding: 5px 8px;
+      border-radius: 9px;
+      border: 1.5px solid var(--border-color);
+      background: transparent;
+      color: var(--accent-text);
+      font-size: 0.68rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .music-auto-btn.active {
+      background: rgba(46, 125, 50, 0.14);
+      border-color: #2e7d32;
+      color: #2e7d32;
+    }
+    body.dark-theme .music-auto-btn.active {
+      color: #81c784;
+      border-color: #66bb6a;
     }
   </style>
 </head>
@@ -2582,7 +2719,8 @@
           <div class="hero-title-row">
             <h1>ABC BAĞLAMACA</h1>
             <div class="hero-mini-icons">
-              <button class="icon-btn" id="btnSound" title="Sesi Aç/Kapat">🔊</button>
+              <button class="icon-btn" id="btnSound" title="Efekt Seslerini Aç/Kapat">🔊</button>
+              <button class="icon-btn" id="btnMusic" title="Seviye Fon Müziğini Aç/Kapat">🎵</button>
               <button class="icon-btn" id="btnTheme" title="Gece / Gündüz Renk Teması">🌙</button>
               <button class="icon-btn" id="btnPattern" title="Renk Körlüğü / Çizgi Deseni Modu">🎨</button>
               <button class="icon-btn" id="btnSymbolTheme" title="Sembol Temasını Değiştir (Harf / Hayvan / Meyve / Uzay / Sayı)">🔤</button>
@@ -2596,6 +2734,26 @@
         <button class="low-reach-toggle-pill" id="btnProfile" title="Küresel Haftalık Lig Sıralamasını (Leaderboard) ve Kaşif Profilini Aç">🏆 Zeki Kaşif</button>
       </div>
     </header>
+
+    <!-- 🎵 Fon Müziği & Ses Ayarları Paneli -->
+    <div class="music-popover" id="musicPopover" role="dialog" aria-label="Fon Müziği ve Ses Ayarları">
+      <div class="music-pop-head">
+        <span class="music-pop-title" id="musicPopTitle">🎵 Fon Müziği</span>
+        <button type="button" class="music-toggle-pill" id="btnMusicOnOff">🎵 Müzik Açık</button>
+      </div>
+      <div id="musicNowPlaying" style="font-size:0.7rem;color:var(--muted-text);margin-bottom:7px;font-weight:700;line-height:1.3;"></div>
+      <div style="display:grid;gap:5px;margin-bottom:8px;font-size:0.68rem;font-weight:800;">
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+          <span>🎵 Müzik Seviyesi</span>
+          <input type="range" id="bgmVolumeRange" min="0" max="100" value="100" style="width:120px;accent-color:var(--blue);">
+        </label>
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+          <span>🔊 Efekt Seviyesi</span>
+          <input type="range" id="sfxVolumeRange" min="0" max="100" value="100" style="width:120px;accent-color:var(--teal);">
+        </label>
+      </div>
+      <button type="button" class="music-auto-btn" id="btnOpenMusicCredits">📜 Müzik Künyesi & Lisanslar</button>
+    </div>
 
     <div class="main-stage">
       <!-- Sol Kontrol Sütunu (Masaüstünde Solda, Mobilde Akıllı Sıralı) -->
@@ -2697,6 +2855,12 @@
 
       <!-- Sağ / Merkez Oyun Sahnesi (İlk Açılışta Doğrudan Karşıda Görünür!) -->
       <div id="singleBoardSection">
+        <div class="mascot-bar" id="mascotBar">
+          <div class="mascot-avatar" id="mascotAvatar" title="Bilge Baykuş İpucu">🦉</div>
+          <div class="mascot-bubble" id="mascotBubble"></div>
+          <button type="button" class="mascot-ask-btn" id="btnMascotAsk">💡 İpucu</button>
+          <button type="button" class="mascot-ask-btn" id="btnMascotClose" title="Gizle" style="background:#546e7a;padding:4px 7px;">✕</button>
+        </div>
 
         <div class="tourney-banner" id="tourneyBanner">
           <span id="tourneyBannerTitle">🏆 20:00 Turnuvası · Etap 1 / 5</span>
@@ -3030,8 +3194,9 @@
     <div class="report-kpi-grid" id="parentKpiGrid"></div>
     <div id="parentGradeBars" style="margin-bottom:10px;"></div>
     <div class="modal-summary" id="parentPedagogicalNote" style="text-align:left;font-weight:600;line-height:1.4;"></div>
-    <div class="modal-actions">
-      <button class="btn btn-check" id="parentClose" style="grid-column: 1 / -1;">Raporu Kapat</button>
+    <div class="modal-actions" style="grid-template-columns:1fr 1fr;">
+      <button type="button" class="btn btn-pdf" id="parentPrintBtn">🖨️ Yazdır / PDF</button>
+      <button type="button" class="btn btn-check" id="parentClose">Raporu Kapat</button>
     </div>
   </div>
 
@@ -3072,6 +3237,10 @@
       <input type="text" id="profileNameInput" maxlength="20" placeholder="Örn: Zeki Kaşif #42"
         style="flex:1;max-width:210px;padding:7px 10px;border:2px solid #9fa8da;border-radius:8px;font-size:0.85rem;font-weight:800;">
     </label>
+    <div style="display:flex;justify-content:space-between;gap:6px;margin:2px 0 6px;">
+      <button type="button" class="pal-btn" id="btnOpenParentReport" style="font-size:0.7rem;padding:4px 10px;">👨‍🏫 Gelişim Raporu</button>
+      <button type="button" class="pal-btn" id="btnProfileMusicCredits" style="font-size:0.7rem;padding:4px 10px;">📜 Müzik Künyesi</button>
+    </div>
     <details style="margin:6px 0 4px;font-size:0.74rem;">
       <summary style="cursor:pointer;font-weight:800;color:var(--accent-text);">👥 Kardeş / Sınıf Arkadaşı Profili Değiştir (4 Yuva)</summary>
       <div id="profileSlotsList" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;"></div>
@@ -3088,6 +3257,19 @@
       <h3>🌟 ABC Bağlamaca'ya Hoş Geldin!</h3>
       <p>Aynı harfleri birbirine bağla, tahtadaki bütün noktaları eksiksiz doldur. Tablet, telefon ve bilgisayarda rahatça oynayabilirsin!</p>
       <button class="btn btn-check" id="btnStartTutorial" style="width:100%;">Oyuna Başla</button>
+    </div>
+  </div>
+
+  <!-- 📜 Müzik Künyesi & Lisanslar Modalı -->
+  <div class="modal-overlay" id="musicCreditsOverlay"></div>
+  <div class="modal" id="musicCreditsModal" style="max-width:480px;">
+    <h3>📜 Müzik Künyesi</h3>
+    <p class="modal-note">
+      Arka plan müzikleri yaş grubuna ve zorluk derecesine göre çalınır; hiçbir müzik veya yaş verisi ağa gönderilmez.
+    </p>
+    <div id="musicCreditsList" style="max-height:52dvh;overflow-y:auto;display:grid;gap:6px;margin-bottom:10px;font-size:0.72rem;"></div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-check" id="musicCreditsClose" style="grid-column:1 / -1;">Kapat</button>
     </div>
   </div>
 
@@ -3828,13 +4010,304 @@
     const confettiEl = document.getElementById('confetti');
     const tutorialModal = document.getElementById('tutorialModal');
 
-    /* Ses Motoru (Web Audio API - Nota Merdiveni ve Melodi Sesleri) */
+    /* Ses ve Arka Plan Müzik Motoru (Yaş Grubu × Zorluk = 18 MP3 Parça + 1.5sn Çapraz Geçiş) */
     const AudioCtx = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
     let soundEnabled = true;
+    let musicEnabled = true;
+    const btnMusic = document.getElementById('btnMusic');
+    const musicPopover = document.getElementById('musicPopover');
+    const musicPopTitle = document.getElementById('musicPopTitle');
+    const musicNowPlaying = document.getElementById('musicNowPlaying');
+    const musicAgeGrid = document.getElementById('musicAgeGrid');
+    const btnMusicOnOff = document.getElementById('btnMusicOnOff');
+    const btnOpenMusicCredits = document.getElementById('btnOpenMusicCredits');
+    const ageGroupOverlay = document.getElementById('ageGroupOverlay');
+    const ageGroupModal = document.getElementById('ageGroupModal');
+    const musicCreditsOverlay = document.getElementById('musicCreditsOverlay');
+    const musicCreditsModal = document.getElementById('musicCreditsModal');
+    const musicCreditsList = document.getElementById('musicCreditsList');
+    const musicCreditsClose = document.getElementById('musicCreditsClose');
+
+    const BGM_DIFF_KEYS = ['cokKolay', 'kolay', 'orta', 'zor', 'cokZor', 'uzman'];
+    const BGM_DIFF_LABELS = ['Çok Kolay', 'Kolay', 'Orta', 'Zor', 'Çok Zor', 'Uzman'];
+    const BGM_AGE_LABELS = {
+      cocuk: '🧸 Çocuk',
+      genc: '🎧 Genç',
+      yetiskin: '🎹 Yetişkin'
+    };
+
+    const BGM_TRACK_TABLE = {
+      cocuk: {
+        cokKolay: { title: 'Wiegenlied (Ninni)', artist: 'Johannes Brahms', license: 'Beste: Kamu Malı (Public Domain) · Kayıt lisansı kullanılan kayda göre değişir' },
+        kolay:    { title: 'Träumerei (Kinderszenen)', artist: 'Robert Schumann', license: 'Beste: Kamu Malı (Public Domain) · Kayıt lisansı kullanılan kayda göre değişir' },
+        orta:     { title: 'Carefree', artist: 'Kevin MacLeod (incompetech.com)', license: 'CC BY 3.0 / 4.0 (Atıf Zorunlu: Kevin MacLeod - incompetech.com)' },
+        zor:      { title: 'Aquarium (Hayvanlar Karnavalı)', artist: 'Camille Saint-Saëns', license: 'Beste: Kamu Malı (Public Domain) · Kayıt lisansı kullanılan kayda göre değişir' },
+        cokZor:   { title: 'Rondo alla Turca', artist: 'Wolfgang Amadeus Mozart', license: 'Beste: Kamu Malı (Public Domain) · Kayıt lisansı kullanılan kayda göre değişir' },
+        uzman:    { title: 'Ode to Joy (9. Senfoni)', artist: 'Ludwig van Beethoven', license: 'Beste: Kamu Malı (Public Domain) · Kayıt lisansı kullanılan kayda göre değişir' }
+      },
+      genc: {
+        cokKolay: { title: 'Clair de Lune', artist: 'Claude Debussy', license: 'Beste: Kamu Malı (Public Domain) · Kayıt lisansı kullanılan kayda göre değişir' },
+        kolay:    { title: 'Gymnopédie No. 1', artist: 'Erik Satie', license: 'Beste: Kamu Malı (Public Domain) · Kayıt lisansı kullanılan kayda göre değişir' },
+        orta:     { title: 'Come and Find Me', artist: 'Eric Skiff (ericskiff.com/music)', license: 'CC BY 4.0 (Atıf Zorunlu: Eric Skiff - Resistor Anthems)' },
+        zor:      { title: 'Digital Native', artist: 'Eric Skiff (ericskiff.com/music)', license: 'CC BY 4.0 (Atıf Zorunlu: Eric Skiff - Resistor Anthems)' },
+        cokZor:   { title: 'Arpanauts', artist: 'Eric Skiff (ericskiff.com/music)', license: 'CC BY 4.0 (Atıf Zorunlu: Eric Skiff - Resistor Anthems)' },
+        uzman:    { title: 'In the Hall of the Mountain King', artist: 'Edvard Grieg', license: 'Beste: Kamu Malı (Public Domain) · Kayıt lisansı kullanılan kayda göre değişir' }
+      },
+      yetiskin: {
+        cokKolay: { title: 'Air on the G String', artist: 'Johann Sebastian Bach', license: 'Beste: Kamu Malı (Public Domain) · Kayıt lisansı kullanılan kayda göre değişir' },
+        kolay:    { title: 'Nocturne Op. 9 No. 2', artist: 'Frédéric Chopin', license: 'Beste: Kamu Malı (Public Domain) · Kayıt lisansı kullanılan kayda göre değişir' },
+        orta:     { title: 'Canon in D', artist: 'Johann Pachelbel', license: 'Beste: Kamu Malı (Public Domain) · Kayıt lisansı kullanılan kayda göre değişir' },
+        zor:      { title: 'Goldberg Variations: Aria', artist: 'Johann Sebastian Bach', license: 'Beste: Kamu Malı (Public Domain) · Kayıt lisansı kullanılan kayda göre değişir' },
+        cokZor:   { title: 'WTC I Prelude in C Major', artist: 'Johann Sebastian Bach', license: 'Beste: Kamu Malı (Public Domain) · Kayıt lisansı kullanılan kayda göre değişir' },
+        uzman:    { title: 'Cello Suite No. 1: Prélude', artist: 'Johann Sebastian Bach', license: 'Beste: Kamu Malı (Public Domain) · Kayıt lisansı kullanılan kayda göre değişir' }
+      }
+    };
+
+    const BGM_GRADE_TRACKS = [
+      { diff: 'Çok Kolay', title: 'ABC Bağlamaca Müzik 1', src: 'muzik/abc-baglamaca-muzik1.mp3', license: 'ABC Bağlamaca Özel Fon Müziği' },
+      { diff: 'Kolay',     title: 'ABC Bağlamaca Müzik 2', src: 'muzik/abc-baglamaca-muzik2.mp3', license: 'ABC Bağlamaca Özel Fon Müziği' },
+      { diff: 'Orta',      title: 'ABC Bağlamaca Müzik 3', src: 'muzik/abc-baglamaca-muzik3.mp3', license: 'ABC Bağlamaca Özel Fon Müziği' },
+      { diff: 'Zor',       title: 'ABC Bağlamaca Müzik 4', src: 'muzik/abc-baglamaca-muzik4.mp3', license: 'ABC Bağlamaca Özel Fon Müziği' },
+      { diff: 'Çok Zor',   title: 'ABC Bağlamaca Müzik 5', src: 'muzik/abc-baglamaca-muzik5.mp3', license: 'ABC Bağlamaca Özel Fon Müziği' },
+      { diff: 'Uzman',     title: 'ABC Bağlamaca Müzik 6', src: 'muzik/abc-baglamaca-muzik6.mp3', license: 'ABC Bağlamaca Özel Fon Müziği' }
+    ];
+
+    const BGM_MAX_VOL = 0.20;
+    const BGM_CROSSFADE_MS = 1500;
+    let bgmHasUserGesture = false;
+    let bgmCurrentSrc = '';
+    let bgmCrossfadeTimer = null;
+    let bgmActiveSlot = 0; // 0 = bgmAudioA, 1 = bgmAudioB
+    const bgmFailedSet = new Set();
+
+    function handleBgmLoadError(failedSrc) {
+      if (!failedSrc) return;
+      console.error('[BGM] Müzik dosyası yüklenemedi:', failedSrc);
+      bgmFailedSet.add(failedSrc);
+      if (musicPopover && musicPopover.classList.contains('open')) renderMusicPopover();
+      if (typeof noteEl !== 'undefined' && noteEl && !noteEl.dataset.bgmWarned) {
+        noteEl.dataset.bgmWarned = failedSrc;
+        noteEl.className = 'note';
+        noteEl.textContent = `🔇 Müzik dosyası bulunamadı (${failedSrc}). Gerçek MP3 eklenene kadar bu seviye sessiz kalır.`;
+      }
+    }
+
+    function createBgmAudioEl() {
+      const a = document.createElement('audio');
+      a.preload = 'none';
+      a.loop = true;
+      a.volume = 0;
+      a.addEventListener('error', () => {
+        const failedSrc = a.getAttribute('src') || bgmCurrentSrc || '';
+        try { a.pause(); } catch (_) {}
+        if (failedSrc) handleBgmLoadError(failedSrc);
+      });
+      return a;
+    }
+    const bgmPlayers = [createBgmAudioEl(), createBgmAudioEl()];
+
+    function getCurrentBgmInfo() {
+      const gi = Math.max(0, Math.min(5, typeof gradeIdx === 'number' ? gradeIdx : 0));
+      const track = BGM_GRADE_TRACKS[gi] || BGM_GRADE_TRACKS[0];
+      return {
+        gi,
+        diffKey: BGM_DIFF_KEYS[gi],
+        diffLabel: BGM_DIFF_LABELS[gi],
+        src: track.src,
+        meta: { title: track.title, artist: track.diff, license: track.license }
+      };
+    }
+
+    function getTargetBgmVolume() {
+      if (!musicEnabled) return 0;
+      const bgmMul = (typeof appData !== 'undefined' && typeof appData.bgmVol === 'number') ? appData.bgmVol : 1;
+      const base = BGM_MAX_VOL * bgmMul;
+      return memoryMode ? (base * 0.5) : base;
+    }
+
+    function clearBgmAudioEl(el) {
+      try {
+        el.pause();
+        el.volume = 0;
+        if (el.hasAttribute('src')) {
+          el.removeAttribute('src');
+          el.load();
+        }
+      } catch (_) {}
+    }
+
+    function stopAllBgm(clearSrc) {
+      if (bgmCrossfadeTimer) {
+        clearInterval(bgmCrossfadeTimer);
+        bgmCrossfadeTimer = null;
+      }
+      bgmPlayers.forEach(el => {
+        try {
+          el.pause();
+          if (clearSrc) clearBgmAudioEl(el);
+        } catch (_) {}
+      });
+      if (clearSrc) bgmCurrentSrc = '';
+    }
+
+    function syncBgmVolume() {
+      const targetVol = getTargetBgmVolume();
+      const activeEl = bgmPlayers[bgmActiveSlot];
+      if (!bgmCrossfadeTimer && activeEl && !activeEl.paused) {
+        activeEl.volume = targetVol;
+      }
+    }
+
+    function syncBgmTrack(useCrossfade) {
+      const info = getCurrentBgmInfo();
+      if (musicPopover && musicPopover.classList.contains('open')) renderMusicPopover();
+      if (!musicEnabled) {
+        stopAllBgm(true);
+        return;
+      }
+      if (!bgmHasUserGesture || document.hidden) return;
+
+      const activeEl = bgmPlayers[bgmActiveSlot];
+      if (bgmCurrentSrc === info.src) {
+        if (activeEl.paused && activeEl.getAttribute('src') && !bgmFailedSet.has(info.src)) {
+          activeEl.volume = getTargetBgmVolume();
+          activeEl.play().catch(() => {});
+        } else {
+          syncBgmVolume();
+        }
+        return;
+      }
+
+      const hadPrevious = !!bgmCurrentSrc && activeEl.getAttribute('src') && !activeEl.paused;
+      bgmCurrentSrc = info.src;
+
+      if (bgmCrossfadeTimer) {
+        clearInterval(bgmCrossfadeTimer);
+        bgmCrossfadeTimer = null;
+      }
+
+      if (!useCrossfade || !hadPrevious) {
+        clearBgmAudioEl(bgmPlayers[1 - bgmActiveSlot]);
+        activeEl.src = info.src;
+        activeEl.loop = true;
+        activeEl.volume = getTargetBgmVolume();
+        activeEl.play().catch(() => {});
+        return;
+      }
+
+      // 1,5 sn Çapraz Geçiş (Crossfade) - eski müzik tamamen durdurulur
+      const oldEl = activeEl;
+      const newSlot = 1 - bgmActiveSlot;
+      const newEl = bgmPlayers[newSlot];
+      bgmActiveSlot = newSlot;
+
+      newEl.src = info.src;
+      newEl.loop = true;
+      newEl.volume = 0;
+      newEl.play().catch(() => {});
+
+      const startVolOld = oldEl.volume;
+      const targetVolNew = getTargetBgmVolume();
+      const stepMs = 50;
+      const totalSteps = Math.max(1, Math.round(BGM_CROSSFADE_MS / stepMs));
+      let step = 0;
+
+      bgmCrossfadeTimer = setInterval(() => {
+        step++;
+        const t = Math.min(1, step / totalSteps);
+        try {
+          oldEl.volume = Math.max(0, startVolOld * (1 - t));
+          newEl.volume = Math.min(BGM_MAX_VOL, (musicEnabled ? getTargetBgmVolume() : targetVolNew) * t);
+        } catch (_) {}
+        if (t >= 1) {
+          clearInterval(bgmCrossfadeTimer);
+          bgmCrossfadeTimer = null;
+          clearBgmAudioEl(oldEl);
+        }
+      }, stepMs);
+    }
+
+    function restartBgmForCurrentLevel() {
+      syncBgmTrack(true);
+    }
+
+    function updateMusicBtnUI() {
+      if (!btnMusic) return;
+      btnMusic.textContent = musicEnabled ? '🎵' : '🔕';
+      btnMusic.style.opacity = musicEnabled ? '1' : '0.65';
+    }
+
+    function renderMusicPopover() {
+      const info = getCurrentBgmInfo();
+      if (musicPopTitle) musicPopTitle.textContent = `🎵 Fon Müziği · ${info.diffLabel}`;
+      if (musicNowPlaying) {
+        const isMissing = bgmFailedSet.has(info.src);
+        musicNowPlaying.innerHTML = isMissing
+          ? `<div style="color:#c62828;"><strong>⚠️ Dosya Bulunamadı:</strong> <code>${info.src}</code></div><div style="font-size:0.62rem;opacity:0.85;">Gerçek MP3 dosyası eklenene kadar bu seviye sessiz kalır.</div>`
+          : `<div><strong>${info.meta.title}</strong> — ${info.diffLabel}</div><div style="font-size:0.62rem;opacity:0.8;">Dosya: <code>${info.src}</code> · Ses: %${memoryMode ? '10 (Hafıza)' : '20'}</div>`;
+      }
+      if (btnMusicOnOff) {
+        btnMusicOnOff.textContent = musicEnabled ? '🎵 Müzik Açık' : '🔕 Müzik Kapalı';
+        btnMusicOnOff.classList.toggle('off', !musicEnabled);
+      }
+    }
+
+    function openMusicCreditsModal() {
+      if (!musicCreditsList) return;
+      const rows = [
+        `<div style="font-weight:900;color:var(--accent-text);margin-top:2px;">🎵 Zorluklara Göre 6 Gerçek MP3 Parça</div>`
+      ];
+      BGM_GRADE_TRACKS.forEach(t => {
+        const missing = bgmFailedSet.has(t.src) ? ' · <span style="color:#c62828;font-weight:800;">Eksik</span>' : '';
+        rows.push(`<div style="padding:7px 9px;border:1px solid var(--border-color);border-radius:8px;background:var(--page);">
+          <div><strong>${t.diff}:</strong> ${t.title}${missing}</div>
+          <div style="font-size:0.65rem;color:var(--muted-text);">Dosya: <code>${t.src}</code> · Durum: ${t.license}</div>
+        </div>`);
+      });
+      musicCreditsList.innerHTML = rows.join('');
+      if (musicCreditsOverlay) musicCreditsOverlay.classList.add('show');
+      if (musicCreditsModal) musicCreditsModal.classList.add('show');
+    }
+
+    function closeMusicCreditsModal() {
+      if (musicCreditsOverlay) musicCreditsOverlay.classList.remove('show');
+      if (musicCreditsModal) musicCreditsModal.classList.remove('show');
+    }
+
+    function setAgeGroupPreference(group) {
+      if (group !== 'cocuk' && group !== 'genc' && group !== 'yetiskin') return;
+      appData.ageGroup = group;
+      saveAppData();
+      const sel = document.getElementById('profileAgeGroupSelect');
+      if (sel) sel.value = group;
+      if (musicPopover && musicPopover.classList.contains('open')) renderMusicPopover();
+      syncBgmTrack(true);
+    }
+
+    // Dışarıdan veya testlerden durum okuma (salt okunur)
+    window.getBgmState = () => {
+      const info = getCurrentBgmInfo();
+      const activeEl = bgmPlayers[bgmActiveSlot];
+      return {
+        ageGroup: info.ageGroup,
+        diffKey: info.diffKey,
+        src: info.src,
+        soundEnabled,
+        musicEnabled,
+        memoryMode: !!memoryMode,
+        targetVolume: getTargetBgmVolume(),
+        activeAudioSrc: activeEl ? (activeEl.getAttribute('src') || '') : '',
+        paused: activeEl ? activeEl.paused : true,
+        crossfading: !!bgmCrossfadeTimer
+      };
+    };
 
     function playTone(freq, start, dur, type = 'sine', vol = 0.12) {
       if (!soundEnabled) return;
+      const sfxMul = (typeof appData !== 'undefined' && typeof appData.sfxVol === 'number') ? appData.sfxVol : 1;
+      const effVol = vol * sfxMul;
+      if (effVol <= 0.001) return;
       try {
         if (!audioCtx) audioCtx = new AudioCtx();
         const ctx = audioCtx;
@@ -3842,7 +4315,7 @@
         const gain = ctx.createGain();
         osc.type = type;
         osc.frequency.value = freq;
-        gain.gain.setValueAtTime(vol, ctx.currentTime + start);
+        gain.gain.setValueAtTime(effVol, ctx.currentTime + start);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + dur);
         osc.connect(gain);
         gain.connect(ctx.destination);
@@ -4709,8 +5182,94 @@
     }
     patternMode = !!appData.pattern;
     btnPattern.style.background = patternMode ? 'rgba(255,255,255,0.42)' : '';
-    soundEnabled = appData.sound;
+    soundEnabled = appData.sound !== false;
     btnSound.textContent = soundEnabled ? '🔊' : '🔇';
+    musicEnabled = appData.music !== false;
+    updateMusicBtnUI();
+
+    function unlockAudioAndStartBgm() {
+      bgmHasUserGesture = true;
+      try {
+        if (!audioCtx && (soundEnabled || musicEnabled)) audioCtx = new AudioCtx();
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
+      } catch (_) {}
+      if (musicEnabled && !document.hidden) {
+        syncBgmTrack(false);
+      }
+    }
+    document.addEventListener('pointerdown', unlockAudioAndStartBgm, { once: true, passive: true });
+    document.addEventListener('keydown', unlockAudioAndStartBgm, { once: true, passive: true });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopAllBgm(false);
+      } else if (musicEnabled && bgmHasUserGesture) {
+        syncBgmTrack(false);
+      }
+    });
+
+    const bgmVolumeRange = document.getElementById('bgmVolumeRange');
+    const sfxVolumeRange = document.getElementById('sfxVolumeRange');
+    if (bgmVolumeRange) {
+      bgmVolumeRange.value = Math.round(((typeof appData.bgmVol === 'number') ? appData.bgmVol : 1) * 100);
+      bgmVolumeRange.addEventListener('input', () => {
+        appData.bgmVol = Math.max(0, Math.min(1, parseInt(bgmVolumeRange.value, 10) / 100));
+        saveAppData();
+        syncBgmVolume();
+      });
+    }
+    if (sfxVolumeRange) {
+      sfxVolumeRange.value = Math.round(((typeof appData.sfxVol === 'number') ? appData.sfxVol : 1) * 100);
+      sfxVolumeRange.addEventListener('input', () => {
+        appData.sfxVol = Math.max(0, Math.min(1, parseInt(sfxVolumeRange.value, 10) / 100));
+        saveAppData();
+      });
+    }
+
+    if (btnMusic && musicPopover) {
+      btnMusic.addEventListener('click', (e) => {
+        e.stopPropagation();
+        playClick();
+        unlockAudioAndStartBgm();
+        const isOpen = musicPopover.classList.toggle('open');
+        if (isOpen) renderMusicPopover();
+      });
+      document.addEventListener('click', (e) => {
+        if (musicPopover.classList.contains('open') && !musicPopover.contains(e.target) && e.target !== btnMusic) {
+          musicPopover.classList.remove('open');
+        }
+      });
+    }
+    if (musicAgeGrid) {
+      musicAgeGrid.querySelectorAll('.music-track-btn[data-age]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          playClick();
+          setAgeGroupPreference(btn.getAttribute('data-age'));
+        });
+      });
+    }
+    if (btnMusicOnOff) {
+      btnMusicOnOff.addEventListener('click', () => {
+        musicEnabled = !musicEnabled;
+        appData.music = musicEnabled;
+        updateMusicBtnUI();
+        saveAppData();
+        renderMusicPopover();
+        if (musicEnabled) {
+          unlockAudioAndStartBgm();
+        } else {
+          stopAllBgm(true);
+        }
+      });
+    }
+    if (btnOpenMusicCredits) {
+      btnOpenMusicCredits.addEventListener('click', () => {
+        playClick();
+        if (musicPopover) musicPopover.classList.remove('open');
+        openMusicCreditsModal();
+      });
+    }
+    if (musicCreditsClose) musicCreditsClose.addEventListener('click', () => { playClick(); closeMusicCreditsModal(); });
+    if (musicCreditsOverlay) musicCreditsOverlay.addEventListener('click', closeMusicCreditsModal);
 
     btnPattern.addEventListener('click', () => {
       patternMode = !patternMode;
@@ -5063,6 +5622,7 @@
       render();
       if (memoryMode) startMemoryCountdown();
       if (typeof onPedagogicalPuzzleStart === 'function') onPedagogicalPuzzleStart();
+      syncBgmTrack(true);
     }
 
     function dailySeedCode() {
@@ -5117,9 +5677,14 @@
         pad = Math.round(cellGap * 0.32);
         return;
       }
+      const hasModeBanner = rushMode || memoryMode || tournamentMode;
+      const baseMobileRatio = vh <= 650 ? 0.30 : 0.33;
+      const mobileRatio = memoryMode
+        ? (baseMobileRatio - 0.07)
+        : (hasModeBanner ? (baseMobileRatio - 0.04) : baseMobileRatio);
       const singleCap = vw >= 1100
         ? Math.min(490, Math.floor(vh * 0.56))
-        : (vw >= 768 ? 450 : Math.max(200, Math.min(350, Math.floor(vh * 0.36))));
+        : (vw >= 768 ? 450 : Math.max(165, Math.min(340, Math.floor(vh * mobileRatio))));
       const maxW = Math.min(vw - (vw < 768 ? 36 : 44), singleCap);
       cellGap = Math.floor(maxW / (size - 1 + 0.64));
       if (vw < 600) {
@@ -6321,6 +6886,7 @@
     btnCheck.addEventListener('click', () => {
       const result = validate();
       if (!result.valid) {
+        if (typeof recordTelemetryCheck === 'function') recordTelemetryCheck(false);
         playError();
         if (result.empty > 0) highlightEmptyCells();
         if (typeof onPedagogicalCheckFail === 'function') onPedagogicalCheckFail(result);
@@ -6328,6 +6894,7 @@
           `${result.issues[0]} Harika gidiyorsun, beyin kasların güçleniyor! 🦉 Bilge Baykuş'un ipucu sorusuna göz atabilirsin.`);
         return;
       }
+      if (typeof recordTelemetryCheck === 'function') recordTelemetryCheck(true);
       triggerSingleWin();
     });
 
@@ -6374,6 +6941,9 @@
       rushMode = false;
       btnRush.classList.remove('active');
       updateRushBanner();
+      resizeBoard();
+      render();
+      if (typeof window._syncModeMenuUI === 'function') window._syncModeMenuUI(false);
       if (timeExpired) {
         playSuccess();
         if (finalSolved > 0) spawnConfetti();
@@ -6424,8 +6994,10 @@
       playClick();
       memoryMode = !memoryMode;
       btnMemory.classList.toggle('active', memoryMode);
+      resizeBoard();
       if (memoryMode) {
         startMemoryCountdown();
+        render();
       } else {
         clearInterval(memoryTimer);
         clearTimeout(memoryPeekTimeout);
@@ -6435,6 +7007,8 @@
         render();
         updateStatus();
       }
+      if (typeof window._syncModeMenuUI === 'function') window._syncModeMenuUI(true);
+      syncBgmVolume();
     });
 
     if (btnMemoryReady) {
@@ -8155,11 +8729,45 @@
       return `<strong>Rehber:</strong> Harika gidiyorsun! Bütün noktalar doldu! 🎉`;
     }
 
-    function showMascotMessage() {}
+    function showMascotMessage(htmlMsg, makeVisible = true) {
+      if (!mascotBubble) return;
+      mascotBubble.innerHTML = htmlMsg || generateSocraticQuestion();
+      if (mascotBar && makeVisible) {
+        mascotBar.classList.add('show');
+        if (typeof resizeBoard === 'function') resizeBoard();
+      }
+    }
+
+    function stopTwoMinMascotTimer() {
+      if (mascotTwoMinTimer) {
+        clearTimeout(mascotTwoMinTimer);
+        mascotTwoMinTimer = null;
+      }
+    }
+
+    function isAnyModalOpenForTimer() {
+      return !!document.querySelector('.modal.show, .tutorial-overlay[style*="flex"]');
+    }
 
     function startTwoMinMascotTimer() {
-      clearTimeout(mascotTwoMinTimer);
+      stopTwoMinMascotTimer();
+      if (mascotBar) mascotBar.classList.remove('show');
+      if (document.hidden || puzzleSolved) return;
+      mascotTwoMinTimer = setTimeout(() => {
+        mascotTwoMinTimer = null;
+        if (document.hidden || puzzleSolved || isAnyModalOpenForTimer()) return;
+        const hintHtml = generateSocraticQuestion();
+        showMascotMessage(`${hintHtml} <span style="opacity:0.85;">· 🌱 2 dk oldu, kısa bir nefes alıp devam edebilirsin!</span>`, true);
+      }, 120000);
     }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopTwoMinMascotTimer();
+      } else if (!puzzleSolved && !mascotTwoMinTimer) {
+        startTwoMinMascotTimer();
+      }
+    });
 
     function onPedagogicalPuzzleStart() {
       mascotMistakeCount = 0;
@@ -8238,23 +8846,63 @@
     }
     ensureAdventureWeekSync();
 
+    function todayDateKey() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function ensureDailyPlayDate() {
+      const tk = todayDateKey();
+      if (!appData.stats || typeof appData.stats !== 'object') {
+        appData.stats = { checksSuccess: 0, checksFail: 0, hintsUsedTotal: 0, dailyHistory: {} };
+      }
+      if (!appData.stats.dailyHistory) appData.stats.dailyHistory = {};
+      if (appData.dailyPlayDate !== tk) {
+        appData.dailyPlayDate = tk;
+        appData.dailyPlaySeconds = 0;
+      }
+      if (typeof appData.dailyPlaySeconds !== 'number') appData.dailyPlaySeconds = 0;
+      if (!appData.stats.dailyHistory[tk]) {
+        appData.stats.dailyHistory[tk] = { seconds: appData.dailyPlaySeconds, solved: 0 };
+      }
+    }
+    ensureDailyPlayDate();
+
+    function recordTelemetryCheck(ok) {
+      ensureDailyPlayDate();
+      if (ok) appData.stats.checksSuccess = (appData.stats.checksSuccess || 0) + 1;
+      else appData.stats.checksFail = (appData.stats.checksFail || 0) + 1;
+      const tk = todayDateKey();
+      if (ok && appData.stats.dailyHistory[tk]) {
+        appData.stats.dailyHistory[tk].solved = (appData.stats.dailyHistory[tk].solved || 0) + 1;
+      }
+      saveAppData();
+    }
+
     let sessionActiveSeconds = 0;
     let screenTimeReminderShown = false;
 
-    // Her 30 saniyede aktif oyun süresini kaydet ve 18 dakikada nazik mola hatırlatması sun
+    // Her 10 saniyede aktif oyun süresini (günlük + oturum ayrı) kaydet ve 18 dakikada nazik mola hatırlatması sun
     setInterval(() => {
       if (document.hidden) return;
-      sessionActiveSeconds += 30;
-      appData.activeMinutes = Math.round(((appData.activeMinutes || 0) * 60 + 30) / 60);
+      ensureDailyPlayDate();
+      sessionActiveSeconds += 10;
+      appData.dailyPlaySeconds = (appData.dailyPlaySeconds || 0) + 10;
+      appData.activeMinutes = Math.round(appData.dailyPlaySeconds / 60);
+      const tk = todayDateKey();
+      appData.stats.dailyHistory[tk].seconds = appData.dailyPlaySeconds;
       saveAppData();
       if (sessionActiveSeconds >= 18 * 60 && !screenTimeReminderShown) {
         screenTimeReminderShown = true;
         showMascotMessage(
-          `<strong>Rehber (Sağlıklı Mola):</strong> 18 dakikadır harika çözdün! 🌱 Gözlerini 20 sn uzağa bakarak dinlendir.`,
+          `<strong>Rehber (Sağlıklı Mola):</strong> Bu oturumda 18 dakikadır harika çözdün! 🌱 Gözlerini 20 sn uzağa bakarak dinlendirebilirsin.`,
           true
         );
       }
-    }, 30000);
+    }, 10000);
 
     function applyEquippedHat() {
       if (!heroKidsEl) return;
@@ -8339,9 +8987,11 @@
         });
       }
 
-      const sessionMin = Math.max(1, Math.round(sessionActiveSeconds / 60));
+      ensureDailyPlayDate();
+      const dailyMin = Math.floor((appData.dailyPlaySeconds || 0) / 60);
+      const sessionMin = Math.floor(sessionActiveSeconds / 60);
       if (screenTimeBanner) {
-        screenTimeBanner.textContent = `🌱 Sağlıklı Ekran Süresi: Bugün aktif ${sessionMin} dk oynadın (Önerilen günlük ideal süre: 15–20 dk).`;
+        screenTimeBanner.textContent = `🌱 Sağlıklı Ekran Süresi: Bugün toplam ${dailyMin} dk · Bu oturum ${sessionMin} dk (Önerilen günlük ideal süre: 15–20 dk).`;
       }
     }
 
@@ -10308,6 +10958,13 @@
       }
     }
 
+    function sanitizePublicNickname(raw) {
+      let s = String(raw || '').trim().slice(0, 20);
+      // E-posta veya telefon numarası gibi kişisel veri kalıplarını gizle
+      s = s.replace(/\S+@\S+\.\S+/g, 'Kaşif').replace(/\+?\d[\d\s\-()]{6,}\d/g, '***');
+      return s || 'Zeki Kaşif';
+    }
+
     async function syncPlayerToCloudLeaderboard(renderAfter = false) {
       if (location.protocol === 'file:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
         if (cloudSyncStatusNote && renderAfter) {
@@ -10353,11 +11010,11 @@
             }, 900);
           }
           cloudObj.p[myCloudId] = {
-            n: curProfile.name.slice(0, 20),
+            n: sanitizePublicNickname(curProfile.name),
             s: myScore,
             t: Date.now(),
             c: incomingClaps,
-            cb: prevEntry.cb || ''
+            cb: sanitizePublicNickname(prevEntry.cb || '')
           };
         }
 
@@ -10653,8 +11310,8 @@
       { gi: 0, icon: '🌱', title: 'Minik Kaşif Tebrik Kartı', gradeName: 'Çok Kolay', desc: 'Çok Kolay kademesindeki tüm 5 seviyeyi başarıyla tamamlayarak temel uzamsal bağlama aşamasını bitirdi.' },
       { gi: 1, icon: '⭐', title: 'Yıldız Çözücü Tebrik Kartı', gradeName: 'Kolay', desc: 'Kolay kademesindeki tüm 5 seviyeyi tamamlayarak rota planlama ve eşleştirme aşamasını bitirdi.' },
       { gi: 2, icon: '🧩', title: 'Mantık Ustası Tebrik Kartı', gradeName: 'Orta', desc: 'Orta kademesindeki tüm 5 seviyeyi tamamlayarak çok adımlı mantık yürütme aşamasını bitirdi.' },
-      { gi: 3, icon: '🚀', title: 'İleri Strateji Tebrik Kartı', gradeName: 'İyi', desc: 'İyi kademesindeki tüm 5 seviyeyi tamamlayarak ileri düzey stratejik düşünme aşamasını bitirdi.' },
-      { gi: 4, icon: '🔥', title: 'Üstün Zeka Tebrik Kartı', gradeName: 'Zor', desc: 'Zor kademesindeki tüm 5 seviyeyi tamamlayarak karmaşık ızgaralarda problem çözme aşamasını bitirdi.' },
+      { gi: 3, icon: '🚀', title: 'İleri Strateji Tebrik Kartı', gradeName: 'Zor', desc: 'Zor kademesindeki tüm 5 seviyeyi tamamlayarak ileri düzey stratejik düşünme aşamasını bitirdi.' },
+      { gi: 4, icon: '🔥', title: 'Üstün Zeka Tebrik Kartı', gradeName: 'Çok Zor', desc: 'Çok Zor kademesindeki tüm 5 seviyeyi tamamlayarak karmaşık ızgaralarda problem çözme aşamasını bitirdi.' },
       { gi: 5, icon: '👑', title: 'Büyük Zeka Ustası Başarı Kartı', gradeName: 'Uzman (Tüm Oyun)', desc: 'ABC Bağlamaca oyunundaki tüm 30 seviyeyi ve Uzman kademesini tamamlayarak oyun içi Büyük Usta unvanına ulaştı!' }
     ];
 
@@ -10864,7 +11521,116 @@
       renderProfilePortfolio();
     }
 
+    const parentOverlay = document.getElementById('parentOverlay');
+    const parentModal = document.getElementById('parentModal');
+    const parentKpiGrid = document.getElementById('parentKpiGrid');
+    const parentGradeBars = document.getElementById('parentGradeBars');
+    const parentPedagogicalNote = document.getElementById('parentPedagogicalNote');
+    const parentClose = document.getElementById('parentClose');
+    const parentPrintBtn = document.getElementById('parentPrintBtn');
+    const btnOpenParentReport = document.getElementById('btnOpenParentReport');
+
+    function renderParentReport() {
+      ensureDailyPlayDate();
+      ensureProfilesInit();
+      const activeIdx = appData.activeProfileIdx || 0;
+      const curProfile = appData.profiles[activeIdx] || { name: 'Kaşif' };
+      const totalSolved = Object.values(appData.progress || {}).reduce((a, b) => a + (Number(b) || 0), 0);
+      const eduSolved = Object.values(appData.eduProgress || {}).reduce((acc, item) => {
+        const sub = item && item.progress ? Object.values(item.progress).reduce((x, y) => x + (Number(y) || 0), 0) : 0;
+        return acc + sub;
+      }, 0);
+      const unlockedLvl = (appData.goldTour || 0) > 0 ? 30 : Math.min(30, (appData.unlockedIdx || 0) + 1);
+      const st = appData.stats || {};
+      const okCount = Number(st.checksSuccess) || 0;
+      const failCount = Number(st.checksFail) || 0;
+      const totalChecks = okCount + failCount;
+      const successRateStr = totalChecks > 0 ? `%${Math.round((okCount / totalChecks) * 100)} (${okCount}/${totalChecks})` : 'Henüz yeterli veri yok';
+      const dailyMin = Math.floor((appData.dailyPlaySeconds || 0) / 60);
+      const sessionMin = Math.floor((typeof sessionActiveSeconds === 'number' ? sessionActiveSeconds : 0) / 60);
+
+      if (parentKpiGrid) {
+        parentKpiGrid.innerHTML = `
+          <div class="report-kpi"><span class="k-val">${totalSolved + eduSolved}</span><span class="k-lbl">Toplam Çözüm</span></div>
+          <div class="report-kpi"><span class="k-val">${unlockedLvl} / 30</span><span class="k-lbl">Açık Seviye</span></div>
+          <div class="report-kpi"><span class="k-val" style="font-size:${totalChecks > 0 ? '1rem' : '0.72rem'};">${successRateStr}</span><span class="k-lbl">Doğru / Kontrol</span></div>
+          <div class="report-kpi"><span class="k-val">${dailyMin} dk</span><span class="k-lbl">Bugün (Oturum: ${sessionMin} dk)</span></div>
+        `;
+      }
+
+      if (parentGradeBars) {
+        const gradeRows = GRADES.map((g, gi) => {
+          const req = requiredForLevel(gi);
+          const maxTarget = req * 5;
+          const curSum = g.levels.reduce((s, _, li) => s + Math.min(req, solvedCount(gi, li)), 0);
+          const pct = Math.min(100, Math.round((curSum / Math.max(1, maxTarget)) * 100));
+          return `<div class="report-bar-row">
+            <span style="min-width:68px;font-weight:800;">${g.label}</span>
+            <div class="report-bar-track"><div class="report-bar-fill" style="width:${pct}%;"></div></div>
+            <span style="min-width:44px;text-align:right;font-weight:800;">%${pct}</span>
+          </div>`;
+        }).join('');
+
+        // Tema karşılaştırması (yalnızca gerçek veriden)
+        const themeStats = SYMBOL_THEMES.filter(t => t.isEdu).map(t => {
+          const ep = appData.eduProgress && appData.eduProgress[t.id];
+          const cnt = ep && ep.progress ? Object.values(ep.progress).reduce((a, b) => a + (Number(b) || 0), 0) : 0;
+          return { name: t.name, icon: t.icon, count: cnt };
+        });
+        const playedEdu = themeStats.filter(x => x.count > 0).sort((a, b) => b.count - a.count);
+        const histEntries = Object.entries(st.dailyHistory || {}).sort((a, b) => b[0].localeCompare(a[0])).slice(0, 5);
+        const histHtml = histEntries.length > 0
+          ? histEntries.map(([dt, val]) => `${dt}: ${Math.floor((val.seconds || 0) / 60)} dk · ${val.solved || 0} çözüm`).join(' | ')
+          : 'Henüz geçmiş gün verisi birikmedi.';
+
+        const themeHtml = playedEdu.length > 0
+          ? `En başarılı tema: <strong>${playedEdu[0].icon} ${playedEdu[0].name}</strong> (${playedEdu[0].count} çözüm).` + (playedEdu.length > 1 ? ` Desteklenebilecek tema: <strong>${playedEdu[playedEdu.length - 1].icon} ${playedEdu[playedEdu.length - 1].name}</strong> (${playedEdu[playedEdu.length - 1].count} çözüm).` : '')
+          : 'Eğitici temalarda henüz yeterli veri yok.';
+
+        parentGradeBars.innerHTML = gradeRows +
+          `<div style="margin-top:8px;font-size:0.72rem;color:var(--text-main);"><strong>Tema Analizi:</strong> ${themeHtml}</div>` +
+          `<div style="margin-top:4px;font-size:0.68rem;color:var(--muted-text);"><strong>Son Günler:</strong> ${histHtml}</div>`;
+      }
+
+      if (parentPedagogicalNote) {
+        if (totalSolved + eduSolved === 0 && totalChecks === 0) {
+          parentPedagogicalNote.textContent = `${curProfile.name} için henüz yeterli oyun verisi oluşmadı. Öğrenci bulmaca çözdükçe doğruluk oranı, süre takibi ve tema analizi burada gerçek verilerle güncellenecektir.`;
+        } else {
+          parentPedagogicalNote.textContent = `${curProfile.name} bugüne kadar toplam ${totalSolved + eduSolved} bulmaca tamamladı (${appData.score || 0} Akıl Puanı). Sağlıklı ekran süresi için günlük 15–20 dakikalık oturumlar ve 2 dakikalık kısa göz molaları önerilir.`;
+        }
+      }
+    }
+
+    function openParentModal() {
+      renderParentReport();
+      if (parentOverlay) parentOverlay.classList.add('show');
+      if (parentModal) parentModal.classList.add('show');
+    }
+    function closeParentModal() {
+      if (parentOverlay) parentOverlay.classList.remove('show');
+      if (parentModal) parentModal.classList.remove('show');
+    }
+    if (btnOpenParentReport) {
+      btnOpenParentReport.addEventListener('click', () => {
+        playClick();
+        closeProfileModal();
+        openParentModal();
+      });
+    }
+    if (parentClose) parentClose.addEventListener('click', () => { playClick(); closeParentModal(); });
+    if (parentOverlay) parentOverlay.addEventListener('click', closeParentModal);
+    if (parentPrintBtn) parentPrintBtn.addEventListener('click', () => { playClick(); window.print(); });
+
+    const profileAgeGroupSelect = document.getElementById('profileAgeGroupSelect');
+    const btnProfileMusicCredits = document.getElementById('btnProfileMusicCredits');
+    if (btnProfileMusicCredits) {
+      btnProfileMusicCredits.addEventListener('click', () => {
+        playClick();
+        openMusicCreditsModal();
+      });
+    }
     function openProfileModal() {
+      if (profileAgeGroupSelect) profileAgeGroupSelect.value = getActiveAgeGroup();
       renderProfileModal();
       profileOverlay.classList.add('show');
       profileModal.classList.add('show');
@@ -10885,6 +11651,9 @@
         const cleanName = (profileNameInput.value || '').trim().slice(0, 20);
         if (cleanName) {
           appData.profiles[activeIdx].name = cleanName;
+        }
+        if (profileAgeGroupSelect) {
+          setAgeGroupPreference(profileAgeGroupSelect.value);
         }
         syncCurrentToActiveProfile();
         saveAppData();
@@ -10933,12 +11702,41 @@
     } catch (_) {}
     const btnModeMenuToggle = document.getElementById('btnModeMenuToggle');
     const modeMenuDropdown = document.getElementById('modeMenuDropdown');
+    const modeMenuBtnText = document.getElementById('modeMenuBtnText');
+    function syncModeMenuUI(closeDropdown) {
+      if (closeDropdown && modeMenuDropdown && btnModeMenuToggle) {
+        modeMenuDropdown.classList.remove('open');
+        btnModeMenuToggle.classList.remove('open');
+        btnModeMenuToggle.setAttribute('aria-expanded', 'false');
+      }
+      if (modeMenuBtnText && btnModeMenuToggle) {
+        const activeModes = [];
+        if (obstacleMode) activeModes.push('🧱 Engelli');
+        if (rushMode) activeModes.push('⏱️ Fırtına');
+        if (memoryMode) activeModes.push('🧠 Hafıza');
+        if (activeModes.length > 0) {
+          modeMenuBtnText.textContent = `Menü · ${activeModes.join(' + ')} (Açık)`;
+          btnModeMenuToggle.classList.add('has-active-mode');
+        } else {
+          modeMenuBtnText.textContent = 'Menü (Modlar & Araçlar)';
+          btnModeMenuToggle.classList.remove('has-active-mode');
+        }
+      }
+    }
+    window._syncModeMenuUI = syncModeMenuUI;
     if (btnModeMenuToggle && modeMenuDropdown) {
       btnModeMenuToggle.addEventListener('click', () => {
         playClick();
         const isOpen = modeMenuDropdown.classList.toggle('open');
         btnModeMenuToggle.classList.toggle('open', isOpen);
         btnModeMenuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+      [btnObstacle, btnRush, btnAdventure, btnCreator].forEach(b => {
+        if (b) {
+          b.addEventListener('click', () => {
+            syncModeMenuUI(true);
+          });
+        }
       });
     }
 
