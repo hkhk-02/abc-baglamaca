@@ -2747,10 +2747,97 @@
     .mode-menu-dropdown .mode-bar .mode-btn:last-child {
       grid-column: span 2;
     }
+    .how-to-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 9px 11px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #fff;
+      border: 1.5px solid #0c4a6e;
+      font-size: 0.78rem;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.22);
+      transition: all 0.15s ease;
+    }
+    .how-to-btn:hover { filter: brightness(1.07); }
+    .howto-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px solid var(--border-color);
+    }
+    .howto-close-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 900;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
+      transition: transform 0.12s ease, background 0.12s ease;
+    }
+    .howto-close-btn:hover { background: #dc2626; transform: scale(1.06); }
+    .modal-top-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 2px solid #ffffff;
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 900;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
+      z-index: 20;
+      transition: transform 0.12s ease, background 0.12s ease;
+    }
+    .modal-top-close:hover { background: #dc2626; transform: scale(1.06); }
+    .modal h3 { padding-right: 36px; }
+    #jigsawModal.jigsaw-fullscreen .jigsaw-top-header { padding-right: 38px; }
+    .howto-body {
+      font-size: 0.85rem;
+      line-height: 1.55;
+      color: var(--text-main);
+      text-align: left;
+    }
+    .howto-body ul {
+      margin: 8px 0 0 18px;
+      padding: 0;
+      display: grid;
+      gap: 6px;
+    }
     @media (max-width: 600px) {
       .top-quick-bar { gap: 4px; }
       .top-quick-btn { padding: 4px 4px; font-size: 0.65rem; border-radius: 8px; gap: 3px; }
-      .mode-menu-trigger { padding: 6px 10px; font-size: 0.72rem; border-radius: 10px; }
+      .mode-menu-wrap { gap: 5px; }
+      .how-to-btn { padding: 6px 8px; font-size: 0.67rem; border-radius: 10px; gap: 3px; }
+      .mode-menu-trigger { padding: 6px 8px; font-size: 0.67rem; border-radius: 10px; min-width: 0; gap: 4px; }
+      #modeMenuBtnText { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      #btnPdf { padding: 6px 9px !important; font-size: 0.67rem; border-radius: 10px; flex-shrink: 0; }
     }
 
     /* 🎵 Fon Müziği Seçim Paneli (Üst Bar Altında Kompakt Açılır Kutu) */
@@ -2952,6 +3039,10 @@
 
         <!-- Tekli "Menü" Butonu (Engelli Mod, 60sn Fırtına, Hafıza Modu, Macera Haritası, Bulmaca Tasarla) -->
         <div class="mode-menu-wrap">
+          <button type="button" class="how-to-btn" id="btnHowToPlay" title="Nasıl Oynanır?">
+            <span>❓</span>
+            <span>Nasıl Oynanır</span>
+          </button>
           <button type="button" class="mode-menu-trigger" id="btnModeMenuToggle" aria-expanded="false">
             <span>☰</span>
             <span id="modeMenuBtnText">Menü (Modlar & Araçlar)</span>
@@ -2990,23 +3081,6 @@
             </button>
           </div>
         </div>
-
-        <details class="card rules">
-          <summary>Nasıl oynanır?</summary>
-          <p style="margin-top:6px">
-            Temel amaç <strong>tüm noktaları kullanarak</strong> aynı harfleri birbirine bağlamaktır.
-          </p>
-          <ul>
-            <li>Yalnızca <strong>yatay</strong> ve <strong>dikey</strong> çizgiler kullanılır (çapraz yasak).</li>
-            <li>Çizgiler birbirini <strong>kesmemelidir</strong>.</li>
-            <li>Çizgi başka bir <strong>harfin</strong> veya <strong>engelin (⬛)</strong> üzerinden geçemez.</li>
-            <li>Bitişte <strong>tek bir nokta bile açıkta kalmamalıdır</strong>.</li>
-            <li>Harfler aynı düz çizgide bağlanamayacak konumlarda yer alır; tüm noktaları doldurarak doğal <strong>dönüşlerle (virajlarla)</strong> birleştirilir.</li>
-            <li>Kendi yolunun üzerine geri gidersen çizgi <strong>kısalır</strong>.</li>
-            <li>Her seviyede hedef bulmaca sayısını tamamladığında <strong>otomatik olarak bir üst seviyeye ve zorluğa</strong> geçersin!</li>
-            <li>Dokunmatik ekranda harfe <strong>dokunup sürükle</strong> ya da <strong>dokun-dokun</strong> ile ilerle.</li>
-          </ul>
-        </details>
       </div>
 
       <!-- Sağ / Merkez Oyun Sahnesi (İlk Açılışta Doğrudan Karşıda Görünür!) -->
@@ -3441,6 +3515,28 @@
     </div>
   </div>
   <div class="confetti-box" id="confetti"></div>
+
+  <!-- Nasıl Oynanır Modalı -->
+  <div class="modal-overlay" id="howToOverlay" style="z-index:115;"></div>
+  <div class="modal" id="howToModal" role="dialog" aria-modal="true" aria-labelledby="howToTitle" style="max-width:440px;z-index:116;">
+    <div class="howto-head">
+      <h3 id="howToTitle" style="margin:0;">📖 Nasıl Oynanır?</h3>
+      <button type="button" class="howto-close-btn" id="btnHowToClose" aria-label="Kapat" title="Kapat">✕</button>
+    </div>
+    <div class="howto-body">
+      <p style="margin:0;">Temel amaç <strong>tüm noktaları kullanarak</strong> aynı harfleri birbirine bağlamaktır.</p>
+      <ul>
+        <li>Yalnızca <strong>yatay</strong> ve <strong>dikey</strong> çizgiler kullanılır (çapraz yasak).</li>
+        <li>Çizgiler birbirini <strong>kesmemelidir</strong>.</li>
+        <li>Çizgi başka bir <strong>harfin</strong> veya <strong>engelin (⬛)</strong> üzerinden geçemez.</li>
+        <li>Bitişte <strong>tek bir nokta bile açıkta kalmamalıdır</strong>.</li>
+        <li>Harfler aynı düz çizgide bağlanamayacak konumlarda yer alır; tüm noktaları doldurarak doğal <strong>dönüşlerle (virajlarla)</strong> birleştirilir.</li>
+        <li>Kendi yolunun üzerine geri gidersen çizgi <strong>kısalır</strong>.</li>
+        <li>Her seviyede hedef bulmaca sayısını tamamladığında <strong>otomatik olarak bir üst seviyeye ve zorluğa</strong> geçersin!</li>
+        <li>Dokunmatik ekranda harfe <strong>dokunup sürükle</strong> ya da <strong>dokun-dokun</strong> ile ilerle.</li>
+      </ul>
+    </div>
+  </div>
 
   <!-- İlk Açılış Karşılama Modalı -->
   <div class="modal-overlay" id="welcomeOverlay" style="z-index:119;"></div>
@@ -11972,6 +12068,63 @@
     const btnModeMenuToggle = document.getElementById('btnModeMenuToggle');
     const modeMenuDropdown = document.getElementById('modeMenuDropdown');
     const modeMenuBtnText = document.getElementById('modeMenuBtnText');
+    const btnHowToPlay = document.getElementById('btnHowToPlay');
+    const howToOverlay = document.getElementById('howToOverlay');
+    const howToModal = document.getElementById('howToModal');
+    const btnHowToClose = document.getElementById('btnHowToClose');
+    function openHowToModal() {
+      if (howToOverlay) howToOverlay.classList.add('show');
+      if (howToModal) howToModal.classList.add('show');
+    }
+    function closeHowToModal() {
+      if (howToOverlay) howToOverlay.classList.remove('show');
+      if (howToModal) howToModal.classList.remove('show');
+    }
+    if (btnHowToPlay) btnHowToPlay.addEventListener('click', () => { playClick(); openHowToModal(); });
+    if (btnHowToClose) btnHowToClose.addEventListener('click', () => { playClick(); closeHowToModal(); });
+    if (howToOverlay) howToOverlay.addEventListener('click', closeHowToModal);
+
+    // Tüm modal pencerelerinin sağ üst köşesine kırmızı ✕ (Ana Sayfaya Dön) butonu ekle
+    (function initModalTopCloseButtons() {
+      const closeTargetMap = {
+        themeModal: 'themeClose',
+        seedModal: 'seedCancel',
+        tourneyModal: 'tourneyClose',
+        badgeModal: 'badgeClose',
+        adventureModal: 'adventureClose',
+        jigsawModal: 'jigsawClose',
+        creatorModal: 'creatorClose',
+        parentModal: 'parentClose',
+        profileModal: 'profileClose',
+        musicCreditsModal: 'musicCreditsClose',
+        pdfModal: 'pdfCancel'
+      };
+      document.querySelectorAll('.modal').forEach(modal => {
+        const id = modal.id;
+        if (!id || id === 'welcomeModal' || id === 'howToModal') return;
+        if (modal.querySelector('.modal-top-close')) return;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'modal-top-close';
+        btn.setAttribute('aria-label', 'Kapat');
+        btn.title = 'Ana Sayfaya Dön (Kapat)';
+        btn.textContent = '✕';
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const targetId = closeTargetMap[id];
+          const targetBtn = targetId ? document.getElementById(targetId) : null;
+          if (targetBtn) {
+            targetBtn.click();
+            return;
+          }
+          playClick();
+          modal.classList.remove('show');
+          const ov = document.getElementById(id.replace(/Modal$/, 'Overlay'));
+          if (ov) ov.classList.remove('show');
+        });
+        modal.prepend(btn);
+      });
+    })();
     function syncModeMenuUI(closeDropdown) {
       if (closeDropdown && modeMenuDropdown && btnModeMenuToggle) {
         modeMenuDropdown.classList.remove('open');
