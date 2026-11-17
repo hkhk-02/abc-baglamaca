@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
@@ -145,9 +145,9 @@
       gap: 4px;
     }
     .icon-btn {
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.28);
-      color: #fff;
+      background: rgba(255,255,255,0.92);
+      border: 1.5px solid #ffffff;
+      color: #1e293b;
       width: 27px;
       height: 27px;
       border-radius: 50%;
@@ -156,10 +156,11 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 2px 6px rgba(15,23,42,0.28);
       transition: background 0.2s, transform 0.15s;
       padding: 0;
     }
-    .icon-btn:hover { background: rgba(255,255,255,0.35); transform: translateY(-1px); }
+    .icon-btn:hover { background: #ffffff; transform: translateY(-1px) scale(1.06); }
 
     /* 4 Basamaklı Küresel Lig ve Sıralama (Leaderboard) Stilleri */
     .league-pyramid {
@@ -1764,6 +1765,115 @@
       z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.25s;
     }
     .overlay.show, .modal-overlay.show { opacity: 1; pointer-events: auto; }
+    #welcomeOverlay {
+      background:
+        radial-gradient(circle at 18% 18%, rgba(56,189,248,0.24), transparent 42%),
+        radial-gradient(circle at 82% 82%, rgba(250,204,21,0.18), transparent 45%),
+        linear-gradient(160deg, #1e3a8a 0%, #312e81 55%, #0f172a 100%);
+      transition: opacity 0.3s ease;
+    }
+    #welcomeModal {
+      max-width: 396px;
+      width: calc(100vw - 24px);
+      max-height: calc(100vh - 24px);
+      overflow-y: auto;
+      padding: 16px 16px 15px;
+      border-radius: 20px;
+      border: 2.5px solid rgba(255,255,255,0.85);
+      box-shadow: 0 20px 48px rgba(15,23,42,0.45);
+      text-align: center;
+      z-index: 120;
+    }
+    .welcome-brand-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      border: 2px solid #f59e0b; border-radius: 999px;
+      padding: 4px 12px; font-size: 0.76rem; font-weight: 900;
+      color: #92400e; margin-bottom: 6px;
+      box-shadow: 0 3px 10px rgba(245,158,11,0.2);
+    }
+    .welcome-demo-box {
+      display: flex; align-items: center; gap: 11px;
+      background: var(--page); border: 1.5px solid var(--border-color);
+      border-radius: 14px; padding: 10px; margin-bottom: 10px; text-align: left;
+    }
+    .welcome-demo-svg {
+      flex: 0 0 124px; width: 124px; height: 124px;
+      background: #ffffff; border: 2px solid #cbd5e1; border-radius: 12px;
+      box-shadow: inset 0 2px 6px rgba(15,23,42,0.05);
+    }
+    .welcome-demo-rules {
+      flex: 1; display: grid; gap: 6px; font-size: 0.72rem; line-height: 1.3; color: var(--text-main);
+    }
+    .welcome-demo-rule {
+      display: flex; align-items: flex-start; gap: 5px; font-weight: 700;
+    }
+    .welcome-demo-status {
+      margin-top: 2px; font-size: 0.68rem; font-weight: 900;
+      color: #15803d; background: rgba(34,197,94,0.14);
+      border-radius: 7px; padding: 3px 6px; text-align: center;
+      animation: welcomeDoneAnim 4.8s infinite;
+    }
+    .welcome-path-a {
+      stroke-dasharray: 160; stroke-dashoffset: 160;
+      animation: welcomeDrawA 4.8s ease-in-out infinite;
+    }
+    .welcome-path-b {
+      stroke-dasharray: 120; stroke-dashoffset: 120;
+      animation: welcomeDrawB 4.8s ease-in-out infinite;
+    }
+    .welcome-finger {
+      animation: welcomeFingerMove 4.8s ease-in-out infinite;
+    }
+    @keyframes welcomeDrawA {
+      0%, 6% { stroke-dashoffset: 160; opacity: 0.25; }
+      38%, 90% { stroke-dashoffset: 0; opacity: 1; }
+      97%, 100% { stroke-dashoffset: 160; opacity: 0; }
+    }
+    @keyframes welcomeDrawB {
+      0%, 40% { stroke-dashoffset: 120; opacity: 0.2; }
+      72%, 90% { stroke-dashoffset: 0; opacity: 1; }
+      97%, 100% { stroke-dashoffset: 120; opacity: 0; }
+    }
+    @keyframes welcomeDoneAnim {
+      0%, 71% { opacity: 0.35; transform: scale(0.97); }
+      76%, 90% { opacity: 1; transform: scale(1.02); }
+      97%, 100% { opacity: 0.35; transform: scale(0.97); }
+    }
+    @keyframes welcomeFingerMove {
+      0% { transform: translate(28px, 28px); opacity: 0; }
+      6% { transform: translate(28px, 28px); opacity: 1; }
+      20% { transform: translate(28px, 108px); opacity: 1; }
+      30% { transform: translate(68px, 108px); opacity: 1; }
+      38% { transform: translate(68px, 68px); opacity: 1; }
+      41% { transform: translate(68px, 28px); opacity: 0.9; }
+      56% { transform: translate(108px, 28px); opacity: 1; }
+      72% { transform: translate(108px, 108px); opacity: 1; }
+      78%, 100% { transform: translate(108px, 108px); opacity: 0; }
+    }
+    .welcome-name-field {
+      display: grid; gap: 4px; text-align: left; margin-bottom: 9px;
+      font-size: 0.74rem; font-weight: 800; color: var(--text-main);
+    }
+    .welcome-name-field input {
+      width: 100%; padding: 9px 11px; border-radius: 10px;
+      border: 1.5px solid var(--border-color); background: var(--page);
+      color: var(--text-main); font-size: 0.85rem; font-weight: 700;
+      box-sizing: border-box;
+    }
+    .welcome-start-info {
+      background: rgba(34,197,94,0.1); border: 1.5px solid rgba(34,197,94,0.35);
+      border-radius: 10px; padding: 7px 10px; font-size: 0.72rem;
+      color: var(--text-main); margin-bottom: 11px; text-align: left;
+    }
+    .welcome-cta-btn {
+      width: 100%; padding: 12px 16px; border: none; border-radius: 13px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #fff;
+      font-weight: 900; font-size: 1rem; cursor: pointer;
+      box-shadow: 0 5px 15px rgba(37,99,235,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .welcome-cta-btn:hover { transform: translateY(-1px); box-shadow: 0 7px 18px rgba(37,99,235,0.45); }
     
     .toast {
       position: fixed; top: 50%; left: 50%;
@@ -2745,7 +2855,7 @@
       <div style="display:grid;gap:5px;margin-bottom:8px;font-size:0.68rem;font-weight:800;">
         <label style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
           <span>🎵 Müzik Seviyesi</span>
-          <input type="range" id="bgmVolumeRange" min="0" max="100" value="100" style="width:120px;accent-color:var(--blue);">
+          <input type="range" id="bgmVolumeRange" min="0" max="100" value="20" style="width:120px;accent-color:var(--blue);">
         </label>
         <label style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
           <span>🔊 Efekt Seviyesi</span>
@@ -3285,6 +3395,54 @@
     </div>
   </div>
   <div class="confetti-box" id="confetti"></div>
+
+  <!-- İlk Açılış Karşılama Modalı -->
+  <div class="modal-overlay" id="welcomeOverlay" style="z-index:119;"></div>
+  <div class="modal" id="welcomeModal" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+    <div class="welcome-brand-pill">🦉 MiniBilge · ABC Bağlamaca</div>
+    <h3 id="welcomeTitle" style="margin-bottom:8px;font-size:1.12rem;">Hoş Geldin! Nasıl Oynanır?</h3>
+
+    <div class="welcome-demo-box">
+      <svg class="welcome-demo-svg" viewBox="0 0 136 136" aria-hidden="true">
+        <!-- 3x3 Noktalar -->
+        <circle cx="28" cy="28" r="4" fill="#cbd5e1"/><circle cx="68" cy="28" r="4" fill="#cbd5e1"/><circle cx="108" cy="28" r="4" fill="#cbd5e1"/>
+        <circle cx="28" cy="68" r="4" fill="#cbd5e1"/><circle cx="68" cy="68" r="4" fill="#cbd5e1"/><circle cx="108" cy="68" r="4" fill="#cbd5e1"/>
+        <circle cx="28" cy="108" r="4" fill="#cbd5e1"/><circle cx="68" cy="108" r="4" fill="#cbd5e1"/><circle cx="108" cy="108" r="4" fill="#cbd5e1"/>
+        <!-- Animasyonlu Çizgiler -->
+        <path class="welcome-path-a" d="M 28 28 L 28 108 L 68 108 L 68 68" fill="none" stroke="#2563eb" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+        <path class="welcome-path-b" d="M 68 28 L 108 28 L 108 108" fill="none" stroke="#f97316" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Harf Düğmeleri -->
+        <circle cx="28" cy="28" r="13" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+        <text x="28" y="33" text-anchor="middle" font-size="14" font-weight="900" fill="#1e3a8a">A</text>
+        <circle cx="68" cy="68" r="13" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+        <text x="68" y="73" text-anchor="middle" font-size="14" font-weight="900" fill="#1e3a8a">A</text>
+        <circle cx="68" cy="28" r="13" fill="#fff7ed" stroke="#f97316" stroke-width="2.5"/>
+        <text x="68" y="33" text-anchor="middle" font-size="14" font-weight="900" fill="#9a3412">B</text>
+        <circle cx="108" cy="108" r="13" fill="#fff7ed" stroke="#f97316" stroke-width="2.5"/>
+        <text x="108" y="113" text-anchor="middle" font-size="14" font-weight="900" fill="#9a3412">B</text>
+        <!-- Hareketli İşaretçi -->
+        <g class="welcome-finger">
+          <circle cx="0" cy="0" r="7" fill="rgba(255,255,255,0.9)" stroke="#0f172a" stroke-width="2"/>
+        </g>
+      </svg>
+      <div class="welcome-demo-rules">
+        <div class="welcome-demo-rule"><span>✏️</span><span>Aynı harfleri sürükleyip birleştir</span></div>
+        <div class="welcome-demo-rule"><span>🟦</span><span>Tahtadaki tüm noktaları doldur</span></div>
+        <div class="welcome-demo-rule"><span>🚫</span><span>Çapraz gitme, çizgiler kesişmesin</span></div>
+        <div class="welcome-demo-status">✨ Harika! Hepsi doldu!</div>
+      </div>
+    </div>
+
+    <label class="welcome-name-field">
+      <span>👤 Oyuncu Adın (İsteğe Bağlı)</span>
+      <input type="text" id="welcomeNameInput" maxlength="20" placeholder="Örn: Zeki Kaşif">
+    </label>
+    <div class="welcome-start-info">
+      <strong>🌟 Başlangıç:</strong> Çok Kolay (3×3) · 1. Seviye<br>
+      <span style="opacity:0.84;font-size:0.67rem;">Bulmacaları çözdükçe yeni seviyeler ve zorluklar otomatik açılır.</span>
+    </div>
+    <button type="button" class="welcome-cta-btn" id="welcomeStartBtn">🚀 Oyuna Başla</button>
+  </div>
 
   <!-- Detaylı PDF & Resmi Turnuva Kitapçığı Modalı -->
   <div class="modal-overlay" id="pdfOverlay"></div>
@@ -4073,7 +4231,8 @@
       { diff: 'Uzman',     title: 'ABC Bağlamaca Müzik 6', src: 'muzik/abc-baglamaca-muzik6.mp3', license: 'ABC Bağlamaca Özel Fon Müziği' }
     ];
 
-    const BGM_MAX_VOL = 0.20;
+    const BGM_MAX_VOL = 1.0;
+    const BGM_DEFAULT_MUL = 0.20;
     const BGM_CROSSFADE_MS = 1500;
     let bgmHasUserGesture = false;
     let bgmCurrentSrc = '';
@@ -4121,7 +4280,7 @@
 
     function getTargetBgmVolume() {
       if (!musicEnabled) return 0;
-      const bgmMul = (typeof appData !== 'undefined' && typeof appData.bgmVol === 'number') ? appData.bgmVol : 1;
+      const bgmMul = (typeof appData !== 'undefined' && typeof appData.bgmVol === 'number') ? appData.bgmVol : BGM_DEFAULT_MUL;
       const base = BGM_MAX_VOL * bgmMul;
       return memoryMode ? (base * 0.5) : base;
     }
@@ -4243,9 +4402,10 @@
       if (musicPopTitle) musicPopTitle.textContent = `🎵 Fon Müziği · ${info.diffLabel}`;
       if (musicNowPlaying) {
         const isMissing = bgmFailedSet.has(info.src);
+        const volPct = Math.round(getTargetBgmVolume() * 100);
         musicNowPlaying.innerHTML = isMissing
           ? `<div style="color:#c62828;"><strong>⚠️ Dosya Bulunamadı:</strong> <code>${info.src}</code></div><div style="font-size:0.62rem;opacity:0.85;">Gerçek MP3 dosyası eklenene kadar bu seviye sessiz kalır.</div>`
-          : `<div><strong>${info.meta.title}</strong> — ${info.diffLabel}</div><div style="font-size:0.62rem;opacity:0.8;">Dosya: <code>${info.src}</code> · Ses: %${memoryMode ? '10 (Hafıza)' : '20'}</div>`;
+          : `<div><strong>${info.meta.title}</strong> — ${info.diffLabel}</div><div style="font-size:0.62rem;opacity:0.8;">Dosya: <code>${info.src}</code> · Ses: %${volPct}${memoryMode ? ' (Hafıza)' : ''}</div>`;
       }
       if (btnMusicOnOff) {
         btnMusicOnOff.textContent = musicEnabled ? '🎵 Müzik Açık' : '🔕 Müzik Kapalı';
@@ -5210,11 +5370,12 @@
     const bgmVolumeRange = document.getElementById('bgmVolumeRange');
     const sfxVolumeRange = document.getElementById('sfxVolumeRange');
     if (bgmVolumeRange) {
-      bgmVolumeRange.value = Math.round(((typeof appData.bgmVol === 'number') ? appData.bgmVol : 1) * 100);
+      bgmVolumeRange.value = Math.round(((typeof appData.bgmVol === 'number') ? appData.bgmVol : BGM_DEFAULT_MUL) * 100);
       bgmVolumeRange.addEventListener('input', () => {
         appData.bgmVol = Math.max(0, Math.min(1, parseInt(bgmVolumeRange.value, 10) / 100));
         saveAppData();
         syncBgmVolume();
+        if (musicPopover && musicPopover.classList.contains('open')) renderMusicPopover();
       });
     }
     if (sfxVolumeRange) {
@@ -10887,6 +11048,7 @@
       // ADIM 3 & 4: Haftalık Küresel Lig Puanını (addSolved içinde aynı miktarda artırıldı) Ortak Bulut Tablosuna Gönder
       ensureLeagueWeekSync();
       updateProfileButtonUI();
+
       saveAppData();
       syncPlayerToCloudLeaderboard(false);
     }
@@ -11039,6 +11201,7 @@
           cloudSyncStatusNote.innerHTML = `🟢 <strong>Canlı Ortak Sıralama Aktif:</strong> Şu an bu haftaki ortak tabloda <strong>${realCount} gerçek oyuncu (arkadaşın)</strong> yarışıyor!`;
         }
         updateProfileButtonUI();
+
         if (renderAfter && profileModal && profileModal.classList.contains('show')) {
           renderProfileModal(false);
         }
@@ -11250,6 +11413,7 @@
     }
     updateProfileButtonUI();
 
+
     async function sendClapToFriend(targetCloudId, targetRawName) {
       try {
         playPathComplete();
@@ -11299,6 +11463,7 @@
       saveAppData();
       applyEquippedHat();
       updateProfileButtonUI();
+
       updateStatsUI();
       updateGoldTourBanner();
       buildGradeButtons();
@@ -11658,6 +11823,7 @@
         syncCurrentToActiveProfile();
         saveAppData();
         updateProfileButtonUI();
+
         syncPlayerToCloudLeaderboard(true);
         renderProfileModal(false);
         closeProfileModal();
@@ -11680,6 +11846,63 @@
     if (btnMemory) btnMemory.classList.remove('active');
     newPuzzle();
     updateProfileButtonUI();
+
+    // İlk açılış karşılama ekranı (yalnızca ilk açılışta, Çok Kolay · 1. Seviye ile)
+    (function initFirstLaunchWelcome() {
+      const wOverlay = document.getElementById('welcomeOverlay');
+      const wModal = document.getElementById('welcomeModal');
+      const wInput = document.getElementById('welcomeNameInput');
+      const wStartBtn = document.getElementById('welcomeStartBtn');
+      if (!wOverlay || !wModal || !wStartBtn) return;
+      const forceWelcome = new URLSearchParams(location.search).get('welcome') === '1';
+      if (!forceWelcome && (appData.welcomeSeen || (appData.totalSolved || 0) > 0)) return;
+
+      const slot = appData.activeProfileIdx || 0;
+      const curProf = appData.profiles && appData.profiles[slot];
+      if (wInput && curProf && curProf.name) {
+        wInput.placeholder = curProf.name;
+      }
+
+      function finishWelcome() {
+        playClick();
+        if (typeof unlockAudioAndStartBgm === 'function') unlockAudioAndStartBgm();
+        const rawName = wInput ? wInput.value.trim() : '';
+        if (rawName && appData.profiles && appData.profiles[slot]) {
+          appData.profiles[slot].name = sanitizePublicNickname(rawName);
+        }
+        appData.welcomeSeen = true;
+        saveAppData();
+        updateProfileButtonUI();
+
+        if (gradeIdx !== 0 || levelIdx !== 0) {
+          gradeIdx = 0;
+          levelIdx = 0;
+          buildGradeButtons();
+          buildLevelButtons();
+          newPuzzle();
+        }
+        wOverlay.classList.remove('show');
+        wModal.classList.remove('show');
+
+        const activeName = (appData.profiles && appData.profiles[slot] && appData.profiles[slot].name) || 'Kaşif';
+        if (typeof showMascotMessage === 'function') {
+          showMascotMessage(`Hoş geldin ${activeName}! Aynı harfleri birleştirerek başlayabilirsin.`);
+        }
+      }
+
+      wStartBtn.addEventListener('click', finishWelcome);
+      if (wInput) {
+        wInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            finishWelcome();
+          }
+        });
+      }
+
+      wOverlay.classList.add('show');
+      wModal.classList.add('show');
+    })();
 
     // Eğer arkadaşımız bize özel tasarladığı bulmaca linkini (?custom=...) gönderdiyse otomatik aç!
     try {
