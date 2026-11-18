@@ -102,6 +102,8 @@
       background: rgba(255,255,255,0.16);
       padding: 5px 8px;
       border-radius: 10px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .hero h1 {
       font-size: clamp(1.05rem, 3.8vw, 1.35rem);
@@ -2656,26 +2658,33 @@
       }
     }
     @media (max-width: 600px) {
-      body { padding: 0 6px 8px; }
-      .main-stage { gap: 7px; }
-      .hero { padding: 6px 10px; gap: 5px; margin: 0 -6px 5px; border-radius: 0 0 14px 14px; }
-      .hero-brand { gap: 6px; }
-      .hero-brand .kids { font-size: 1rem; padding: 3px 5px; border-radius: 8px; }
-      .hero h1 { font-size: 0.86rem; white-space: nowrap; }
+      body { padding: 0 6px 6px; }
+      .main-stage { gap: 4px; }
+      .hero,
+      body.main-fullscreen-mode .hero {
+        padding: 4px 8px;
+        gap: 3px;
+        margin: 0 -6px 3px;
+        border-radius: 0 0 12px 12px;
+      }
+      .hero-brand { gap: 5px; }
+      .hero-brand .kids { font-size: 0.92rem; padding: 2px 4px; border-radius: 8px; white-space: nowrap; flex-shrink: 0; }
+      .hero-title-row { flex-wrap: nowrap; gap: 4px; }
+      .hero h1 { font-size: 0.79rem; white-space: nowrap; }
       .hero .sub { display: none; }
-      .hero-mini-icons { gap: 5px; }
-      .icon-btn { width: 27px; height: 27px; font-size: 0.78rem; }
-      .main-fs-toggle-btn, .low-reach-toggle-pill { padding: 4px 9px; font-size: 0.67rem; }
-      .hint-text { display: none; }
-      .stats-card { padding: 5px 8px !important; }
-      .stat-item { font-size: 0.58rem; }
-      .stat-item span { font-size: 0.78rem; }
-      .gold-tour-banner { padding: 4px 8px; font-size: 0.64rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-      .pickers-wrap { padding: 5px 7px 3px; gap: 3px; }
+      .hero-mini-icons { gap: 4px; flex-shrink: 0; }
+      .icon-btn { width: 25px; height: 25px; font-size: 0.74rem; }
+      .main-fs-toggle-btn, .low-reach-toggle-pill { padding: 3px 8px; font-size: 0.65rem; }
+      .hint-text, .footer { display: none; }
+      .stats-card { padding: 3px 6px !important; }
+      .stat-item { font-size: 0.56rem; }
+      .stat-item span { font-size: 0.75rem; }
+      .gold-tour-banner { padding: 3px 8px; font-size: 0.62rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .pickers-wrap { padding: 3px 6px 2px; gap: 2px; }
       .picker-label { display: none; }
-      .chip { padding: 3px 2px; font-size: 0.64rem; }
-      .chip .sub { font-size: 0.48rem; margin-top: 0; }
-      #singleBoardSection { padding: 8px 6px 9px; }
+      .chip { padding: 2px 1px; font-size: 0.62rem; }
+      .chip .sub { font-size: 0.46rem; margin-top: 0; }
+      #singleBoardSection { padding: 5px 5px 6px; }
       .rush-banner { padding: 4px 8px; margin-bottom: 4px; font-size: 0.68rem; }
       .memory-banner { padding: 4px 8px; margin-bottom: 4px; gap: 3px; }
       .memory-top-row { font-size: 0.66rem; gap: 4px; }
@@ -2686,14 +2695,14 @@
         align-items: center;
         justify-content: center;
         padding: 0;
-        margin-bottom: 6px;
+        margin-bottom: 3px;
       }
-      .board-frame { width: min(calc(100% - 2px), 95vw, 60dvh); max-width: 100%; padding: 4px; margin: 0 auto; border-width: 3px; }
-      body.main-fullscreen-mode .board-frame { width: min(calc(100% - 2px), 96vw, 62dvh); }
-      .status { gap: 4px; margin: 4px 0; font-size: 0.65rem; }
-      .note { font-size: 0.66rem; line-height: 1.25; margin-bottom: 6px; }
-      .actions { gap: 5px; margin-bottom: 2px; }
-      .actions .btn { padding: 8px 4px; font-size: 0.7rem; border-radius: 10px; white-space: nowrap; }
+      .board-frame { width: min(calc(100% - 2px), 95vw, 50dvh); max-width: 100%; padding: 4px; margin: 0 auto; border-width: 3px; }
+      body.main-fullscreen-mode .board-frame { width: min(calc(100% - 2px), 96vw, 56dvh); }
+      .status { gap: 3px; margin: 2px 0; font-size: 0.62rem; }
+      .note { font-size: 0.62rem; line-height: 1.15; margin-bottom: 3px; }
+      .actions { gap: 4px; margin-bottom: 1px; }
+      .actions .btn { padding: 6px 3px; font-size: 0.67rem; border-radius: 9px; white-space: nowrap; }
       .modal:not(.jigsaw-fullscreen) {
         width: calc(100vw - 16px) !important;
         max-width: calc(100vw - 16px) !important;
@@ -3063,13 +3072,13 @@
       gap: 6px;
     }
     @media (max-width: 600px) {
-      .top-quick-bar { gap: 5px; }
-      .top-quick-btn { padding: 7px 5px; font-size: 0.68rem; border-radius: 9px; gap: 4px; }
-      .mode-menu-wrap { gap: 6px; }
-      .how-to-btn { padding: 8px 9px; font-size: 0.69rem; border-radius: 10px; gap: 3px; }
-      .mode-menu-trigger { padding: 8px 9px; font-size: 0.69rem; border-radius: 10px; min-width: 0; gap: 4px; }
+      .top-quick-bar { gap: 4px; }
+      .top-quick-btn { padding: 5px 4px; font-size: 0.65rem; border-radius: 8px; gap: 3px; }
+      .mode-menu-wrap { gap: 5px; }
+      .how-to-btn { padding: 6px 8px; font-size: 0.67rem; border-radius: 9px; gap: 3px; }
+      .mode-menu-trigger { padding: 6px 8px; font-size: 0.67rem; border-radius: 9px; min-width: 0; gap: 4px; }
       #modeMenuBtnText { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      #btnPdf { padding: 8px 10px !important; font-size: 0.69rem; border-radius: 10px; flex-shrink: 0; }
+      #btnPdf { padding: 6px 9px !important; font-size: 0.67rem; border-radius: 9px; flex-shrink: 0; }
     }
 
     /* 🎵 Fon Müziği Seçim Paneli (Üst Bar Altında Kompakt Açılır Kutu) */
@@ -3980,6 +3989,63 @@
       ]}
     ];
 
+    /* 👑 Altın Yıldız Turu (30 Seviye Tamamlandıktan Sonra Devreye Giren Usta / Üstat Kademeleri) */
+    const GOLD_TOUR_GRADES = [
+      { grade: 0, label: 'Bronz Usta', levels: [
+        { level: 1, size: 6, pairs: 4 },
+        { level: 2, size: 6, pairs: 5 },
+        { level: 3, size: 6, pairs: 5 },
+        { level: 4, size: 6, pairs: 6 },
+        { level: 5, size: 6, pairs: 6 }
+      ]},
+      { grade: 1, label: 'Gümüş Usta', levels: [
+        { level: 1, size: 6, pairs: 5 },
+        { level: 2, size: 6, pairs: 6 },
+        { level: 3, size: 7, pairs: 5 },
+        { level: 4, size: 7, pairs: 6 },
+        { level: 5, size: 7, pairs: 6 }
+      ]},
+      { grade: 2, label: 'Altın Usta', levels: [
+        { level: 1, size: 7, pairs: 5 },
+        { level: 2, size: 7, pairs: 6 },
+        { level: 3, size: 7, pairs: 6 },
+        { level: 4, size: 7, pairs: 7 },
+        { level: 5, size: 7, pairs: 7 }
+      ]},
+      { grade: 3, label: 'Elmas Usta', levels: [
+        { level: 1, size: 7, pairs: 6 },
+        { level: 2, size: 7, pairs: 7 },
+        { level: 3, size: 8, pairs: 6 },
+        { level: 4, size: 8, pairs: 7 },
+        { level: 5, size: 8, pairs: 7 }
+      ]},
+      { grade: 4, label: 'Büyük Üstat', levels: [
+        { level: 1, size: 8, pairs: 6 },
+        { level: 2, size: 8, pairs: 7 },
+        { level: 3, size: 8, pairs: 7 },
+        { level: 4, size: 8, pairs: 8 },
+        { level: 5, size: 8, pairs: 8 }
+      ]},
+      { grade: 5, label: 'Efsanevi Deha', levels: [
+        { level: 1, size: 8, pairs: 7 },
+        { level: 2, size: 8, pairs: 7 },
+        { level: 3, size: 8, pairs: 8 },
+        { level: 4, size: 8, pairs: 8 },
+        { level: 5, size: 8, pairs: 8 }
+      ]}
+    ];
+
+    function isGoldMasterMode() {
+      return (typeof appData !== 'undefined') && ((appData.goldTour || 0) > 0) && !(typeof isEduThemeActive === 'function' && isEduThemeActive());
+    }
+    function getActiveGrades() {
+      return isGoldMasterMode() ? GOLD_TOUR_GRADES : GRADES;
+    }
+    function getActiveGradeObj(gi) {
+      const list = getActiveGrades();
+      return list[gi] || list[0];
+    }
+
     const MAX_SIZE = 10;
     const LETTERS = 'ABCDEFGHI';
     const PATH_COLORS = {
@@ -4437,16 +4503,17 @@
     }
 
     function growthEvery(gi, li) {
-      return GRADES[gi].levels[li].size <= 3 ? 4 : 8;
+      return getActiveGradeObj(gi).levels[li].size <= 3 ? 4 : 8;
     }
 
     function grownSteps(gi, li, solved) {
+      if (isGoldMasterMode()) return 0;
       if (gi === 0) return 0;
       return Math.min(2, Math.floor(solved / growthEvery(gi, li)));
     }
 
     function variantFor(gi, li, solved) {
-      const cfg = GRADES[gi].levels[li];
+      const cfg = getActiveGradeObj(gi).levels[li];
       const grown = grownSteps(gi, li, solved);
       return {
         size: Math.min(cfg.size + grown, MAX_SIZE),
@@ -4456,6 +4523,10 @@
     }
 
     function percentileFor(gi, li, solved) {
+      if (isGoldMasterMode()) {
+        const basePct = 0.72 + gi * 0.045 + li * 0.008;
+        return Math.min(0.98, basePct);
+      }
       const r = difficultyRange(gi, li);
       const inVariant = solved - growthEvery(gi, li) * grownSteps(gi, li, solved);
       return Math.min(r.max, r.start + inVariant * r.step);
@@ -4927,13 +4998,26 @@
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         const parsed = raw ? JSON.parse(raw) : {};
-        return Object.assign({
+        const data = Object.assign({
           progress: {}, tourProgress: {}, unlockedIdx: 0,
           goldTour: 0, goldCrowns: {},
           score: 0, sound: true, dark: false, pattern: false,
           symbolTheme: 0, firstTime: false, achievements: {},
           noHintWins: 0, obstacleWins: 0, bestRush: 0
         }, parsed);
+        try {
+          const sp = new URLSearchParams(window.location.search);
+          if (sp.get('gold') === '1') {
+            data.goldTour = 1;
+            data.unlockedIdx = 29;
+            data.classicGradeIdx = 0;
+            data.classicLevelIdx = 0;
+            data.welcomeSeen = true;
+          } else if (sp.get('gold') === '0') {
+            data.goldTour = 0;
+          }
+        } catch (_) {}
+        return data;
       } catch (_) {
         return {
           progress: {}, tourProgress: {}, unlockedIdx: 0,
@@ -5038,7 +5122,11 @@
       return Object.keys(appData.goldCrowns || {}).length;
     }
     function goldTargetSec(gi, li) {
-      const sz = GRADES[gi].levels[li].size;
+      const gObj = getActiveGradeObj(gi);
+      const sz = gObj.levels[li].size;
+      if (isGoldMasterMode()) {
+        return Math.max(25, sz * 10 - gi * 3 - li);
+      }
       return sz * 10;
     }
     function updateGoldTourBanner() {
@@ -5049,8 +5137,8 @@
       const tour = appData.goldTour || 0;
       if (tour > 0) {
         banner.classList.add('show');
-        const tourName = tour === 1 ? '🌟 ALTIN YILDIZ TURU' : (tour === 2 ? '💎 ELMAS YILDIZ TURU' : `🔥 ${tour}. EFSANE TURU`);
-        if (titleEl) titleEl.textContent = `${tourName} · Sürede & İpucusuz Çöz!`;
+        const tourName = tour === 1 ? '🌟 ALTIN YILDIZ USTA TURU' : (tour === 2 ? '💎 ELMAS YILDIZ ÜSTAT TURU' : `🔥 ${tour}. EFSANE DEHA TURU`);
+        if (titleEl) titleEl.textContent = `${tourName} · 6×6–8×8 Uzman Zorluk!`;
         if (countEl) countEl.textContent = `👑 ${countGoldCrowns()} / 30 Taç`;
       } else {
         banner.classList.remove('show');
@@ -5105,9 +5193,10 @@
     }
 
     function getMemoryGradeConfig(gi = gradeIdx) {
+      const gLabel = getActiveGradeObj(gi) ? getActiveGradeObj(gi).label : 'Orta';
       if (gi === 0) {
         return {
-          tierName: '🌱 Çok Kolay · Yarı-Hafıza (Başlangıç Uçları Açık)',
+          tierName: `🌱 ${gLabel} · Yarı-Hafıza (Başlangıç Uçları Açık)`,
           halfHide: true,
           defaultColorHint: true,
           peeks: 3,
@@ -5116,7 +5205,7 @@
       }
       if (gi === 1) {
         return {
-          tierName: '⭐ Kolay · Renk Halkalı Hafıza',
+          tierName: `⭐ ${gLabel} · Renk Halkalı Hafıza`,
           halfHide: false,
           defaultColorHint: true,
           peeks: 3,
@@ -5125,7 +5214,7 @@
       }
       if (gi === 2 || gi === 3) {
         return {
-          tierName: `🔥 ${GRADES[gi] ? GRADES[gi].label : 'Orta'} · Klasik Tam Hafıza`,
+          tierName: `🔥 ${gLabel} · Klasik Tam Hafıza`,
           halfHide: false,
           defaultColorHint: false,
           peeks: 2,
@@ -5133,7 +5222,7 @@
         };
       }
       return {
-        tierName: `👑 ${GRADES[gi] ? GRADES[gi].label : 'Uzman'} · Usta Hafıza (Hızlı Süre)`,
+        tierName: `👑 ${gLabel} · Usta Hafıza (Hızlı Süre)`,
         halfHide: false,
         defaultColorHint: false,
         peeks: 1,
@@ -5954,7 +6043,7 @@
       return size * size - obstacles.length;
     }
     function nodeXY(r, c) { return { x: pad + c * cellGap, y: pad + r * cellGap }; }
-    function levelCfg() { return GRADES[gradeIdx].levels[levelIdx]; }
+    function levelCfg() { return getActiveGradeObj(gradeIdx).levels[levelIdx]; }
     
     function rebuildPaths() {
       const hasAnyPath = letters.some(l => paths[l] && paths[l].length > 0);
@@ -5977,7 +6066,7 @@
     /* Seçiciler */
     function buildGradeButtons() {
       gradeButtonsEl.innerHTML = '';
-      GRADES.forEach((g, i) => {
+      getActiveGrades().forEach((g, i) => {
         const unlocked = isGradeUnlocked(i);
         const allCrowns = g.levels.every((_, li) => hasGoldCrown(i, li));
         const btn = document.createElement('button');
@@ -6021,7 +6110,7 @@
     function buildLevelButtons() {
       levelButtonsEl.innerHTML = '';
       const req = requiredForLevel(gradeIdx);
-      GRADES[gradeIdx].levels.forEach((lvl, i) => {
+      getActiveGradeObj(gradeIdx).levels.forEach((lvl, i) => {
         const unlocked = isLevelUnlocked(gradeIdx, i);
         const curProg = Math.min(req, tourSolvedCount(gradeIdx, i));
         const isDone = curProg >= req;
@@ -6291,7 +6380,8 @@
 
       const pcbGradeEl = document.getElementById('pcbGradeText');
       const pcbLevelEl = document.getElementById('pcbLevelText');
-      if (pcbGradeEl) pcbGradeEl.textContent = GRADES[gradeIdx].label;
+      const curGradeLabel = getActiveGradeObj(gradeIdx).label;
+      if (pcbGradeEl) pcbGradeEl.textContent = curGradeLabel;
       if (pcbLevelEl) pcbLevelEl.textContent = `Seviye ${cfg.level} (${curProg}/${req})`;
 
       const activeTheme = getActiveSymbolTheme();
@@ -6300,7 +6390,7 @@
         : '';
 
       statusEl.innerHTML =
-        `<span class="tag"><strong>${GRADES[gradeIdx].label}</strong> · Seviye ${cfg.level}</span>` +
+        `<span class="tag"><strong>${curGradeLabel}</strong> · Seviye ${cfg.level}</span>` +
         `<span class="tag">${size}×${size} · Nokta: <strong>${filled}/${total}</strong></span>` +
         `<span class="tag solved">Seviye Hedefi: <strong>${curProg}/${req}</strong></span>` +
         mathTag +
@@ -6316,7 +6406,7 @@
         });
       }
 
-      if (gradeIdx === 0 && levelIdx === 0 && solved === 0 && hintsUsed === 0) {
+      if (!isGoldMasterMode() && gradeIdx === 0 && levelIdx === 0 && solved === 0 && hintsUsed === 0) {
         noteEl.className = 'note teach';
         noteEl.textContent = `👆 Harfe dokun, aynı harfe sürükle · 🎯 Hedef: ${curProg}/${req}`;
       } else if (!hintArmed && hintsUsed === 0) {
@@ -7231,8 +7321,8 @@
     function triggerSingleWin() {
       const prevGrade = gradeIdx;
       const prevLevel = levelIdx;
-      const prevGradeLabel = GRADES[prevGrade].label;
-      const prevLevelNum = GRADES[prevGrade].levels[prevLevel].level;
+      const prevGradeLabel = getActiveGradeObj(prevGrade).label;
+      const prevLevelNum = getActiveGradeObj(prevGrade).levels[prevLevel].level;
       const easy = prevGrade === 0 && prevLevel <= 1;
       const list = easy ? PRAISE_EASY : PRAISE_HARD;
       let title = list[(Math.random() * list.length) | 0];
@@ -7317,7 +7407,7 @@
                 }
               }
             } else if (prevGrade === 5 && prevLevel === 4) {
-              // 30. Seviye (Uzman - Seviye 5) bitti! 🌟 Altın Yıldız Turu başlasın!
+              // 30. Seviye (Uzman / Efsanevi Deha - Seviye 5) bitti! 🌟 Altın Yıldız Usta Turu başlasın!
               appData.goldTour = (appData.goldTour || 0) + 1;
               appData.unlockedIdx = 29;
               appData.tourProgress = {};
@@ -7326,9 +7416,9 @@
               saveCurrentThemePosition();
               pendingFloor = null;
               toastIconChar = '👑';
-              title = '🌟 ALTIN YILDIZ TURU AÇILDI!';
-              levelUpMsg = `Tebrikler! Tüm 30 seviyeyi tamamladın! 🎖️ "👑 Büyük Zeka Ustası Tebrik Kartın" otomatik olarak Profilindeki "🏅 Başarılarım" bölümüne kaydedildi! Şimdi "🌟 Altın Yıldız Turu" başladı: 30 Altın Tacı (👑) topla!`;
-              toastNext.textContent = '🌟 Altın Tura Başla →';
+              title = '🌟 ALTIN YILDIZ USTA TURU AÇILDI!';
+              levelUpMsg = `Tebrikler! Tüm 30 seviyeyi tamamladın! 🎖️ "👑 Büyük Zeka Ustası Tebrik Kartın" otomatik olarak Profilindeki "🏅 Başarılarım" bölümüne kaydedildi! Şimdi yepyeni 6 Usta Kademesi ("Bronz Usta"dan "Efsanevi Deha"ya, 6×6–8×8 uzman zorlukta) açıldı: 30 Altın Tacı (👑) topla!`;
+              toastNext.textContent = '🌟 Bronz Usta Turuna Başla →';
             } else {
               let nextGi = prevGrade;
               let nextLi = prevLevel + 1;
@@ -7346,17 +7436,20 @@
               levelIdx = nextLi;
               saveCurrentThemePosition();
               pendingFloor = null;
+              const nextGObj = getActiveGradeObj(nextGi);
 
               if (gradeChanged) {
                 toastIconChar = '🚀';
-                title = `Yeni Zorluk Açıldı: ${GRADES[nextGi].label}!`;
-                levelUpMsg = `${prevGradeLabel} kademesini tamamen bitirdin! 🎖️ "${prevGradeLabel} Tebrik Kartın" otomatik olarak Profilindeki "🏅 Başarılarım" bölümüne kaydedildi ve "${GRADES[nextGi].label} · Seviye 1" açıldı!`;
-                toastNext.textContent = `${GRADES[nextGi].label} Kademesine Başla →`;
+                title = `Yeni Zorluk Açıldı: ${nextGObj.label}!`;
+                levelUpMsg = isGoldMasterMode()
+                  ? `${prevGradeLabel} kademesindeki tüm hedefleri tamamladın ve bir üst usta kademesi olan "${nextGObj.label} · Seviye 1"e geçtin!`
+                  : `${prevGradeLabel} kademesini tamamen bitirdin! 🎖️ "${prevGradeLabel} Tebrik Kartın" otomatik olarak Profilindeki "🏅 Başarılarım" bölümüne kaydedildi ve "${nextGObj.label} · Seviye 1" açıldı!`;
+                toastNext.textContent = `${nextGObj.label} Kademesine Başla →`;
               } else {
                 toastIconChar = '⬆️';
-                title = `Seviye ${GRADES[nextGi].levels[nextLi].level} Açıldı!`;
-                levelUpMsg = `Bu seviyedeki ${req}/${req} hedefini tamamladın ve otomatik olarak Seviye ${GRADES[nextGi].levels[nextLi].level}'e geçtin!`;
-                toastNext.textContent = `Seviye ${GRADES[nextGi].levels[nextLi].level}'e Geç →`;
+                title = `Seviye ${nextGObj.levels[nextLi].level} Açıldı!`;
+                levelUpMsg = `Bu seviyedeki ${req}/${req} hedefini tamamladın ve otomatik olarak Seviye ${nextGObj.levels[nextLi].level}'e geçtin!`;
+                toastNext.textContent = `Seviye ${nextGObj.levels[nextLi].level}'e Geç →`;
               }
             }
             playLevelUpFanfare();
@@ -7685,7 +7778,7 @@
     const seedApply = document.getElementById('seedApply');
 
     function openSeedModal() {
-      currentSeedDisplay.textContent = `Mevcut Soru Kodu: #${currentSeedCode} (${GRADES[gradeIdx].label} · Seviye ${levelCfg().level})`;
+      currentSeedDisplay.textContent = `Mevcut Soru Kodu: #${currentSeedCode} (${getActiveGradeObj(gradeIdx).label} · Seviye ${levelCfg().level})`;
       seedInput.value = currentSeedCode;
       seedOverlay.classList.add('show');
       seedModal.classList.add('show');
@@ -8907,7 +9000,8 @@
       }
 
       function addLevel(gi, li, n) {
-        const cfg = GRADES[gi].levels[li];
+        const gObj = getActiveGradeObj(gi);
+        const cfg = gObj.levels[li];
         const v = variantFor(gi, li, solvedCount(gi, li));
         const range = difficultyRange(gi, li);
         const stars = '★'.repeat(Math.min(5, gi + 1)) + '☆'.repeat(Math.max(0, 4 - gi));
@@ -8923,7 +9017,7 @@
           const basePts = (gi + 1) * 50 + li * 15;
           items.push({
             puzzle,
-            caption: `${GRADES[gi].label} · Seviye ${cfg.level} · Soru ${i + 1} (${v.size}×${v.size} · #${puzzle.code})`,
+            caption: `${gObj.label} · Seviye ${cfg.level} · Soru ${i + 1} (${v.size}×${v.size} · #${puzzle.code})`,
             meta: `Zorluk: ${stars} | Hedef Süre: ${targetSec} sn | Puan: ${basePts}p | Çözüm Süresi: .........`
           });
         }
@@ -8935,15 +9029,15 @@
         const targetSec = goldTargetSec(gradeIdx, levelIdx);
         items.push({
           puzzle: { s: size, sol, obstacles: obsIdx, code: currentSeedCode },
-          caption: `${GRADES[gradeIdx].label} · Seviye ${levelCfg().level} · Soru #${currentSeedCode} (${size}×${size})`,
+          caption: `${getActiveGradeObj(gradeIdx).label} · Seviye ${levelCfg().level} · Soru #${currentSeedCode} (${size}×${size})`,
           meta: `Hedef Süre: ${targetSec} sn | Puan Değeri: ${puzzleScore || 100}p | Çözüm Süresi: .........`
         });
       } else if (scope === 'level') {
         addLevel(gradeIdx, levelIdx, count);
       } else if (scope === 'grade') {
-        GRADES[gradeIdx].levels.forEach((_, li) => addLevel(gradeIdx, li, count));
+        getActiveGradeObj(gradeIdx).levels.forEach((_, li) => addLevel(gradeIdx, li, count));
       } else {
-        GRADES.forEach((g, gi) => g.levels.forEach((_, li) => addLevel(gi, li, count)));
+        getActiveGrades().forEach((g, gi) => g.levels.forEach((_, li) => addLevel(gi, li, count)));
       }
       return items;
     }
@@ -9026,7 +9120,7 @@
 
     function scopeLabel(scope) {
       const cfg = levelCfg();
-      const label = GRADES[gradeIdx].label;
+      const label = getActiveGradeObj(gradeIdx).label;
       if (scope === 'question') return `${label} · Seviye ${cfg.level} · Ekrandaki soru`;
       if (scope === 'level') return `${label} · Seviye ${cfg.level}`;
       if (scope === 'grade') return `${label} Grubu`;
