@@ -440,6 +440,30 @@
       border-radius: 0 0 14px 14px;
       padding: 6px clamp(8px, 1.8vw, 24px);
     }
+    @media (max-width: 859px) and (min-height: 521px) {
+      body.main-fullscreen-mode .main-stage {
+        flex: 1;
+        min-height: 0;
+      }
+      body.main-fullscreen-mode #singleBoardSection {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      body.main-fullscreen-mode #singleBoardSection .board-wrap {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      body.main-fullscreen-mode .board-frame {
+        width: min(calc(100% - 2px), 96vw, calc(100dvh - 335px)) !important;
+      }
+      body.main-fullscreen-mode .mode-menu-wrap {
+        margin-top: auto;
+      }
+    }
     @media (min-width: 860px) {
       body.main-fullscreen-mode .main-stage {
         flex: 1;
@@ -2587,6 +2611,39 @@
       flex-direction: column;
       gap: 5px;
     }
+    .tour-switch-bar {
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      margin-bottom: 2px;
+    }
+    .tour-switch-bar.show {
+      display: grid;
+    }
+    .tour-switch-btn {
+      border: 1.5px solid #9fa8da;
+      background: var(--card-bg);
+      color: var(--accent-text);
+      border-radius: 8px;
+      padding: 5px 6px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: 0.15s;
+      touch-action: manipulation;
+    }
+    .tour-switch-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(46, 58, 146, 0.22);
+    }
+    .tour-switch-btn.gold-btn.active {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      border-color: #92400e;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.28);
+    }
     @media (max-width: 859px) and (min-height: 521px), (max-width: 600px) {
       .pickers-wrap { padding: 4px 6px 2px; gap: 3px; }
       .pickers-compact-bar {
@@ -2632,6 +2689,39 @@
       }
       .pickers-wrap.expanded .pickers-body {
         display: flex;
+      }
+      .tour-switch-bar {
+        display: none;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+        margin-bottom: 2px;
+      }
+      .tour-switch-bar.show {
+        display: grid;
+      }
+      .tour-switch-btn {
+        border: 1.5px solid #9fa8da;
+        background: var(--card-bg);
+        color: var(--accent-text);
+        border-radius: 8px;
+        padding: 4px 6px;
+        font-size: 0.67rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: 0.15s;
+        touch-action: manipulation;
+      }
+      .tour-switch-btn.active {
+        background: var(--blue);
+        border-color: var(--blue);
+        color: #fff;
+        box-shadow: 0 2px 6px rgba(46, 58, 146, 0.22);
+      }
+      .tour-switch-btn.gold-btn.active {
+        background: linear-gradient(135deg, #d97706, #b45309);
+        border-color: #92400e;
+        color: #fff;
+        box-shadow: 0 2px 8px rgba(217, 119, 6, 0.28);
       }
       .pickers-drag-handle {
         display: flex;
@@ -2832,6 +2922,8 @@
       .levels { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 3px; }
       .chip { min-width: 0; overflow: hidden; padding: 3px 1px; font-size: 0.54rem; }
       .chip .sub { font-size: 0.43rem; margin-top: 0; }
+      .tour-switch-bar { gap: 3px; margin-bottom: 2px; }
+      .tour-switch-btn { padding: 2px 3px; font-size: 0.5rem; border-radius: 6px; }
       .top-quick-bar {
         grid-column: 3;
         grid-row: 2;
@@ -3279,6 +3371,10 @@
             <span class="pcb-hint" id="pcbToggleHint">Tümü ▾</span>
           </div>
           <div class="pickers-body" id="pickersBody">
+            <div class="tour-switch-bar" id="tourSwitchBar">
+              <button type="button" class="tour-switch-btn" id="btnSwitchClassicTour" title="Daha önce açtığın tüm Klasik (Çok Kolay - Uzman) derece ve seviyelere git">🧩 Klasik Dereceler (30/30 Açık)</button>
+              <button type="button" class="tour-switch-btn gold-btn active" id="btnSwitchGoldTour" title="Altın Usta Turu (Bronz Usta - Efsanevi Deha) kademelerine git">👑 Altın Usta Turu</button>
+            </div>
             <div class="picker">
               <div class="picker-label">Zorluk Kademesi</div>
               <div class="grades" id="gradeButtons"></div>
@@ -4036,7 +4132,10 @@
     ];
 
     function isGoldMasterMode() {
-      return (typeof appData !== 'undefined') && ((appData.goldTour || 0) > 0) && !(typeof isEduThemeActive === 'function' && isEduThemeActive());
+      return (typeof appData !== 'undefined')
+        && ((appData.goldTour || 0) > 0)
+        && !appData.viewClassicInGoldTour
+        && !(typeof isEduThemeActive === 'function' && isEduThemeActive());
     }
     function getActiveGrades() {
       return isGoldMasterMode() ? GOLD_TOUR_GRADES : GRADES;
@@ -5000,7 +5099,8 @@
         const parsed = raw ? JSON.parse(raw) : {};
         const data = Object.assign({
           progress: {}, tourProgress: {}, unlockedIdx: 0,
-          goldTour: 0, goldCrowns: {},
+          goldTour: 0, goldUnlockedIdx: 0, goldProgress: {}, goldTourProgress: {},
+          viewClassicInGoldTour: false, goldCrowns: {},
           score: 0, sound: true, dark: false, pattern: false,
           symbolTheme: 0, firstTime: false, achievements: {},
           noHintWins: 0, obstacleWins: 0, bestRush: 0
@@ -5010,11 +5110,16 @@
           if (sp.get('gold') === '1') {
             data.goldTour = 1;
             data.unlockedIdx = 29;
+            data.goldUnlockedIdx = 0;
+            data.viewClassicInGoldTour = (sp.get('classic') === '1');
+            data.goldGradeIdx = 0;
+            data.goldLevelIdx = 0;
             data.classicGradeIdx = 0;
             data.classicLevelIdx = 0;
             data.welcomeSeen = true;
           } else if (sp.get('gold') === '0') {
             data.goldTour = 0;
+            data.viewClassicInGoldTour = false;
           }
         } catch (_) {}
         return data;
@@ -5061,6 +5166,9 @@
         const store = getEduThemeProgress(theme.id);
         store.gradeIdx = gradeIdx;
         store.levelIdx = levelIdx;
+      } else if (isGoldMasterMode()) {
+        appData.goldGradeIdx = gradeIdx;
+        appData.goldLevelIdx = levelIdx;
       } else {
         appData.classicGradeIdx = gradeIdx;
         appData.classicLevelIdx = levelIdx;
@@ -5077,8 +5185,18 @@
           gradeIdx = 2;
           levelIdx = 2;
         }
+      } else if (isGoldMasterMode()) {
+        const maxU = Math.min(29, appData.goldUnlockedIdx || 0);
+        const defGi = Math.floor(maxU / 5);
+        const defLi = maxU % 5;
+        gradeIdx = (typeof appData.goldGradeIdx === 'number') ? Math.max(0, Math.min(5, appData.goldGradeIdx)) : defGi;
+        levelIdx = (typeof appData.goldLevelIdx === 'number') ? Math.max(0, Math.min(4, appData.goldLevelIdx)) : defLi;
+        if (!isLevelUnlocked(gradeIdx, levelIdx)) {
+          gradeIdx = defGi;
+          levelIdx = defLi;
+        }
       } else {
-        const maxU = Math.min(29, appData.unlockedIdx || 0);
+        const maxU = Math.min(29, (appData.goldTour || 0) > 0 ? 29 : (appData.unlockedIdx || 0));
         const defGi = Math.floor(maxU / 5);
         const defLi = maxU % 5;
         gradeIdx = (typeof appData.classicGradeIdx === 'number') ? Math.max(0, Math.min(5, appData.classicGradeIdx)) : defGi;
@@ -5092,14 +5210,23 @@
 
     function levelKey(gi, li) { return `g${GRADES[gi].grade}-l${GRADES[gi].levels[li].level}`; }
     function solvedCount(gi, li) {
+      const k = levelKey(gi, li);
+      if (isGoldMasterMode()) {
+        return ((appData.goldProgress && appData.goldProgress[k]) || 0);
+      }
       const store = getActiveProgressStore();
-      return ((store.progress && store.progress[levelKey(gi, li)]) || 0);
+      return ((store.progress && store.progress[k]) || 0);
     }
     function requiredForLevel(gi) { return gi <= 2 ? 2 : 3; }
     function tourSolvedCount(gi, li) {
+      const k = levelKey(gi, li);
+      if (isGoldMasterMode()) {
+        if (!appData.goldTourProgress) appData.goldTourProgress = {};
+        return (appData.goldTourProgress[k] || 0);
+      }
       const store = getActiveProgressStore();
       if (!store.tourProgress) store.tourProgress = {};
-      return (store.tourProgress[levelKey(gi, li)] || 0);
+      return (store.tourProgress[k] || 0);
     }
     function isLevelUnlocked(gi, li) {
       if (isEduThemeActive()) {
@@ -5107,6 +5234,9 @@
         if (gIdx > EDU_MAX_UNLOCKED_IDX) return false;
         const store = getActiveProgressStore();
         return gIdx <= (store.unlockedIdx || 0);
+      }
+      if (isGoldMasterMode()) {
+        return (gi * 5 + li) <= (appData.goldUnlockedIdx || 0);
       }
       if ((appData.goldTour || 0) > 0) return true;
       return (gi * 5 + li) <= (appData.unlockedIdx || 0);
@@ -5116,6 +5246,7 @@
     }
     function hasGoldCrown(gi, li) {
       if (isEduThemeActive()) return false;
+      if (!isGoldMasterMode()) return false;
       return !!(appData.goldCrowns && appData.goldCrowns[levelKey(gi, li)]);
     }
     function countGoldCrowns() {
@@ -5155,11 +5286,18 @@
 
     function addSolved(gi, li) {
       const k = levelKey(gi, li);
-      const store = getActiveProgressStore();
-      if (!store.progress) store.progress = {};
-      store.progress[k] = (store.progress[k] || 0) + 1;
-      if (!store.tourProgress) store.tourProgress = {};
-      store.tourProgress[k] = (store.tourProgress[k] || 0) + 1;
+      if (isGoldMasterMode()) {
+        if (!appData.goldProgress) appData.goldProgress = {};
+        appData.goldProgress[k] = (appData.goldProgress[k] || 0) + 1;
+        if (!appData.goldTourProgress) appData.goldTourProgress = {};
+        appData.goldTourProgress[k] = (appData.goldTourProgress[k] || 0) + 1;
+      } else {
+        const store = getActiveProgressStore();
+        if (!store.progress) store.progress = {};
+        store.progress[k] = (store.progress[k] || 0) + 1;
+        if (!store.tourProgress) store.tourProgress = {};
+        store.tourProgress[k] = (store.tourProgress[k] || 0) + 1;
+      }
       if (isEduThemeActive()) {
         appData.eduTotalSolved = (appData.eduTotalSolved || 0) + 1;
       }
@@ -5183,6 +5321,7 @@
     function updateStatsUI() {
       let total = appData.eduTotalSolved || 0;
       Object.values(appData.progress || {}).forEach(v => total += v);
+      Object.values(appData.goldProgress || {}).forEach(v => total += v);
       statTotalSolved.textContent = total;
       statScore.textContent = appData.score;
       statStreak.textContent = `🔥 ${streakCount}`;
@@ -6064,7 +6203,44 @@
     }
 
     /* Seçiciler */
+    function updateTourSwitchBarUI() {
+      const bar = document.getElementById('tourSwitchBar');
+      const btnClassic = document.getElementById('btnSwitchClassicTour');
+      const btnGold = document.getElementById('btnSwitchGoldTour');
+      if (!bar) return;
+      const showSwitch = ((appData.goldTour || 0) > 0) && !(typeof isEduThemeActive === 'function' && isEduThemeActive());
+      bar.classList.toggle('show', showSwitch);
+      if (!showSwitch) return;
+      const inGold = isGoldMasterMode();
+      if (btnClassic) btnClassic.classList.toggle('active', !inGold);
+      if (btnGold) btnGold.classList.toggle('active', inGold);
+    }
+
+    function switchClassicOrGoldTour(viewClassic) {
+      if ((appData.goldTour || 0) <= 0) return;
+      const wantClassic = !!viewClassic;
+      if (!!appData.viewClassicInGoldTour === wantClassic) return;
+      playClick();
+      saveCurrentThemePosition();
+      appData.viewClassicInGoldTour = wantClassic;
+      loadCurrentThemePosition();
+      saveAppData();
+      dailyMode = false;
+      if (btnDaily) btnDaily.classList.remove('active');
+      buildGradeButtons();
+      buildLevelButtons();
+      newPuzzle();
+    }
+
+    (function bindTourSwitchButtons() {
+      const btnClassic = document.getElementById('btnSwitchClassicTour');
+      const btnGold = document.getElementById('btnSwitchGoldTour');
+      if (btnClassic) btnClassic.addEventListener('click', () => switchClassicOrGoldTour(true));
+      if (btnGold) btnGold.addEventListener('click', () => switchClassicOrGoldTour(false));
+    })();
+
     function buildGradeButtons() {
+      updateTourSwitchBarUI();
       gradeButtonsEl.innerHTML = '';
       getActiveGrades().forEach((g, i) => {
         const unlocked = isGradeUnlocked(i);
@@ -6322,7 +6498,7 @@
       if (isMainFs) {
         const fsCap = vw >= 860
           ? Math.min(Math.floor(vw * 0.56), Math.floor(vh * 0.68), 720)
-          : Math.min(vw - 26, Math.floor(vh * 0.60), 560);
+          : Math.min(vw - 26, Math.max(220, vh - 335), 560);
         const maxW = Math.min(vw - 26, fsCap);
         cellGap = Math.floor(maxW / (size - 1 + 0.5));
         if (size >= 10) cellGap = Math.max(26, Math.min(cellGap, 62));
@@ -6375,7 +6551,7 @@
       const bar = '●'.repeat(stars) + '○'.repeat(5 - stars);
       const filled = countFilledCells();
       const total = totalUsableCells();
-      const goldTourActive = (appData.goldTour || 0) > 0;
+      const goldTourActive = isGoldMasterMode();
       const targetSec = goldTargetSec(gradeIdx, levelIdx);
 
       const pcbGradeEl = document.getElementById('pcbGradeText');
@@ -7352,7 +7528,7 @@
         if (!rushMode) {
           const req = requiredForLevel(prevGrade);
           const curProg = tourSolvedCount(prevGrade, prevLevel);
-          const goldTourActive = (appData.goldTour || 0) > 0;
+          const goldTourActive = isGoldMasterMode();
           const targetSec = goldTargetSec(prevGrade, prevLevel);
 
           if (goldTourActive && !isEduThemeActive() && curProg >= req && elapsedSec <= targetSec && hintsUsed === 0) {
@@ -7410,14 +7586,16 @@
               // 30. Seviye (Uzman / Efsanevi Deha - Seviye 5) bitti! 🌟 Altın Yıldız Usta Turu başlasın!
               appData.goldTour = (appData.goldTour || 0) + 1;
               appData.unlockedIdx = 29;
-              appData.tourProgress = {};
+              appData.goldUnlockedIdx = 0;
+              appData.goldTourProgress = {};
+              appData.viewClassicInGoldTour = false;
               gradeIdx = 0;
               levelIdx = 0;
               saveCurrentThemePosition();
               pendingFloor = null;
               toastIconChar = '👑';
               title = '🌟 ALTIN YILDIZ USTA TURU AÇILDI!';
-              levelUpMsg = `Tebrikler! Tüm 30 seviyeyi tamamladın! 🎖️ "👑 Büyük Zeka Ustası Tebrik Kartın" otomatik olarak Profilindeki "🏅 Başarılarım" bölümüne kaydedildi! Şimdi yepyeni 6 Usta Kademesi ("Bronz Usta"dan "Efsanevi Deha"ya, 6×6–8×8 uzman zorlukta) açıldı: 30 Altın Tacı (👑) topla!`;
+              levelUpMsg = `Tebrikler! Tüm 30 seviyeyi tamamladın! 🎖️ "👑 Büyük Zeka Ustası Tebrik Kartın" otomatik olarak Profilindeki "🏅 Başarılarım" bölümüne kaydedildi! Şimdi yepyeni 6 Usta Kademesi ("Bronz Usta"dan "Efsanevi Deha"ya, 6×6–8×8 uzman zorlukta) kilitli olarak başladı! İstersen çekmeceden "🧩 Klasik Dereceler"e tıklayarak eski 30 seviyeye de her zaman ulaşabilirsin.`;
               toastNext.textContent = '🌟 Bronz Usta Turuna Başla →';
             } else {
               let nextGi = prevGrade;
@@ -7429,8 +7607,14 @@
                 gradeChanged = true;
               }
               const nextGlobal = nextGi * 5 + nextLi;
-              if (nextGlobal > (appData.unlockedIdx || 0)) {
-                appData.unlockedIdx = nextGlobal;
+              if (isGoldMasterMode()) {
+                if (nextGlobal > (appData.goldUnlockedIdx || 0)) {
+                  appData.goldUnlockedIdx = nextGlobal;
+                }
+              } else {
+                if (nextGlobal > (appData.unlockedIdx || 0)) {
+                  appData.unlockedIdx = nextGlobal;
+                }
               }
               gradeIdx = nextGi;
               levelIdx = nextLi;
@@ -11945,6 +12129,10 @@
         tourProgress: JSON.parse(JSON.stringify(appData.tourProgress || {})),
         unlockedIdx: appData.unlockedIdx || 0,
         goldTour: appData.goldTour || 0,
+        goldUnlockedIdx: appData.goldUnlockedIdx || 0,
+        goldProgress: JSON.parse(JSON.stringify(appData.goldProgress || {})),
+        goldTourProgress: JSON.parse(JSON.stringify(appData.goldTourProgress || {})),
+        viewClassicInGoldTour: !!appData.viewClassicInGoldTour,
         goldCrowns: JSON.parse(JSON.stringify(appData.goldCrowns || {})),
         score: appData.score || 0,
         weeklyLeagueScore: appData.weeklyLeagueScore || 0,
@@ -12006,6 +12194,10 @@
       appData.tourProgress = snap.tourProgress || {};
       appData.unlockedIdx = snap.unlockedIdx || 0;
       appData.goldTour = snap.goldTour || 0;
+      appData.goldUnlockedIdx = snap.goldUnlockedIdx || 0;
+      appData.goldProgress = snap.goldProgress || {};
+      appData.goldTourProgress = snap.goldTourProgress || {};
+      appData.viewClassicInGoldTour = !!snap.viewClassicInGoldTour;
       appData.goldCrowns = snap.goldCrowns || {};
       appData.score = snap.score || 0;
       appData.weeklyLeagueScore = typeof snap.weeklyLeagueScore === 'number' ? snap.weeklyLeagueScore : (snap.score || 0);
