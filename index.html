@@ -2576,26 +2576,106 @@
         transform: translate(-50%, 0);
       }
     }
+    .pickers-compact-bar,
+    .pickers-drag-handle {
+      display: none;
+    }
+    .pickers-body {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    @media (max-width: 859px) and (min-height: 521px), (max-width: 600px) {
+      .pickers-wrap { padding: 4px 6px 2px; gap: 3px; }
+      .pickers-compact-bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        padding: 1px 2px;
+        user-select: none;
+      }
+      .pcb-pill {
+        background: var(--blue);
+        color: #fff;
+        border-radius: 7px;
+        padding: 3px 8px;
+        font-size: 0.68rem;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+      .pcb-label {
+        font-size: 0.64rem;
+        font-weight: 800;
+        color: var(--muted-text);
+        white-space: nowrap;
+        margin-right: -3px;
+      }
+      .pcb-pill.pcb-lvl {
+        background: rgba(37, 99, 235, 0.12);
+        color: var(--accent-text);
+        border: 1px solid rgba(37, 99, 235, 0.3);
+      }
+      .pcb-hint {
+        margin-left: auto;
+        font-size: 0.64rem;
+        font-weight: 800;
+        color: var(--accent-text);
+        white-space: nowrap;
+      }
+      .pickers-body {
+        display: none;
+        gap: 3px;
+        padding-top: 2px;
+      }
+      .pickers-wrap.expanded .pickers-body {
+        display: flex;
+      }
+      .pickers-drag-handle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 14px;
+        background: transparent;
+        border: none;
+        padding: 0;
+        cursor: grab;
+        touch-action: none;
+      }
+      .pickers-handle-bar {
+        width: 54px;
+        height: 4px;
+        border-radius: 99px;
+        background: #111827;
+        opacity: 0.85;
+        transition: width 0.15s, opacity 0.15s;
+      }
+      body.dark .pickers-handle-bar {
+        background: #e2e8f0;
+      }
+    }
     @media (max-width: 600px) {
-      body { padding: 0 6px 6px; }
-      .main-stage { gap: 3px; }
-      .hero { padding: 4px 8px; gap: 4px; margin: 0 -6px 3px; border-radius: 0 0 12px 12px; }
-      .hero-brand { gap: 5px; }
-      .hero-brand .kids { font-size: 0.96rem; padding: 2px 4px; border-radius: 8px; }
-      .hero h1 { font-size: 0.82rem; white-space: nowrap; }
+      body { padding: 0 6px 8px; }
+      .main-stage { gap: 7px; }
+      .hero { padding: 6px 10px; gap: 5px; margin: 0 -6px 5px; border-radius: 0 0 14px 14px; }
+      .hero-brand { gap: 6px; }
+      .hero-brand .kids { font-size: 1rem; padding: 3px 5px; border-radius: 8px; }
+      .hero h1 { font-size: 0.86rem; white-space: nowrap; }
       .hero .sub { display: none; }
-      .hero-mini-icons { gap: 3px; }
-      .icon-btn { width: 22px; height: 22px; font-size: 0.68rem; }
-      .main-fs-toggle-btn, .low-reach-toggle-pill { padding: 3px 6px; font-size: 0.64rem; }
-      .stats-card { padding: 2px 6px !important; }
-      .stat-item { font-size: 0.56rem; }
-      .stat-item span { font-size: 0.74rem; }
-      .gold-tour-banner { padding: 3px 8px; font-size: 0.62rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-      .pickers-wrap { padding: 3px 5px; gap: 2px; }
+      .hero-mini-icons { gap: 5px; }
+      .icon-btn { width: 27px; height: 27px; font-size: 0.78rem; }
+      .main-fs-toggle-btn, .low-reach-toggle-pill { padding: 4px 9px; font-size: 0.67rem; }
+      .hint-text { display: none; }
+      .stats-card { padding: 5px 8px !important; }
+      .stat-item { font-size: 0.58rem; }
+      .stat-item span { font-size: 0.78rem; }
+      .gold-tour-banner { padding: 4px 8px; font-size: 0.64rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .pickers-wrap { padding: 5px 7px 3px; gap: 3px; }
       .picker-label { display: none; }
-      .chip { padding: 2px 1px; font-size: 0.62rem; }
-      .chip .sub { font-size: 0.46rem; margin-top: 0; }
-      #singleBoardSection { padding: 4px 6px 5px; }
+      .chip { padding: 3px 2px; font-size: 0.64rem; }
+      .chip .sub { font-size: 0.48rem; margin-top: 0; }
+      #singleBoardSection { padding: 8px 6px 9px; }
       .rush-banner { padding: 4px 8px; margin-bottom: 4px; font-size: 0.68rem; }
       .memory-banner { padding: 4px 8px; margin-bottom: 4px; gap: 3px; }
       .memory-top-row { font-size: 0.66rem; gap: 4px; }
@@ -2606,14 +2686,14 @@
         align-items: center;
         justify-content: center;
         padding: 0;
-        margin-bottom: 3px;
+        margin-bottom: 6px;
       }
       .board-frame { width: min(calc(100% - 2px), 95vw, 60dvh); max-width: 100%; padding: 4px; margin: 0 auto; border-width: 3px; }
       body.main-fullscreen-mode .board-frame { width: min(calc(100% - 2px), 96vw, 62dvh); }
-      .status { gap: 3px; margin: 2px 0; font-size: 0.62rem; }
-      .note { font-size: 0.62rem; line-height: 1.12; margin-bottom: 3px; }
-      .actions { gap: 4px; margin-bottom: 1px; }
-      .actions .btn { padding: 5px 2px; font-size: 0.65rem; border-radius: 8px; white-space: nowrap; }
+      .status { gap: 4px; margin: 4px 0; font-size: 0.65rem; }
+      .note { font-size: 0.66rem; line-height: 1.25; margin-bottom: 6px; }
+      .actions { gap: 5px; margin-bottom: 2px; }
+      .actions .btn { padding: 8px 4px; font-size: 0.7rem; border-radius: 10px; white-space: nowrap; }
       .modal:not(.jigsaw-fullscreen) {
         width: calc(100vw - 16px) !important;
         max-width: calc(100vw - 16px) !important;
@@ -2983,13 +3063,13 @@
       gap: 6px;
     }
     @media (max-width: 600px) {
-      .top-quick-bar { gap: 4px; }
-      .top-quick-btn { padding: 4px 4px; font-size: 0.65rem; border-radius: 8px; gap: 3px; }
-      .mode-menu-wrap { gap: 5px; }
-      .how-to-btn { padding: 6px 8px; font-size: 0.67rem; border-radius: 10px; gap: 3px; }
-      .mode-menu-trigger { padding: 6px 8px; font-size: 0.67rem; border-radius: 10px; min-width: 0; gap: 4px; }
+      .top-quick-bar { gap: 5px; }
+      .top-quick-btn { padding: 7px 5px; font-size: 0.68rem; border-radius: 9px; gap: 4px; }
+      .mode-menu-wrap { gap: 6px; }
+      .how-to-btn { padding: 8px 9px; font-size: 0.69rem; border-radius: 10px; gap: 3px; }
+      .mode-menu-trigger { padding: 8px 9px; font-size: 0.69rem; border-radius: 10px; min-width: 0; gap: 4px; }
       #modeMenuBtnText { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-      #btnPdf { padding: 6px 9px !important; font-size: 0.67rem; border-radius: 10px; flex-shrink: 0; }
+      #btnPdf { padding: 8px 10px !important; font-size: 0.69rem; border-radius: 10px; flex-shrink: 0; }
     }
 
     /* 🎵 Fon Müziği Seçim Paneli (Üst Bar Altında Kompakt Açılır Kutu) */
@@ -3181,15 +3261,27 @@
         </div>
 
         <!-- Zorluk & Seviye Seçiciler -->
-        <div class="pickers-wrap">
-          <div class="picker">
-            <div class="picker-label">Zorluk Kademesi</div>
-            <div class="grades" id="gradeButtons"></div>
+        <div class="pickers-wrap" id="pickersWrap">
+          <div class="pickers-compact-bar" id="pickersCompactBar" role="button" tabindex="0" aria-expanded="false" title="Tüm zorluk ve seviyeleri aç / kapat">
+            <span class="pcb-label">Derece:</span>
+            <span class="pcb-pill" id="pcbGradeText">Çok Kolay</span>
+            <span class="pcb-label">Seviye:</span>
+            <span class="pcb-pill pcb-lvl" id="pcbLevelText">Seviye 1 (0/2)</span>
+            <span class="pcb-hint" id="pcbToggleHint">Tümü ▾</span>
           </div>
-          <div class="picker">
-            <div class="picker-label">Seviye</div>
-            <div class="levels" id="levelButtons"></div>
+          <div class="pickers-body" id="pickersBody">
+            <div class="picker">
+              <div class="picker-label">Zorluk Kademesi</div>
+              <div class="grades" id="gradeButtons"></div>
+            </div>
+            <div class="picker">
+              <div class="picker-label">Seviye</div>
+              <div class="levels" id="levelButtons"></div>
+            </div>
           </div>
+          <button type="button" class="pickers-drag-handle" id="pickersDragHandle" aria-label="Zorluk ve seviyeleri aç veya kapat" title="Aşağı çekerek tümünü aç / yukarı çekerek kapat">
+            <span class="pickers-handle-bar"></span>
+          </button>
         </div>
 
         <!-- Tekli "Menü" Butonu (Engelli Mod, 60sn Fırtına, Hafıza Modu, Macera Haritası, Bulmaca Tasarla) -->
@@ -3390,12 +3482,12 @@
   <!-- 🏆 Her Gün 20:00 Büyük Akşam Turnuvası Modalı -->
   <div class="modal-overlay" id="tourneyOverlay"></div>
   <div class="modal" id="tourneyModal" style="max-width:460px;">
-    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px;">
-      <h3 style="margin:0;">🏆 Büyük 20:00 Akşam Turnuvası</h3>
-      <span class="tourney-pill" id="tourneyCountdownBadge" style="background:#4a148c;color:#fff;font-weight:900;">⏱️ 20:00</span>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px;padding-right:36px;">
+      <h3 style="margin:0;padding-right:4px;">🏆 Büyük 20:00 Akşam Turnuvası</h3>
+      <span class="tourney-pill" id="tourneyCountdownBadge" style="background:#4a148c;color:#fff;font-weight:900;flex-shrink:0;">⏱️ 20:00</span>
     </div>
     <p class="modal-note" id="tourneyStatusNote">
-      Her akşam saat <strong>20:00 – 21:00</strong> arasında tüm oyuncular aynı deterministik 5 etabı çözerek yarışır! Saat 20:00 dışında ise günün turnuva sorularıyla <strong>Antrenman Turnuvası</strong> yapabilir veya PDF kitapçığını çıkarabilirsin.
+      Her akşam saat <strong>20:00 – 20:30 (30 dakika)</strong> arasında oyuncular en son açtıkları seviye kilidine göre (tümü açıksa Uzman · 5. Seviye) 5 etabı çözerek yarışır!
     </p>
     <div class="modal-summary" id="tourneySummaryBar" style="background:#f3e5f5;color:#4a148c;">
       Bugünkü Turnuva İlerlemen: 0 / 5 Etap · Turnuva Puanın: 0
@@ -3625,6 +3717,11 @@
       <span>✏️ Kaşif Adın (Özelleştir):</span>
       <input type="text" id="profileNameInput" maxlength="20" placeholder="Örn: Zeki Kaşif #42"
         style="flex:1;max-width:210px;padding:7px 10px;border:2px solid #9fa8da;border-radius:8px;font-size:0.85rem;font-weight:800;">
+    </label>
+    <label class="field" style="margin-top:4px;">
+      <span>🏫 Sınıf / Grup Kodu (İsteğe Bağlı):</span>
+      <input type="text" id="profileGroupInput" maxlength="10" placeholder="Örn: 2A veya OKUL1 (Boş = Tümü)"
+        style="flex:1;max-width:210px;padding:6px 10px;border:1.5px solid #b0bec5;border-radius:8px;font-size:0.78rem;font-weight:800;text-transform:uppercase;">
     </label>
     <div style="display:flex;justify-content:space-between;gap:6px;margin:2px 0 6px;">
       <button type="button" class="pal-btn" id="btnOpenParentReport" style="font-size:0.7rem;padding:4px 10px;">👨‍🏫 Gelişim Raporu</button>
@@ -4792,12 +4889,22 @@
       const idx = Math.max(0, (stepLen - 1)) % SCALE_NOTES.length;
       playTone(SCALE_NOTES[idx], 0, 0.09, 'triangle', 0.09);
     }
+    function triggerHaptic(pattern) {
+      if (!soundEnabled) return;
+      try {
+        if (navigator && typeof navigator.vibrate === 'function') {
+          navigator.vibrate(pattern);
+        }
+      } catch (_) {}
+    }
     function playPathComplete() {
       playTone(587.33, 0, 0.14, 'sine', 0.12);
       playTone(880.00, 0.07, 0.20, 'sine', 0.13);
+      triggerHaptic(14);
     }
     function playSuccess() {
       [523, 659, 784, 1047].forEach((n, i) => playTone(n, i * 0.11, 0.26, 'sine', 0.14));
+      triggerHaptic([18, 40, 28]);
     }
     function playLevelUpFanfare() {
       // Seviye ve zorluk kademesi atlama müzikal arpej fanfarı
@@ -6182,6 +6289,11 @@
       const goldTourActive = (appData.goldTour || 0) > 0;
       const targetSec = goldTargetSec(gradeIdx, levelIdx);
 
+      const pcbGradeEl = document.getElementById('pcbGradeText');
+      const pcbLevelEl = document.getElementById('pcbLevelText');
+      if (pcbGradeEl) pcbGradeEl.textContent = GRADES[gradeIdx].label;
+      if (pcbLevelEl) pcbLevelEl.textContent = `Seviye ${cfg.level} (${curProg}/${req})`;
+
       const activeTheme = getActiveSymbolTheme();
       const mathTag = (activeTheme && (activeTheme.isMath || activeTheme.usesGrade))
         ? `<button type="button" class="tag math-grade-tag" id="btnStatusMathGrade" title="Sınıf seviyesini değiştir">🏫 ${getMathGrade()}. Sınıf (${activeTheme.isMath ? getMathOpBadgeLabel() : activeTheme.name})</button>`
@@ -6206,14 +6318,14 @@
 
       if (gradeIdx === 0 && levelIdx === 0 && solved === 0 && hintsUsed === 0) {
         noteEl.className = 'note teach';
-        noteEl.textContent = `Bir harfe dokun ve aynı harfe sürükle. Bu seviyede ${req} bulmaca çözünce otomatik olarak 2. Seviye açılacak!`;
+        noteEl.textContent = `👆 Harfe dokun, aynı harfe sürükle · 🎯 Hedef: ${curProg}/${req}`;
       } else if (!hintArmed && hintsUsed === 0) {
         noteEl.className = 'note';
         noteEl.textContent = dailyMode
-          ? `📅 Günün Sorusu (#${currentSeedCode}) · 2 kademeli ipucu hakkın var.`
+          ? `📅 Günün Sorusu (#${currentSeedCode}) · 💡 2 ipucu`
           : (goldTourActive
-              ? `🌟 Altın Taç Hedefi: ≤${targetSec}sn · İpucusuz ${req} çözüm (${curProg}/${req})`
-              : `Bu seviyeyi geçmek için ${req} bulmaca çözmelisin (İlerleme: ${curProg}/${req}).`);
+              ? `👑 Altın Taç: ⏱️ ≤${targetSec}sn · 💡 İpucusuz · ${curProg}/${req}`
+              : `🎯 Sonraki seviye için: ${curProg}/${req} bulmaca`);
       }
     }
 
@@ -6334,7 +6446,8 @@
         endpoints[letter].forEach(([r, c], epIdx) => {
           const { x, y } = nodeXY(r, c);
           const symText = getSymbol(letter, false, epIdx);
-          const neutralEdu = eduMode && !!appData.eduNeutralColor;
+          const autoNeutralByLevel = (levelIdx === 1 || levelIdx === 3 || levelIdx === 4);
+          const neutralEdu = eduMode && (!!appData.eduNeutralColor || autoNeutralByLevel);
           const badgeStroke = neutralEdu ? '#3949ab' : PATH_COLORS[letter];
 
           const circleR = cellGap * (eduMode ? 0.43 : 0.35);
@@ -7616,6 +7729,7 @@
     const tourneyCardBtn = document.getElementById('tourneyCardBtn');
     const TOURNEY_HOUR = 20;
     const TOURNEY_END_HOUR = 21;
+    const TOURNEY_DURATION_MINS = 30;
     let tourneyFrozenSec = 0;
 
     const TOURNAMENT_STAGES = [
@@ -7626,6 +7740,36 @@
       { stage: 5, title: '5. Etap · Büyük Şampiyonluk Finali', size: 8, pairs: 6, gi: 4, li: 3, basePts: 350, targetSec: 95, pct: 0.80 }
     ];
 
+    function getTourneyUnlockedTarget() {
+      const rawIdx = (typeof appData !== 'undefined' && typeof appData.unlockedIdx === 'number') ? appData.unlockedIdx : 0;
+      const uIdx = Math.max(0, Math.min(29, rawIdx));
+      const gi = Math.floor(uIdx / 5);
+      const li = uIdx % 5;
+      const gObj = (typeof GRADES !== 'undefined' && GRADES[gi]) ? GRADES[gi] : { label: 'Çok Kolay', levels: [{ level: 1, size: 3, pairs: 2 }] };
+      const lObj = (gObj.levels && gObj.levels[li]) || { level: 1, size: 3, pairs: 2 };
+      return { uIdx, gi, li, gradeLabel: gObj.label, levelNo: lObj.level, size: lObj.size, pairs: lObj.pairs };
+    }
+
+    function getTourneyStageConfig(stageIdx) {
+      const idx = Math.max(0, Math.min(TOURNAMENT_STAGES.length - 1, stageIdx));
+      const base = TOURNAMENT_STAGES[idx];
+      const tgt = getTourneyUnlockedTarget();
+      const targetSec = typeof goldTargetSec === 'function' ? Math.max(20, goldTargetSec(tgt.gi, tgt.li)) : base.targetSec;
+      const pct = Math.min(0.88, 0.38 + tgt.gi * 0.08 + idx * 0.02);
+      const gradeBonus = tgt.gi * 30 + tgt.li * 5;
+      return {
+        stage: base.stage,
+        title: `${base.title} (${tgt.gradeLabel} · S${tgt.levelNo})`,
+        size: tgt.size,
+        pairs: tgt.pairs,
+        gi: tgt.gi,
+        li: tgt.li,
+        basePts: base.basePts + gradeBonus,
+        targetSec,
+        pct
+      };
+    }
+
     const tPad2 = n => String(n).padStart(2, '0');
     function dateKeyOf(d) {
       return `${d.getFullYear()}-${tPad2(d.getMonth() + 1)}-${tPad2(d.getDate())}`;
@@ -7634,9 +7778,11 @@
       return dateKeyOf(new Date());
     }
     function getTourneyPhase(now = new Date()) {
-      const h = now.getHours();
-      if (h < TOURNEY_HOUR) return 'before';
-      if (h < TOURNEY_END_HOUR) return 'live';
+      const mins = now.getHours() * 60 + now.getMinutes();
+      const startMins = TOURNEY_HOUR * 60;
+      const endMins = startMins + TOURNEY_DURATION_MINS;
+      if (mins < startMins) return 'before';
+      if (mins < endMins) return 'live';
       return 'closed';
     }
     function nextTourneyStart(now = new Date()) {
@@ -7654,14 +7800,15 @@
     }
     function secsToLiveEnd() {
       const e = new Date();
-      e.setHours(TOURNEY_END_HOUR, 0, 0, 0);
+      e.setHours(TOURNEY_HOUR, TOURNEY_DURATION_MINS, 0, 0);
       return Math.max(0, Math.ceil((e.getTime() - Date.now()) / 1000));
     }
 
     function getTourneySeedForStage(stageIndex, dateStr) {
       const dStr = dateStr || getTourneyDateKey();
+      const tgt = getTourneyUnlockedTarget();
       let h = 2166136261;
-      const str = `TOURNEY-2000-${dStr}-S${stageIndex + 1}`;
+      const str = `TOURNEY-2000-${dStr}-U${tgt.uIdx}-S${stageIndex + 1}`;
       for (let i = 0; i < str.length; i++) {
         h ^= str.charCodeAt(i);
         h = Math.imul(h, 16777619);
@@ -7754,6 +7901,13 @@
     function tourneyTick() {
       const phase = getTourneyPhase();
       const tState = ensureTourneyState();
+
+      // 30 dakikalık süre (20:30) dolduğunda devam eden turnuva oturumunu otomatik bitir
+      if (tournamentMode && phase === 'closed') {
+        stopTournamentMode();
+        showToast('gentle', '⏰', 'Turnuva Süresi Doldu!',
+          '30 dakikalık canlı turnuva süresi (20:00–20:30) sona erdi. O ana kadar kazandığın puanlar sıralamaya kaydedildi!');
+      }
 
       // Bekleme salonundaki oyuncu için saat 20:00 olduğunda otomatik başlat
       if (phase === 'live' && !tState.completed && !tournamentMode &&
@@ -7964,17 +8118,18 @@
 
     // Turnuva etabı: tek çözümlü olduğu doğrulanan ilk deterministik soruyu seç (sonuç günlük önbelleğe alınır)
     function getVerifiedTourneyPuzzle(stageIdx, dateKey) {
-      const st = TOURNAMENT_STAGES[stageIdx];
+      const st = getTourneyStageConfig(stageIdx);
       const baseCode = getTourneySeedForStage(stageIdx, dateKey);
       const persist = dateKey === ensureTourneyState().date;
       if (persist && (!appData.tourneyUniqueCache || appData.tourneyUniqueCache.date !== dateKey)) {
         appData.tourneyUniqueCache = { date: dateKey, codes: {} };
       }
       const cache = persist ? appData.tourneyUniqueCache.codes : {};
+      const cacheKey = `${stageIdx}_${st.gi}_${st.li}`;
       const make = (code) => generatePuzzle(st.size, st.pairs, st.pct, null, 50, {
         seedCode: code, gi: st.gi, li: st.li, withObstacles: false
       });
-      const cached = cache[stageIdx];
+      const cached = cache[cacheKey];
       if (cached && cached.v === 2) {
         const p = make(cached.code);
         if (p) {
@@ -7990,13 +8145,13 @@
         if (!fallback) fallback = { puzzle: p, code };
         const ref = refineToUnique(p, 8);
         if (ref.unique) {
-          cache[stageIdx] = { code, unique: true, v: 2 };
+          cache[cacheKey] = { code, unique: true, v: 2 };
           if (persist) saveAppData();
           return ref;
         }
       }
       if (fallback) {
-        cache[stageIdx] = { code: fallback.code, unique: false, v: 2 };
+        cache[cacheKey] = { code: fallback.code, unique: false, v: 2 };
         if (persist) saveAppData();
         return { puzzle: fallback.puzzle, unique: false };
       }
@@ -8004,7 +8159,7 @@
     }
 
     /* ---------- 🌐 GERÇEK BULUT TURNUVA SIRALAMASI ---------- */
-    const TOURNEY_MAX_SCORE = TOURNAMENT_STAGES.reduce((s, st) => s + st.basePts + st.targetSec * 3 + 40, 0);
+    const TOURNEY_MAX_SCORE = 3500;
     let tourneyCloud = { date: null, list: null, status: 'idle', fetchedAt: 0 };
 
     function tourneyCloudKey(dateKey) {
@@ -8022,7 +8177,8 @@
           score: Math.floor(Number(e.s) || 0),
           sec: Math.floor(Number(e.t) || 0),
           stages: Math.min(5, Math.max(0, Math.floor(Number(e.g) || 0))),
-          done: !!e.d
+          done: !!e.d,
+          tier: String(e.k || '').slice(0, 18)
         };
       }).filter(e => e.score > 0 && e.score <= TOURNEY_MAX_SCORE && e.sec >= 3 && e.sec < 36000);
     }
@@ -8042,13 +8198,15 @@
         if (pushMine && tState.totalScore > 0) {
           ensureProfilesInit();
           const prof = appData.profiles[appData.activeProfileIdx || 0] || {};
+          const tgt = getTourneyUnlockedTarget();
           obj.p[getCurrentPlayerCloudId()] = {
             n: String(prof.name || 'Oyuncu').slice(0, 20),
             i: prof.icon || '🦊',
             s: Math.min(TOURNEY_MAX_SCORE, tState.totalScore),
             t: tState.totalSec,
             g: tState.stageScores.filter(x => x > 0).length,
-            d: tState.completed ? 1 : 0
+            d: tState.completed ? 1 : 0,
+            k: `${tgt.gradeLabel} · S${tgt.levelNo}`
           };
           const ids = Object.keys(obj.p).sort((a, b) =>
             ((obj.p[b].s || 0) - (obj.p[a].s || 0)) || ((obj.p[a].t || 0) - (obj.p[b].t || 0)));
@@ -8071,10 +8229,12 @@
       let list = online ? tourneyCloud.list.map(e => ({ ...e, isMe: e.id === myId, bot: false })) : [];
       if (tState.totalScore > 0) {
         const mine = list.find(e => e.isMe);
+        const tgt = getTourneyUnlockedTarget();
         const local = {
           id: myId, name: `${prof.name || 'Oyuncu'} (Sen)`, icon: prof.icon || '🦊',
           score: tState.totalScore, sec: tState.totalSec,
-          stages: tState.stageScores.filter(x => x > 0).length, done: tState.completed, isMe: true, bot: false
+          stages: tState.stageScores.filter(x => x > 0).length, done: tState.completed,
+          tier: `${tgt.gradeLabel} · S${tgt.levelNo}`, isMe: true, bot: false
         };
         if (mine) Object.assign(mine, local); else list.push(local);
       }
@@ -8095,15 +8255,15 @@
         html = `🎉 <strong>Bugünün turnuvasını tamamladın!</strong> Toplam: <strong>${tState.totalScore} puan</strong> · ${tState.totalSec} sn. ` +
                (inLobby ? `🟢 Yarınki turnuvanın bekleme salonundasın (${cd}).` : `Yarınki 20:00 turnuvası için şimdiden bekleme salonuna girebilirsin.`);
       } else if (phase === 'live') {
-        html = `🔴 <strong>Turnuva şu an CANLI!</strong> 5 etabı sırayla çöz; hız ve ipucusuz çözüm bonuslarını topla. Kapanış: <strong>21:00</strong>.` +
+        html = `🔴 <strong>Turnuva şu an CANLI! (30 dk)</strong> Kalan süre: <strong>${formatHMS(secsToLiveEnd()).slice(3)}</strong> · Kapanış: <strong>20:30</strong>.` +
                (tState.stageIdx > 0 ? ` Kaldığın yer: <strong>${tState.stageIdx + 1}. Etap</strong>.` : '');
       } else if (inLobby) {
-        html = `🟢 <strong>Bekleme salonundasın.</strong> Turnuva <strong>${cd}</strong> sonra (saat 20:00) <strong>otomatik</strong> başlayacak. ` +
+        html = `🟢 <strong>Bekleme salonundasın.</strong> Turnuva <strong>${cd}</strong> sonra (saat 20:00) <strong>otomatik</strong> başlayacak ve <strong>30 dakika (20:30'a kadar)</strong> sürecek. ` +
                `Bu sürede normal oyuna devam edebilirsin; son 10 saniyede sesli uyarı alırsın. Salondan çıkmak için alttaki butona tekrar dokun.`;
       } else if (phase === 'closed') {
-        html = `🌙 <strong>Bugünkü turnuva 21:00'de kapandı.</strong> Bir sonraki turnuva yarın <strong>20:00</strong>'de (${cd}). Şimdiden bekleme salonuna girip saatin gelmesini bekleyebilirsin.`;
+        html = `🌙 <strong>Bugünkü 30 dakikalık turnuva 20:30'da kapandı.</strong> Bir sonraki turnuva yarın <strong>20:00</strong>'de (${cd}). Şimdiden bekleme salonuna girip saatin gelmesini bekleyebilirsin.`;
       } else {
-        html = `🕗 Turnuva <strong>her gün saat 20:00</strong>'de başlar (20:00–21:00 arası açık). İstediğin saatte <strong>bekleme salonuna</strong> gir; saat geldiğinde turnuva otomatik başlar. Kalan süre: <strong>${cd}</strong>.`;
+        html = `🕗 Turnuva <strong>her gün saat 20:00</strong>'de başlar ve <strong>30 dakika (20:00–20:30)</strong> sürer. İstediğin saatte <strong>bekleme salonuna</strong> gir; saat geldiğinde turnuva otomatik başlar. Kalan süre: <strong>${cd}</strong>.`;
       }
       tourneyStatusNote.innerHTML = html;
     }
@@ -8140,12 +8300,14 @@
 
       if (tourneyStageList) {
         const revealCodes = tState.completed || getTourneyPhase() !== 'before';
-        tourneyStageList.innerHTML = TOURNAMENT_STAGES.map((st, idx) => {
+        tourneyStageList.innerHTML = TOURNAMENT_STAGES.map((_, idx) => {
+          const st = getTourneyStageConfig(idx);
           const sc = tState.stageScores[idx] || 0;
           const tm = tState.stageTimes[idx] || 0;
           const isDone = sc > 0;
           const isCurr = !tState.completed && idx === tState.stageIdx;
-          const cachedCode = appData.tourneyUniqueCache && appData.tourneyUniqueCache.date === tState.date && appData.tourneyUniqueCache.codes[idx];
+          const cacheKey = `${idx}_${st.gi}_${st.li}`;
+          const cachedCode = appData.tourneyUniqueCache && appData.tourneyUniqueCache.date === tState.date && appData.tourneyUniqueCache.codes[cacheKey];
           const codeTxt = revealCodes
             ? ` · Kod: #${cachedCode ? cachedCode.code : getTourneySeedForStage(idx, tState.date)}${cachedCode && cachedCode.unique ? ' ✔' : ''}`
             : '';
@@ -8169,10 +8331,15 @@
           ? `🟢 Canlı bulut sıralaması · ${board.realCount} gerçek oyuncu${board.realRank ? ` · Senin sıran: ${board.realRank}.` : ''}`
           : (tourneyCloud.status === 'loading' ? '🔄 Bulut sıralaması yükleniyor...' : '🌐 Çevrimdışı: yalnızca senin sonucun gösteriliyor.');
         const rowsHtml = board.list.length > 0
-          ? board.list.map((r, i) => `<div style="display:flex;justify-content:space-between;padding:4px 6px;border-radius:6px;margin-bottom:3px;background:${r.isMe ? '#fef3c7' : 'rgba(255,255,255,0.85)'};color:#263238;border:${r.isMe ? '1.5px solid #f59e0b' : '1px solid rgba(0,0,0,0.05)'};font-weight:${r.isMe ? '900' : '700'};">
-            <span>${i + 1}. ${escapeHtmlTourney(r.icon)} ${escapeHtmlTourney(r.name)}${!r.done ? ` <small>(${r.stages}/5)</small>` : ''}</span>
-            <span>${r.score}p · ${r.sec}sn</span>
-          </div>`).join('')
+          ? board.list.map((r, i) => {
+            const tierBadge = r.tier
+              ? ` <small style="background:rgba(37,99,235,0.12);color:#1d4ed8;padding:1px 5px;border-radius:4px;font-weight:800;font-size:0.65rem;">${escapeHtmlTourney(r.tier)}</small>`
+              : '';
+            return `<div style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px;border-radius:6px;margin-bottom:3px;background:${r.isMe ? '#fef3c7' : 'rgba(255,255,255,0.85)'};color:#263238;border:${r.isMe ? '1.5px solid #f59e0b' : '1px solid rgba(0,0,0,0.05)'};font-weight:${r.isMe ? '900' : '700'};">
+              <span>${i + 1}. ${escapeHtmlTourney(r.icon)} ${escapeHtmlTourney(r.name)}${tierBadge}${!r.done ? ` <small>(${r.stages}/5)</small>` : ''}</span>
+              <span>${r.score}p · ${r.sec}sn</span>
+            </div>`;
+          }).join('')
           : `<div style="padding:8px 6px;text-align:center;opacity:0.8;font-size:0.74rem;">🏁 Bugünkü turnuvada henüz skor kaydeden gerçek oyuncu yok. İlk etabı çözerek liderliği al!</div>`;
         tourneyLeaderboardBox.innerHTML = `<div style="font-weight:900;margin-bottom:6px;display:flex;justify-content:space-between;">
             <span>🏅 Günün Sıralaması (${tState.date})</span>
@@ -8210,10 +8377,11 @@
 
       if (tournamentMode) {
         const tState = ensureTourneyState();
-        const st = TOURNAMENT_STAGES[tournamentStageIdx] || TOURNAMENT_STAGES[0];
+        const st = getTourneyStageConfig(tournamentStageIdx);
         const sec = puzzleSolved ? tourneyFrozenSec : Math.max(0, Math.floor((Date.now() - puzzleStartTime) / 1000));
         const over = sec > st.targetSec;
-        if (tourneyBannerTitle) tourneyBannerTitle.textContent = `🏆 Etap ${st.stage} / 5 · ${st.size}×${st.size}`;
+        const remTxt = getTourneyPhase() === 'live' ? ` · ⏳ Kalan: ${formatHMS(secsToLiveEnd()).slice(3)}` : '';
+        if (tourneyBannerTitle) tourneyBannerTitle.textContent = `🏆 Etap ${st.stage} / 5 · ${st.size}×${st.size}${remTxt}`;
         if (tourneyBannerTimer) tourneyBannerTimer.textContent =
           `⏱️ ${tPad2(Math.floor(sec / 60))}:${tPad2(sec % 60)} / ${st.targetSec}sn${over ? ' ⌛' : ''} · Puan: ${tState.totalScore || 0}`;
       } else if (lobbyShow) {
@@ -8225,7 +8393,7 @@
     function loadTournamentStage(stageIdx) {
       const tState = ensureTourneyState();
       tournamentStageIdx = Math.max(0, Math.min(TOURNAMENT_STAGES.length - 1, stageIdx));
-      const st = TOURNAMENT_STAGES[tournamentStageIdx];
+      const st = getTourneyStageConfig(tournamentStageIdx);
 
       // Not: Oyuncunun normal seviye ilerlemesi (gradeIdx/levelIdx) ve engel tercihi değiştirilmez.
       const verified = getVerifiedTourneyPuzzle(tournamentStageIdx, tState.date);
@@ -8313,7 +8481,7 @@
     function onTournamentStageWin(elapsedSec, earnedStars) {
       clearInterval(tournamentTimerInterval);
       const tState = ensureTourneyState();
-      const st = TOURNAMENT_STAGES[tournamentStageIdx] || TOURNAMENT_STAGES[0];
+      const st = getTourneyStageConfig(tournamentStageIdx);
       const speedBonus = Math.max(0, (st.targetSec - elapsedSec) * 3);
       const noHintBonus = hintsUsed === 0 ? 40 : 0;
       const stagePts = st.basePts + speedBonus + noHintBonus;
@@ -11487,7 +11655,8 @@
             s: myScore,
             t: Date.now(),
             c: incomingClaps,
-            cb: sanitizePublicNickname(prevEntry.cb || '')
+            cb: sanitizePublicNickname(prevEntry.cb || ''),
+            g: String(appData.groupCode || '').slice(0, 10)
           };
         }
 
@@ -11582,20 +11751,25 @@
       const peers = [];
       const seenNames = new Set();
 
+      const myGroup = String(appData.groupCode || '').trim().toUpperCase();
+
       // 1. Önce buluttaki tüm GERÇEK oyuncuları (arkadaşlarımızı) ekle
       const cloudMap = appData.cloudPlayersCache || {};
       Object.keys(cloudMap).forEach(cid => {
         if (cid === myCloudId) return; // Kendimizi aşağıda 'isMe: true' olarak ekleyeceğiz
         const item = cloudMap[cid];
         if (!item || !item.n) return;
+        const itemGroup = String(item.g || '').trim().toUpperCase().slice(0, 10);
+        if (myGroup && itemGroup !== myGroup) return;
         const cleanN = String(item.n).trim();
         const normKey = cleanN.toLowerCase();
         if (normKey === myName.trim().toLowerCase()) return;
         if (seenNames.has(normKey)) return;
         seenNames.add(normKey);
+        const grpTag = itemGroup ? ` [${itemGroup}]` : '';
         peers.push({
           cloudId: cid,
-          name: `🟢 ${cleanN}`,
+          name: `🟢 ${cleanN}${grpTag}`,
           rawName: cleanN,
           score: Math.max(0, Number(item.s) || 0),
           claps: Number(item.c) || 0,
@@ -11606,9 +11780,10 @@
 
       // 2. Kendimizi ekle
       const myCloudEntry = (cloudMap && cloudMap[myCloudId]) || {};
+      const myGrpTag = myGroup ? ` [${myGroup}]` : '';
       peers.push({
         cloudId: myCloudId,
-        name: `🌟 ${myName} (Sen)`,
+        name: `🌟 ${myName}${myGrpTag} (Sen)`,
         rawName: myName,
         score: myWeeklyScore,
         claps: Number(myCloudEntry.c) || 0,
@@ -11879,6 +12054,10 @@
       if (profileNameInput) {
         profileNameInput.value = appData.profiles[activeIdx].name;
       }
+      const profileGroupInput = document.getElementById('profileGroupInput');
+      if (profileGroupInput) {
+        profileGroupInput.value = appData.groupCode || '';
+      }
 
       const entries = buildGlobalLeaderboardEntries();
       const me = entries.find(e => e.isMe) || { rank: 52, score: 60 };
@@ -12110,6 +12289,10 @@
         if (cleanName) {
           appData.profiles[activeIdx].name = cleanName;
         }
+        const profileGroupInput = document.getElementById('profileGroupInput');
+        if (profileGroupInput) {
+          appData.groupCode = (profileGroupInput.value || '').trim().toUpperCase().replace(/[^A-Z0-9ÇĞİÖŞÜ_-]/g, '').slice(0, 10);
+        }
         if (profileAgeGroupSelect) {
           setAgeGroupPreference(profileAgeGroupSelect.value);
         }
@@ -12291,6 +12474,74 @@
         });
         modal.prepend(btn);
       });
+    })();
+
+    // Dikey mobilde Zorluk & Seviye çekmecesini (yatay siyah tutacak çizgi + özet çubuğu) yönet
+    (function initPickersDrawer() {
+      const wrap = document.getElementById('pickersWrap');
+      const bar = document.getElementById('pickersCompactBar');
+      const handle = document.getElementById('pickersDragHandle');
+      const hint = document.getElementById('pcbToggleHint');
+      if (!wrap || !bar || !handle) return;
+
+      function setExpanded(exp) {
+        wrap.classList.toggle('expanded', !!exp);
+        bar.setAttribute('aria-expanded', exp ? 'true' : 'false');
+        if (hint) hint.textContent = exp ? 'Gizle ▴' : 'Tümü ▾';
+      }
+      function toggleExpanded() {
+        playClick();
+        setExpanded(!wrap.classList.contains('expanded'));
+      }
+
+      bar.addEventListener('click', toggleExpanded);
+      bar.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleExpanded();
+        }
+      });
+
+      let dragStartY = null;
+      let dragHandled = false;
+      handle.addEventListener('pointerdown', (e) => {
+        dragStartY = e.clientY;
+        dragHandled = false;
+        try { handle.setPointerCapture(e.pointerId); } catch (_) {}
+      });
+      handle.addEventListener('pointermove', (e) => {
+        if (dragStartY === null || dragHandled) return;
+        const dy = e.clientY - dragStartY;
+        if (dy >= 16) {
+          dragHandled = true;
+          playClick();
+          setExpanded(true);
+        } else if (dy <= -16) {
+          dragHandled = true;
+          playClick();
+          setExpanded(false);
+        }
+      });
+      handle.addEventListener('pointerup', () => {
+        if (!dragHandled && dragStartY !== null) {
+          toggleExpanded();
+        }
+        dragStartY = null;
+        dragHandled = false;
+      });
+      handle.addEventListener('pointercancel', () => {
+        dragStartY = null;
+        dragHandled = false;
+      });
+      const lvlContainer = document.getElementById('levelButtons');
+      if (lvlContainer) {
+        lvlContainer.addEventListener('click', (e) => {
+          const btn = e.target && e.target.closest ? e.target.closest('.chip:not(.locked)') : null;
+          if (btn && wrap.classList.contains('expanded')) {
+            setTimeout(() => setExpanded(false), 120);
+          }
+        });
+      }
     })();
     function syncModeMenuUI(closeDropdown) {
       if (closeDropdown && modeMenuDropdown && btnModeMenuToggle) {

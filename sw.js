@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = 'abc-baglamaca-v73';
+﻿const CACHE_NAME = 'abc-baglamaca-v81';
 const APP_SHELL = [
   './',
   './index.html',
