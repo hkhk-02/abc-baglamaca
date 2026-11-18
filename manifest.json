@@ -1,7 +1,7 @@
 {
   "name": "ABC Bağlamaca: Akıl ve Zekâ Oyunu - MiniBilge",
   "short_name": "ABC Bağlamaca",
-  "description": "Anasınıfı, ilkokul ve ortaokul için 30 seviyeli uzamsal algı, akıl ve zekâ oyunu. Tek kişilik, 2 kişilik düello, hafıza ve hız modları.",
+  "description": "30 Klasik Seviye ve Altın Usta Turu (Bronz Usta - Efsanevi Deha), 11 Eğitici Tema (Matematik, İngilizce, Türkçe), 30 Seviyeli Yapboz, Her Akşam 20:00 Canlı Turnuva, Haftalık Lig ve Yazdırılabilir PDF Çalışma Kağıdı.",
   "lang": "tr",
   "start_url": "./index.html",
   "scope": "./",
@@ -12,28 +12,81 @@
   "categories": ["education", "games", "puzzle"],
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "icon-192.png?v=88",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-192.png",
+      "src": "icon-192.png?v=88",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "icon-512.png?v=88",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-512.png",
+      "src": "icon-512.png?v=88",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "promo-1.png",
+      "sizes": "540x960",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Harfleri Birbirine Bağla, Tüm Noktaları Doldur!"
+    },
+    {
+      "src": "promo-2.png",
+      "sizes": "540x960",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "30 Klasik Seviye + Altın Usta Turu (Bronz Usta - Efsanevi Deha)"
+    },
+    {
+      "src": "promo-3.png",
+      "sizes": "540x960",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Her Akşam 20:00'de 30 Dakikalık Canlı Turnuva"
+    },
+    {
+      "src": "promo-4.png",
+      "sizes": "540x960",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "11 Eğitici Tema (Matematik, İngilizce, Türkçe) ve 30 Seviye Yapboz"
+    },
+    {
+      "src": "promo-5.png",
+      "sizes": "540x960",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Gerçek Haftalık Lig, Tebrik Kartları ve Yazdırılabilir PDF"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "🏆 20:00 Akşam Turnuvası",
+      "short_name": "Turnuva",
+      "description": "Her akşam 20:00'de başlayan 5 etaplı canlı turnuvaya katıl",
+      "url": "./index.html",
+      "icons": [{ "src": "icon-192.png?v=88", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "🧩 30 Seviye Yapboz",
+      "short_name": "Yapboz",
+      "description": "30 seviyeli eğitici resimli yapboz modunu aç",
+      "url": "./index.html",
+      "icons": [{ "src": "icon-192.png?v=88", "sizes": "192x192", "type": "image/png" }]
     }
   ]
 }

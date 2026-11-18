@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 960" width="540" height="960">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e298a"/>
+      <stop offset="55%" stop-color="#131c5e"/>
+      <stop offset="100%" stop-color="#0b1038"/>
+    </linearGradient>
+    <linearGradient id="boardGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#eef2ff"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+    <filter id="dropSh" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#04071a" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <style>
+    .title1 { font: 800 29px 'Segoe UI', Arial, sans-serif; fill: #ffffff; text-anchor: middle; }
+    .title2 { font: 900 30px 'Segoe UI', Arial, sans-serif; fill: #ffd54f; text-anchor: middle; }
+    .sub    { font: 700 15px 'Segoe UI', Arial, sans-serif; fill: #dbeafe; text-anchor: middle; }
+    .badgeT { font: 800 13px 'Segoe UI', Arial, sans-serif; fill: #fef3c7; text-anchor: middle; letter-spacing: 0.5px; }
+    .nodeT  { font: 900 44px 'Segoe UI', Arial, sans-serif; fill: #181c32; text-anchor: middle; dominant-baseline: central; }
+    .chipT  { font: 800 14px 'Segoe UI', Arial, sans-serif; fill: #ffffff; text-anchor: middle; }
+    .ctaT   { font: 900 18px 'Segoe UI', Arial, sans-serif; fill: #ffffff; text-anchor: middle; }
+
+    /* Path A animation (length = 520) */
+    .pathA {
+      stroke-dasharray: 520;
+      stroke-dashoffset: 520;
+      animation: drawA 6s infinite ease-in-out;
+    }
+    @keyframes drawA {
+      0%, 8%   { stroke-dashoffset: 520; }
+      32%, 82% { stroke-dashoffset: 0; }
+      94%, 100%{ stroke-dashoffset: 520; }
+    }
+
+    /* Path B animation (length = 390) */
+    .pathB {
+      stroke-dasharray: 390;
+      stroke-dashoffset: 390;
+      animation: drawB 6s infinite ease-in-out;
+    }
+    @keyframes drawB {
+      0%, 34%  { stroke-dashoffset: 390; }
+      58%, 82% { stroke-dashoffset: 0; }
+      94%, 100%{ stroke-dashoffset: 390; }
+    }
+
+    /* Win banner pop-in */
+    .winBanner {
+      opacity: 0;
+      transform-origin: 270px 665px;
+      animation: popWin 6s infinite ease-in-out;
+    }
+    @keyframes popWin {
+      0%, 58%  { opacity: 0; transform: scale(0.82); }
+      65%, 84% { opacity: 1; transform: scale(1); }
+      92%, 100%{ opacity: 0; transform: scale(0.9); }
+    }
+
+    /* Pulsing CTA button */
+    .ctaBox {
+      transform-origin: 270px 898px;
+      animation: pulseCta 1.5s infinite ease-in-out;
+    }
+    @keyframes pulseCta {
+      0%, 100% { transform: scale(1); }
+      50%      { transform: scale(1.035); }
+    }
+  </style>
+
+  <!-- Background -->
+  <rect width="540" height="960" fill="url(#bgGrad)"/>
+  <circle cx="40" cy="70" r="150" fill="#ffffff" fill-opacity="0.04"/>
+  <circle cx="490" cy="240" r="140" fill="#ffffff" fill-opacity="0.04"/>
+  <circle cx="50" cy="830" r="160" fill="#ffffff" fill-opacity="0.04"/>
+
+  <!-- Top Pill Badge -->
+  <rect x="85" y="26" width="370" height="32" rx="16" fill="#ffffff" fill-opacity="0.14" stroke="#ffffff" stroke-opacity="0.4" stroke-width="1.5"/>
+  <text x="270" y="47" class="badgeT">★ ABC BAĞLAMACA · AKIL VE ZEKÂ OYUNU</text>
+
+  <!-- Hook Headlines -->
+  <text x="270" y="96" class="title1">Tüm Noktaları Kesişmeden</text>
+  <text x="270" y="134" class="title2">Tek Seferde Bağlayabilir misin?</text>
+  <text x="270" y="164" class="sub">Çapraz gitmek yasak · Boş nokta kalmasın!</text>
+
+  <!-- Animated 3x3 Puzzle Board Card -->
+  <g filter="url(#dropSh)">
+    <rect x="65" y="195" width="410" height="410" rx="44" fill="url(#boardGrad)" stroke="#4f62d6" stroke-width="7"/>
+  </g>
+
+  <!-- 3x3 Grid Lines (Nodes at 140, 270, 400; Y at 270, 400, 530) -->
+  <g stroke="#2e3a92" stroke-opacity="0.16" stroke-width="4" stroke-linecap="round">
+    <line x1="140" y1="270" x2="400" y2="270"/>
+    <line x1="140" y1="400" x2="400" y2="400"/>
+    <line x1="140" y1="530" x2="400" y2="530"/>
+    <line x1="140" y1="270" x2="140" y2="530"/>
+    <line x1="270" y1="270" x2="270" y2="530"/>
+    <line x1="400" y1="270" x2="400" y2="530"/>
+  </g>
+
+  <!-- Base Grid Dots -->
+  <g fill="#1e293b">
+    <circle cx="270" cy="270" r="10"/>
+    <circle cx="400" cy="270" r="10"/>
+    <circle cx="400" cy="400" r="10"/>
+    <circle cx="140" cy="530" r="10"/>
+    <circle cx="270" cy="530" r="10"/>
+  </g>
+
+  <!-- Animated Path A: (140,270) -> (270,270) -> (400,270) -> (400,400) -> (400,530) -->
+  <polyline class="pathA" points="140,270 270,270 400,270 400,400 400,530"
+            fill="none" stroke="#e65100" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline class="pathA" points="140,270 270,270 400,270 400,400 400,530"
+            fill="none" stroke="#ffc15e" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Animated Path B: (140,400) -> (140,530) -> (270,530) -> (270,400) -->
+  <polyline class="pathB" points="140,400 140,530 270,530 270,400"
+            fill="none" stroke="#1565c0" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline class="pathB" points="140,400 140,530 270,530 270,400"
+            fill="none" stroke="#73c2fb" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Endpoint Nodes A -->
+  <g>
+    <circle cx="140" cy="270" r="44" fill="#ffeed6" stroke="#e65100" stroke-width="8.5"/>
+    <text x="140" y="272" class="nodeT">A</text>
+    <circle cx="400" cy="530" r="44" fill="#ffeed6" stroke="#e65100" stroke-width="8.5"/>
+    <text x="400" y="532" class="nodeT">A</text>
+  </g>
+
+  <!-- Endpoint Nodes B -->
+  <g>
+    <circle cx="140" cy="400" r="44" fill="#e3f2fd" stroke="#1565c0" stroke-width="8.5"/>
+    <text x="140" y="402" class="nodeT">B</text>
+    <circle cx="270" cy="400" r="44" fill="#e3f2fd" stroke="#1565c0" stroke-width="8.5"/>
+    <text x="270" y="402" class="nodeT">B</text>
+  </g>
+
+  <!-- Pop-up Win Toast Banner -->
+  <g class="winBanner" filter="url(#dropSh)">
+    <rect x="85" y="632" width="370" height="62" rx="20" fill="#16a34a" stroke="#bbf7d0" stroke-width="3"/>
+    <text x="270" y="658" style="font: 900 20px 'Segoe UI', Arial, sans-serif; fill: #ffffff; text-anchor: middle;">★ ★ ★ HARİKA! 9/9 NOKTA DOLDU!</text>
+    <text x="270" y="681" style="font: 800 13px 'Segoe UI', Arial, sans-serif; fill: #dcfce7; text-anchor: middle;">+60 Akıl Puanı · Sıradaki Seviye Açıldı!</text>
+  </g>
+
+  <!-- Feature Highlights Grid -->
+  <g>
+    <rect x="35" y="718" width="228" height="48" rx="14" fill="#ffffff" fill-opacity="0.12" stroke="#93c5fd" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="149" y="747" class="chipT">👑 30 Seviye + Altın Usta Turu</text>
+
+    <rect x="277" y="718" width="228" height="48" rx="14" fill="#ffffff" fill-opacity="0.12" stroke="#93c5fd" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="391" y="747" class="chipT">🏆 Her Akşam 20:00 Turnuva</text>
+
+    <rect x="35" y="778" width="228" height="48" rx="14" fill="#ffffff" fill-opacity="0.12" stroke="#93c5fd" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="149" y="807" class="chipT">🎨 11 Eğitici Tema &amp; Yapboz</text>
+
+    <rect x="277" y="778" width="228" height="48" rx="14" fill="#ffffff" fill-opacity="0.12" stroke="#93c5fd" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="391" y="807" class="chipT">🧠 Hafıza · 60sn Fırtına · PDF</text>
+  </g>
+
+  <!-- Bottom Pulsing CTA Button -->
+  <g class="ctaBox" filter="url(#dropSh)">
+    <rect x="45" y="868" width="450" height="60" rx="30" fill="url(#goldGrad)" stroke="#fef08a" stroke-width="3"/>
+    <text x="270" y="904" class="ctaT">🚀 HEMEN ÜCRETSİZ İNDİR &amp; OYNA!</text>
+  </g>
+</svg>
