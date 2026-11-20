@@ -8968,10 +8968,15 @@
       resizeBoard();
       render();
     }
+    function isMobileOrStandaloneApp() {
+      const isStandalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+      const isNarrowMobile = window.innerWidth <= 900 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
+      return isStandalone || isNarrowMobile;
+    }
     function setMainFullscreen(enable) {
       if (enable) {
         document.body.classList.add('main-fullscreen-mode');
-        if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+        if (!isMobileOrStandaloneApp() && !document.fullscreenElement && document.documentElement.requestFullscreen) {
           document.documentElement.requestFullscreen().catch(() => {});
         }
       } else {
