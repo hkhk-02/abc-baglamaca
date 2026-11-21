@@ -3325,7 +3325,7 @@
       <div style="display:grid;gap:5px;margin-bottom:8px;font-size:0.68rem;font-weight:800;">
         <label style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
           <span>🎵 Müzik Seviyesi</span>
-          <input type="range" id="bgmVolumeRange" min="0" max="100" value="20" style="width:120px;accent-color:var(--blue);">
+          <input type="range" id="bgmVolumeRange" min="0" max="100" value="5" style="width:120px;accent-color:var(--blue);">
         </label>
         <label style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
           <span>🔊 Efekt Seviyesi</span>
@@ -4801,7 +4801,8 @@
     ];
 
     const BGM_MAX_VOL = 1.0;
-    const BGM_DEFAULT_MUL = 0.20;
+    const BGM_DEFAULT_MUL = 0.05;
+    let sessionBgmVol = BGM_DEFAULT_MUL;
     const BGM_CROSSFADE_MS = 1500;
     let bgmHasUserGesture = false;
     let bgmCurrentSrc = '';
@@ -4849,7 +4850,7 @@
 
     function getTargetBgmVolume() {
       if (!musicEnabled) return 0;
-      const bgmMul = (typeof appData !== 'undefined' && typeof appData.bgmVol === 'number') ? appData.bgmVol : BGM_DEFAULT_MUL;
+      const bgmMul = (typeof sessionBgmVol === 'number') ? sessionBgmVol : BGM_DEFAULT_MUL;
       const base = BGM_MAX_VOL * bgmMul;
       return memoryMode ? (base * 0.5) : base;
     }
@@ -6040,10 +6041,10 @@
     const bgmVolumeRange = document.getElementById('bgmVolumeRange');
     const sfxVolumeRange = document.getElementById('sfxVolumeRange');
     if (bgmVolumeRange) {
-      bgmVolumeRange.value = Math.round(((typeof appData.bgmVol === 'number') ? appData.bgmVol : BGM_DEFAULT_MUL) * 100);
+      sessionBgmVol = BGM_DEFAULT_MUL;
+      bgmVolumeRange.value = Math.round(BGM_DEFAULT_MUL * 100);
       bgmVolumeRange.addEventListener('input', () => {
-        appData.bgmVol = Math.max(0, Math.min(1, parseInt(bgmVolumeRange.value, 10) / 100));
-        saveAppData();
+        sessionBgmVol = Math.max(0, Math.min(1, parseInt(bgmVolumeRange.value, 10) / 100));
         syncBgmVolume();
         if (musicPopover && musicPopover.classList.contains('open')) renderMusicPopover();
       });
