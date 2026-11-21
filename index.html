@@ -5139,10 +5139,25 @@
     }
     const EDU_MAX_UNLOCKED_IDX = 12; // Eğitici temalar en fazla 6x6 (Orta · Seviye 3 = index 12)
 
-    function getEduThemeProgress(themeId) {
+    function getEduProgressKey(theme) {
+      if (!theme) return 'edu';
+      const mg = (typeof getMathGrade === 'function') ? getMathGrade() : (parseInt(appData.mathGrade, 10) || 2);
+      if (theme.isMath) {
+        const op = (typeof getMathOp === 'function') ? getMathOp() : (appData.mathOp || 'all');
+        const tbl = (op === 'mul' && typeof getMathTable === 'function') ? getMathTable() : 'all';
+        return (tbl && tbl !== 'all') ? `${theme.id}_g${mg}_${op}_t${tbl}` : `${theme.id}_g${mg}_${op}`;
+      }
+      if (theme.usesGrade) {
+        return `${theme.id}_g${mg}`;
+      }
+      return theme.id;
+    }
+
+    function getEduThemeProgress(themeOrId) {
+      const storeKey = (themeOrId && typeof themeOrId === 'object') ? getEduProgressKey(themeOrId) : String(themeOrId || 'edu');
       if (!appData.eduProgress) appData.eduProgress = {};
-      if (!appData.eduProgress[themeId]) {
-        appData.eduProgress[themeId] = {
+      if (!appData.eduProgress[storeKey]) {
+        appData.eduProgress[storeKey] = {
           progress: {},
           tourProgress: {},
           unlockedIdx: 0,
@@ -5150,13 +5165,13 @@
           levelIdx: 0
         };
       }
-      return appData.eduProgress[themeId];
+      return appData.eduProgress[storeKey];
     }
 
     function getActiveProgressStore() {
       const theme = getActiveSymbolTheme();
       if (theme && theme.isEdu) {
-        return getEduThemeProgress(theme.id);
+        return getEduThemeProgress(theme);
       }
       return appData;
     }
@@ -5164,7 +5179,7 @@
     function saveCurrentThemePosition() {
       const theme = getActiveSymbolTheme();
       if (theme && theme.isEdu) {
-        const store = getEduThemeProgress(theme.id);
+        const store = getEduThemeProgress(theme);
         store.gradeIdx = gradeIdx;
         store.levelIdx = levelIdx;
       } else if (isGoldMasterMode()) {
@@ -5179,7 +5194,7 @@
     function loadCurrentThemePosition() {
       const theme = getActiveSymbolTheme();
       if (theme && theme.isEdu) {
-        const store = getEduThemeProgress(theme.id);
+        const store = getEduThemeProgress(theme);
         gradeIdx = Math.max(0, Math.min(2, store.gradeIdx || 0));
         levelIdx = Math.max(0, Math.min(4, store.levelIdx || 0));
         if (gradeIdx * 5 + levelIdx > EDU_MAX_UNLOCKED_IDX) {
@@ -5755,6 +5770,7 @@
     }
 
     function setMathGrade(g) {
+      saveCurrentThemePosition();
       const next = Math.max(1, Math.min(4, parseInt(g, 10) || 2));
       appData.mathGrade = next;
       if (next === 1 && (appData.mathOp === 'mul' || appData.mathOp === 'div')) {
@@ -5764,11 +5780,16 @@
         appData.mathTable = 'all';
       }
       playClick();
+      const theme = getActiveSymbolTheme();
+      if (theme && (theme.isMath || theme.usesGrade)) {
+        loadCurrentThemePosition();
+        buildGradeButtons();
+        buildLevelButtons();
+      }
       saveAppData();
       updateMathGradeModalUI();
       updateSymbolThemeUI();
       const modalOpen = !!(themeModal && themeModal.classList.contains('show'));
-      const theme = getActiveSymbolTheme();
       if (!modalOpen && theme && (theme.isMath || theme.usesGrade)) {
         newPuzzle();
       }
@@ -5777,13 +5798,19 @@
     function setMathOp(op) {
       const mg = getMathGrade();
       if (mg === 1 && (op === 'mul' || op === 'div')) return;
+      saveCurrentThemePosition();
       appData.mathOp = ['all', 'add', 'sub', 'mul', 'div'].includes(op) ? op : 'all';
       playClick();
+      const theme = getActiveSymbolTheme();
+      if (theme && theme.isMath) {
+        loadCurrentThemePosition();
+        buildGradeButtons();
+        buildLevelButtons();
+      }
       saveAppData();
       updateMathGradeModalUI();
       updateSymbolThemeUI();
       const modalOpen = !!(themeModal && themeModal.classList.contains('show'));
-      const theme = getActiveSymbolTheme();
       if (!modalOpen && theme && theme.isMath) {
         newPuzzle();
       }
@@ -5792,6 +5819,7 @@
     function setMathTable(val) {
       const mg = getMathGrade();
       if (mg < 2) return;
+      saveCurrentThemePosition();
       if (val !== 'all') {
         const n = parseInt(val, 10);
         if (!(n >= 2 && n <= 10) || (mg === 2 && n > 5)) return;
@@ -5800,11 +5828,16 @@
         appData.mathTable = 'all';
       }
       playClick();
+      const theme = getActiveSymbolTheme();
+      if (theme && theme.isMath) {
+        loadCurrentThemePosition();
+        buildGradeButtons();
+        buildLevelButtons();
+      }
       saveAppData();
       updateMathGradeModalUI();
       updateSymbolThemeUI();
       const modalOpen = !!(themeModal && themeModal.classList.contains('show'));
-      const theme = getActiveSymbolTheme();
       if (!modalOpen && theme && theme.isMath) {
         newPuzzle();
       }
@@ -12500,10 +12533,18 @@
           </div>`;
         }).join('');
 
-        // Tema karşılaştırması (yalnızca gerçek veriden)
+        // Tema karşılaştırması (yalnızca gerçek veriden; sınıf/konu bazlı tüm alt anahtarları toplar)
         const themeStats = SYMBOL_THEMES.filter(t => t.isEdu).map(t => {
-          const ep = appData.eduProgress && appData.eduProgress[t.id];
-          const cnt = ep && ep.progress ? Object.values(ep.progress).reduce((a, b) => a + (Number(b) || 0), 0) : 0;
+          let cnt = 0;
+          if (appData.eduProgress) {
+            Object.entries(appData.eduProgress).forEach(([ek, ep]) => {
+              if (ek === t.id || ek.startsWith(t.id + '_')) {
+                if (ep && ep.progress) {
+                  cnt += Object.values(ep.progress).reduce((a, b) => a + (Number(b) || 0), 0);
+                }
+              }
+            });
+          }
           return { name: t.name, icon: t.icon, count: cnt };
         });
         const playedEdu = themeStats.filter(x => x.count > 0).sort((a, b) => b.count - a.count);
